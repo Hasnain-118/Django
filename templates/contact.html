@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Hasnain's Site{% endblock title %}
+
+{% block body %}
+
+<!-- Full Page Hero with Floating Form -->
+<div class="position-relative" style="height: 100vh; overflow: hidden;">
+    
+    <!-- Background Image (Full Screen) -->
+    <img src="/static/contact.jpg" class="w-100 h-100" style="height: 100%; object-fit: cover;" alt="Contact us banner image">
+    
+    <!-- Dark Overlay (Makes text readable) -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.4);"></div>
+    
+    <!-- Floating Form (Glass Card) -->
+    <div class="position-absolute top-50 start-50 translate-middle" style="width: 90%; max-width: 600px;">
+        
+        <div class="card shadow-lg border-0 rounded-4 p-4" style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+            
+            <h2 class="mb-3 fw-bold text-white text-center">
+                <i class="bi bi-envelope-paper-fill me-2"></i>Contact Us
+            </h2>
+            <p class="text-white-50 text-center mb-4">
+                Have questions? We'd love to hear from you!
+            </p>
+
+            <form method="POST" action="/contact/">
+                {% csrf_token %}
+
+                <!-- Name Field -->
+                <div class="mb-3">
+                    <label for="name" class="form-label fw-semibold text-white">Full Name</label>
+                    <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Enter your name" style="background: rgba(255,255,255,0.9);">
+                </div>
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold text-white">Email Address</label>
+                    <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="name@example.com" required style="background: rgba(255,255,255,0.9);">
+                    <div class="form-text text-white-50">We'll never share your email.</div>
+                </div>
+
+                <!-- Phone Field -->
+                <div class="mb-3">
+                    <label for="phone" class="form-label fw-semibold text-white">Phone Number (Optional)</label>
+                    <input type="tel" class="form-control form-control-lg" id="phone" name="phone" placeholder="+92 300 1234567" style="background: rgba(255,255,255,0.9);">
+                </div>
+
+                <!-- Message Field -->
+                <div class="mb-4">
+                    <label for="message" class="form-label fw-semibold text-white">Your Message</label>
+                    <textarea class="form-control form-control-lg" id="message" name="desc" placeholder="Write your message here..." required style="background: rgba(255,255,255,0.9);"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill py-3 fw-bold">
+                    <i class="bi bi-send-fill me-2"></i>Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

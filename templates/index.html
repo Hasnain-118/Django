@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<div class="container-fluid my-0 px-0" ><div id="carouselExampleCaptions" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+
+  <div class="carousel-inner">
+  
+  <!-- Slide 1 -->
+  <div class="carousel-item active position-relative">
+    <img src="/static/1.jpg" class="d-block w-100" style="height: 700px; object-fit: cover;" alt="...">
+    
+    <!-- Dark Overlay for better readability -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));"></div>
+    
+    <div class="carousel-caption d-none d-md-block">
+      <h5 class="display-1 fw-bold text-white p-4 rounded-4 d-inline-block" style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        Welcome to Hasnain's<br>Digital Library
+      </h5>
+      <br>
+      <p class="text-white fs-3 p-3 rounded-3 d-inline-block" style="background: rgba(255, 255, 255, 0.10); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15); color: #f0f0f0; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+        Explore thousands of books, manga, and manhwa at your fingertips
+      </p>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="carousel-item position-relative">
+    <img src="/static/2.jpg" class="d-block w-100" style="height: 700px; object-fit: cover;" alt="...">
+    
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));"></div>
+    
+    <div class="carousel-caption d-none d-md-block">
+      <h5 class="display-1 fw-bold text-white p-4 rounded-4 d-inline-block" style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        Start Your Reading<br>Journey Today
+      </h5>
+      <br>
+      <p class="text-white fs-3 p-3 rounded-3 d-inline-block" style="background: rgba(255, 255, 255, 0.10); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15); color: #f0f0f0; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+        Sign up now to save your favorites, track your progress, and get personalized recommendations
+      </p>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="carousel-item position-relative">
+    <img src="/static/3.jpg" class="d-block w-100" style="height: 700px; object-fit: cover;" alt="...">
+    
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));"></div>
+    
+    <div class="carousel-caption d-none d-md-block">
+      <h5 class="display-1 fw-bold text-white p-4 rounded-4 d-inline-block" style="background: rgba(255, 255, 255, 0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.18); color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        Explore Our Curated<br>Collection
+      </h5>
+      <br>
+      <p class="text-white fs-3 p-3 rounded-3 d-inline-block" style="background: rgba(255, 255, 255, 0.10); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15); color: #f0f0f0; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+        From classic literature to modern bestsellers — find your next great read
+      </p>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+
+  
+
+  {% comment %} album {% endcomment %}
+  <div class="album py-3" style="background-color: #121212;">
+   <div class="text-center py-3 ">
+  <h1 class="display-1 fw-bold text-white p-4 rounded-4 d-inline-block" style="
+  background: rgba(255, 255, 255, 0.12); 
+  backdrop-filter: blur(16px); 
+  -webkit-backdrop-filter: blur(16px); 
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+">
+  Products
+</h1>
+</div>
+
+
+<div class="container"> 
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
+        <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/The Alchemist – Paulo Coelho.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>The Alchemist – Paulo Coelho </b></h5>
+            <p class="card-text" style="color: #d1d1d1;">And, when you want something, all the universe conspires in helping you to achieve it</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+            
+             <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/Dune.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>Dune </b></h5>
+            <p class="card-text" style="color: #d1d1d1;">Fear is the mind-killer</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+
+
+
+
+              <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/Naruto Vol. 1.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>Naruto Vol. 1 </b></h5>
+            <p class="card-text" style="color: #d1d1d1;">I'm not gonna run away, I never go back on my word! That's my nindo: my ninja way!</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+ 
+        <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/Pride and Prejudice.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>Pride and Prejudice</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+            
+             <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/Attack on Titan Vol. 1.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>Attack on Titan Vol. 1</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">If you win, you live. If you lose, you die. If you don't fight, you can't win!</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+
+
+
+
+              <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/1984.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>1984</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">Big Brother is watching you</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+ 
+        <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/Death Note Vol. 1.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>Death Note Vol. 1</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">I am justice! I am the one who will become the god of the new world!</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+            
+             <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/The Great Gatsby.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>	The Great Gatsby</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">So we beat on, boats against the current, borne back ceaselessly into the past.</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+
+
+
+
+              <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/One Piece Vol. 1.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>One Piece Vol. 1</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">I'm going to be the King of the Pirates!</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+ 
+        <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/	Berserk Vol. 1.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>	Berserk Vol. 1</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">You're going to be a sacrifice. Don't worry. It'll all be over soon</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+
+
+
+
+              <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/Jujutsu Kaisen Vol. 1.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>Jujutsu Kaisen Vol. 1 </b></h5>
+            <p class="card-text" style="color: #d1d1d1;">I don't know what I'll do when I die... but I don't want to regret the way I lived</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+
+
+
+
+              <div class="col"> <div class="card h-100 border-secondary" style="background-color: #1e1e1e;"> 
+    <img src="/static/The Little Prince.jpg" class="d-block w-100" style="height: 550px; object-fit: cover;" alt="...">
+    <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">$14.99</span>
+           <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;"> 
+            <h5 style="color: #ffffff !important;"> <b>	The Little Prince</b></h5>
+            <p class="card-text" style="color: #d1d1d1;">What is essential is invisible to the eye</p> 
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;"> 
+              <div class="btn-group"> <button type="button" class="btn btn-sm btn-outline-light">Buy</button> 
+                </div>
+                  <small style="color: #b0b0b0;">Fiction / Inspirational</small>
+                 </div> 
+                </div> 
+              </div>
+             </div> 
+           </div>
+{% endblock body %}
