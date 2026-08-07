@@ -27,11 +27,10 @@ def contact(request):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         desc = request.POST.get('desc')
-
         contact = Contact(name=name , email=email, phone=phone, desc=desc, date=datetime.today())
         contact.save()
-    
-
-
+        # success message after submitting the contact form
+        from django.contrib import messages
+        messages.success(request, 'Your form submitted successfully!')
     # return HttpResponse("This is the contact page of my first Django project.")
     return render(request, 'contact.html')
