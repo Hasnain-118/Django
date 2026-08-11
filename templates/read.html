@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container text-center mt-5">
+
+    {% if book.cover_image %}
+        <img src="{{ book.cover_image.url }}"
+             alt="{{ book.title }}"
+             style="width: 180px; height: 250px; object-fit: cover;"
+             class="rounded shadow mb-3">
+    {% endif %}
+
+    <h1>{{ book.title }}</h1>
+
+    <p class="text-muted">
+        By {{ book.author }}
+    </p>
+
+    {% if book.pdf_file %}
+        <a href="{{ book.pdf_file.url }}"
+           target="_blank"
+           class="btn btn-primary">
+            📖 Open PDF
+        </a>
+    {% elif book.external_link %}
+        <a href="{{ book.external_link }}"
+           target="_blank"
+           class="btn btn-primary">
+            📖 Read Book
+        </a>
+    {% else %}
+        <p class="text-danger">No PDF available.</p>
+    {% endif %}
+
+</div>
+
+{% endblock body %}

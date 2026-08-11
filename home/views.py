@@ -1,36 +1,300 @@
-import datetime
-
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime
-from home.models import Contact
 
-# Create your views here.
+from .models import Contact, Book
+from .forms import SignUpForm, BookForm
 
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
+
+
+# =========================================================
+# HOME
+# =========================================================
 def index(request):
+    books = Book.objects.all().order_by('-id')
+    latest_books = Book.objects.all().order_by('-id')[:3]
+
+    print("ALL BOOKS:", books.count())
+    print("LATEST BOOKS:", latest_books.count())
+
     context = {
-        'variable1': "Hasnain is great",
-        'variable2': "Ahmer is great",
+        'books': books,
+        'latest_books': latest_books,
     }
+
     return render(request, 'index.html', context)
-    # return HttpResponse("Hello World! This is my first Django project.")
+
+
+
+# =========================================================
+# BASIC PAGES
+# =========================================================
+
 def about(request):
-    # return HttpResponse("This is the about page of my first Django project.")
     return render(request, 'about.html')
+
+
 def services(request):
-    # return HttpResponse("This is the services page of my first Django project.")
     return render(request, 'services.html')
+
+
 def contact(request):
 
     if request.method == 'POST':
+
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         desc = request.POST.get('desc')
-        contact = Contact(name=name , email=email, phone=phone, desc=desc, date=datetime.today())
+
+        contact = Contact(
+            name=name,
+            email=email,
+            phone=phone,
+            desc=desc,
+            date=datetime.today()
+        )
+
         contact.save()
-        # success message after submitting the contact form
-        from django.contrib import messages
-        messages.success(request, 'Your form submitted successfully!')
-    # return HttpResponse("This is the contact page of my first Django project.")
+
+        messages.success(
+            request,
+            'Your form submitted successfully!'
+        )
+
     return render(request, 'contact.html')
+
+
+# =========================================================
+# SIGN UP
+# =========================================================
+
+def signup_view(request):
+
+    if request.method == 'POST':
+
+        form = SignUpForm(request.POST)
+
+        if form.is_valid():
+
+            user = form.save()
+
+            # Automatically login after signup
+            login(request, user)
+
+            messages.success(
+                request,
+                'Account created successfully!'
+            )
+
+            return redirect('home')
+
+        else:
+
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
+
+    else:
+
+        form = SignUpForm()
+
+    return render(
+        request,
+        'signup.html',
+        {'form': form}
+    )
+
+
+# =========================================================
+# SIGN IN
+# =========================================================
+
+def signin_view(request):
+
+    if request.method == 'POST':
+
+        form = AuthenticationForm(
+            request,
+            data=request.POST
+        )
+
+        if form.is_valid():
+
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(
+                username=username,
+                password=password
+            )
+
+            if user is not None:
+
+                login(request, user)
+
+                messages.success(
+                    request,
+                    f'Welcome back, {username}!'
+                )
+
+                # Redirect to the page user originally requested
+                next_url = (
+                    request.POST.get('next')
+                    or request.GET.get('next')
+                )
+
+                if next_url:
+                    return redirect(next_url)
+
+                return redirect('home')
+
+        else:
+
+            messages.error(
+                request,
+                'Invalid username or password.'
+            )
+
+    else:
+
+        form = AuthenticationForm()
+
+    return render(
+        request,
+        'signin.html',
+        {'form': form}
+    )
+
+
+# =========================================================
+# SIGN OUT
+# =========================================================
+
+def signout_view(request):
+
+    logout(request)
+
+    messages.success(
+        request,
+        'You have been logged out.'
+    )
+
+    return redirect('home')
+
+
+# =========================================================
+# READ BOOK
+# =========================================================
+
+@login_required
+def read_book(request, book_id):
+
+    book = get_object_or_404(
+        Book,
+        id=book_id
+    )
+
+    return render(
+        request,
+        'read.html',
+        {'book': book}
+    )
+
+
+# =========================================================
+# ADMIN / STAFF CHECK
+# =========================================================
+
+def is_admin(user):
+    return user.is_staff
+
+
+# =========================================================
+# ADD BOOK
+# =========================================================
+
+@login_required
+@user_passes_test(is_admin)
+def add_book(request):
+
+    if request.method == 'POST':
+
+        form = BookForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                'Book added successfully!'
+            )
+
+            return redirect('home')
+
+        else:
+
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
+
+    else:
+
+        form = BookForm()
+
+    return render(
+        request,
+        'add_book.html',
+        {'form': form}
+    )
+
+
+# =========================================================
+# MANAGE BOOKS
+# =========================================================
+
+@login_required
+@user_passes_test(is_admin)
+def manage_books(request):
+
+    books = Book.objects.all()
+
+    return render(
+        request,
+        'manage_books.html',
+        {'books': books}
+    )
+
+
+# =========================================================
+# DELETE BOOK
+# =========================================================
+
+@login_required
+@user_passes_test(is_admin)
+def delete_book(request, book_id):
+
+    book = get_object_or_404(
+        Book,
+        id=book_id
+    )
+
+    book_title = book.title
+
+    book.delete()
+
+    messages.success(
+        request,
+        f'"{book_title}" deleted successfully!'
+    )
+
+    return redirect('manage_books')
