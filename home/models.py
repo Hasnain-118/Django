@@ -28,18 +28,19 @@ class Contact(models.Model):
 class Book(models.Model):
 
     CATEGORY_CHOICES = [
-        ('fiction', 'Fiction'),
-        ('manga', 'Manga'),
-        ('manhwa', 'Manhwa'),
-        ('classic', 'Classic'),
-    ]
+    ('fiction', 'Fiction'),
+    ('manga', 'Manga'),
+    ('manhwa', 'Manhwa'),
+    ('classic', 'Classics'),
+    ('mystery', 'Mystery & Thriller'),
+    ('romance', 'Romance'),
+    ('fantasy', 'Fantasy'),
+    ('sci-fi', 'Science Fiction'),
+]
 
     title = models.CharField(max_length=100)
 
-    author = models.CharField(
-        max_length=100,
-        blank=True
-    )
+    author = models.CharField(max_length=100, blank=True)
 
     # OPTIONAL
     # If user does not upload a cover,
