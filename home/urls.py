@@ -14,5 +14,6 @@ urlpatterns = [
     path("manage-books/", views.manage_books, name="manage_books"),
     path("delete-book/<int:book_id>/", views.delete_book, name="delete_book"),
     path('edit-book/<int:book_id>/',views.edit_book,name='edit_book'),
+    path("category/<str:category_slug>/",views.category_books,name="category_books"),
 ]
 

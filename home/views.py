@@ -337,3 +337,30 @@ def edit_book(request, book_id):
         'edit_book.html',
         {'form': form, 'book': book}
     )
+
+
+
+
+
+# =========================================================
+# CATEGORY BOOKS
+# =========================================================
+def category_books(request, category_slug):
+    books = Book.objects.filter(
+        category=category_slug
+    ).order_by('-id')
+
+    category_display = dict(
+        Book.CATEGORY_CHOICES
+    ).get(category_slug, category_slug)
+
+    context = {
+        'books': books,
+        'category_display': category_display,
+    }
+
+    return render(
+        request,
+        'category_books.html',
+        context
+    )
