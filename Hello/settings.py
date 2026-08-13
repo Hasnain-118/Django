@@ -67,6 +67,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                #added manually to make category choices available in all templates
+                'home.context_processors.category_choices',
             ],
         },
     },
