@@ -128,6 +128,10 @@
 
                     {% if user.is_staff %}
 
+                    <a href="{% url 'admin:index' %}" class="btn btn-outline-info btn-sm">
+                        Admin Panel
+                    </a>
+
                     <a href="{% url 'add_book' %}" class="btn btn-outline-success btn-sm">
                         Add Book
                     </a>
