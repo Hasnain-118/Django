@@ -385,9 +385,10 @@
 <!-- ==================== CAROUSEL CSS ==================== -->
 
 <style>
+
     /* =========================
-   CAROUSEL
-   ========================= */
+       CAROUSEL
+    ========================= */
 
     #bookCarousel .carousel-item {
 
@@ -397,14 +398,14 @@
 
         overflow: hidden;
 
-        background: #111;
+        background: #111315;
 
     }
 
 
     /* =========================
-   BLURRED BACKGROUND
-   ========================= */
+       BLURRED BACKGROUND
+    ========================= */
 
     #bookCarousel .slide-background {
 
@@ -428,14 +429,14 @@
 
         transform: scale(1.08);
 
-        opacity: 0.65;
+        opacity: 0.55;
 
     }
 
 
     /* =========================
-   DARK OVERLAY
-   ========================= */
+       DARK OVERLAY
+    ========================= */
 
     #bookCarousel .slide-overlay {
 
@@ -443,7 +444,13 @@
 
         inset: 0;
 
-        background: rgba(0, 0, 0, 0.45);
+        background:
+            linear-gradient(
+                90deg,
+                rgba(17, 19, 21, 0.92),
+                rgba(17, 19, 21, 0.55),
+                rgba(17, 19, 21, 0.35)
+            );
 
         z-index: 1;
 
@@ -451,8 +458,8 @@
 
 
     /* =========================
-   ORIGINAL COVER
-   ========================= */
+       BOOK COVER
+    ========================= */
 
     #bookCarousel .book-cover-wrapper {
 
@@ -475,15 +482,10 @@
         z-index: 2;
 
         box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.6);
+            0 20px 50px rgba(0, 0, 0, 0.65);
 
     }
 
-
-    /*
-   width = auto
-   means original aspect ratio
-*/
 
     #bookCarousel .book-cover {
 
@@ -497,14 +499,16 @@
 
         display: block;
 
-        border-radius: 4px;
+        border-radius: 6px;
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
 
     }
 
 
     /* =========================
-   CAPTION
-   ========================= */
+       CAPTION
+    ========================= */
 
     #bookCarousel .carousel-caption {
 
@@ -529,22 +533,63 @@
 
         max-width: 600px;
 
-        border-radius: 18px;
+        border-radius: 16px;
 
-        background: rgba(0, 0, 0, 0.55);
+        background: rgba(25, 28, 31, 0.82);
 
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(14px);
 
-        -webkit-backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(14px);
 
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.35);
+
+    }
+
+
+    /* Caption heading */
+
+    #bookCarousel .caption-box h1 {
+
+        color: #ffffff;
+
+    }
+
+
+    /* Author / secondary heading */
+
+    #bookCarousel .caption-box h4 {
+
+        color: #a78bfa;
+
+    }
+
+
+    /* Description */
+
+    #bookCarousel .caption-box p {
+
+        color: #c4c7ca;
 
     }
 
 
     /* =========================
-   CONTROLS
-   ========================= */
+       RATING / ACCENT
+    ========================= */
+
+    #bookCarousel .caption-box .rating {
+
+        color: #a78bfa;
+
+    }
+
+
+    /* =========================
+       CONTROLS
+    ========================= */
 
     #bookCarousel .carousel-control-prev,
     #bookCarousel .carousel-control-next {
@@ -556,6 +601,38 @@
     }
 
 
+    #bookCarousel .carousel-control-prev-icon,
+    #bookCarousel .carousel-control-next-icon {
+
+        width: 42px;
+
+        height: 42px;
+
+        padding: 10px;
+
+        border-radius: 50%;
+
+        background-color: rgba(25, 28, 31, 0.75);
+
+        border: 1px solid rgba(255, 255, 255, 0.15);
+
+        background-size: 45%;
+
+    }
+
+
+    #bookCarousel .carousel-control-prev-icon:hover,
+    #bookCarousel .carousel-control-next-icon:hover {
+
+        background-color: #8b5cf6;
+
+    }
+
+
+    /* =========================
+       INDICATORS
+    ========================= */
+
     #bookCarousel .carousel-indicators {
 
         z-index: 10;
@@ -563,9 +640,31 @@
     }
 
 
+    #bookCarousel .carousel-indicators button {
+
+        width: 28px;
+
+        height: 4px;
+
+        border-radius: 10px;
+
+        border: 0;
+
+        background-color: rgba(255, 255, 255, 0.35);
+
+    }
+
+
+    #bookCarousel .carousel-indicators button.active {
+
+        background-color: #8b5cf6;
+
+    }
+
+
     /* =========================
-   MOBILE
-   ========================= */
+       MOBILE
+    ========================= */
 
     @media (max-width: 768px) {
 
@@ -612,6 +711,8 @@
 
             padding: 12px 15px;
 
+            background: rgba(25, 28, 31, 0.88);
+
         }
 
 
@@ -635,7 +736,56 @@
 
         }
 
+
     }
+
+
+    /* =========================
+       SMALL MOBILE
+    ========================= */
+
+    @media (max-width: 480px) {
+
+        #bookCarousel .carousel-item {
+
+            height: 560px;
+
+        }
+
+
+        #bookCarousel .book-cover-wrapper {
+
+            height: 380px;
+
+            top: 40%;
+
+        }
+
+
+        #bookCarousel .book-cover {
+
+            height: 380px;
+
+            max-width: 260px;
+
+        }
+
+
+        #bookCarousel .carousel-caption {
+
+            bottom: 3%;
+
+        }
+
+
+        #bookCarousel .caption-box h1 {
+
+            font-size: 1.25rem;
+
+        }
+
+    }
+
 </style>
 
 {% endblock body %}
