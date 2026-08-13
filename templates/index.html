@@ -9,9 +9,7 @@
 
     <!-- ==================== CAROUSEL ==================== -->
 
-    <div id="bookCarousel"
-         class="carousel slide carousel-fade"
-         data-bs-ride="carousel">
+    <div id="bookCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
 
 
         <!-- Carousel Indicators -->
@@ -22,12 +20,9 @@
 
             {% for book in latest_books %}
 
-            <button type="button"
-                    data-bs-target="#bookCarousel"
-                    data-bs-slide-to="{{ forloop.counter0 }}"
-                    class="{% if forloop.first %}active{% endif %}"
-                    {% if forloop.first %}aria-current="true"{% endif %}
-                    aria-label="Slide {{ forloop.counter }}">
+            <button type="button" data-bs-target="#bookCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                class="{% if forloop.first %}active{% endif %}" {% if forloop.first %}aria-current="true" {% endif %}
+                aria-label="Slide {{ forloop.counter }}">
             </button>
 
             {% endfor %}
@@ -43,16 +38,14 @@
 
             {% for book in latest_books %}
 
-            <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative"
-     style="height: 700px;">
+            <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative" style="height: 700px;">
 
 
                 <!-- ==================== BLURRED BACKGROUND ==================== -->
 
                 {% if book.cover_image %}
 
-                <div class="slide-background"
-                     style="background-image: url('{{ book.cover_image.url }}');">
+                <div class="slide-background" style="background-image: url('{{ book.cover_image.url }}');">
                 </div>
 
 
@@ -65,10 +58,9 @@
 
                 <div class="book-cover-wrapper">
 
-                    <img src="{{ book.cover_image.url }}"
-     class="position-absolute top-50 end-0 translate-middle-y"
-     style="height: 600px; width: auto; object-fit: contain; right: 8% !important;"
-     alt="{{ book.title }}">
+                    <img src="{{ book.cover_image.url }}" class="position-absolute top-50 end-0 translate-middle-y"
+                        style="height: 600px; width: auto; object-fit: contain; right: 8% !important;"
+                        alt="{{ book.title }}">
 
                 </div>
 
@@ -108,8 +100,7 @@
 
                         {% if user.is_authenticated %}
 
-                        <a href="{% url 'read_book' book.id %}"
-                           class="btn btn-light btn-lg mt-2">
+                        <a href="{% url 'read_book' book.id %}" class="btn btn-light btn-lg mt-2">
 
                             Read Now
 
@@ -118,7 +109,7 @@
                         {% else %}
 
                         <a href="{% url 'signin' %}?next={% url 'read_book' book.id %}"
-                           class="btn btn-warning btn-lg mt-2">
+                            class="btn btn-warning btn-lg mt-2">
 
                             Login to Read
 
@@ -142,8 +133,7 @@
 
             <div class="carousel-item active">
 
-                <div class="d-flex align-items-center justify-content-center bg-dark"
-                     style="height: 650px;">
+                <div class="d-flex align-items-center justify-content-center bg-dark" style="height: 650px;">
 
                     <h2 class="text-white">
                         No books added yet
@@ -164,13 +154,9 @@
 
         {% if latest_books|length > 1 %}
 
-        <button class="carousel-control-prev"
-                type="button"
-                data-bs-target="#bookCarousel"
-                data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
 
-            <span class="carousel-control-prev-icon"
-                  aria-hidden="true">
+            <span class="carousel-control-prev-icon" aria-hidden="true">
             </span>
 
             <span class="visually-hidden">
@@ -183,13 +169,9 @@
 
         <!-- ==================== NEXT BUTTON ==================== -->
 
-        <button class="carousel-control-next"
-                type="button"
-                data-bs-target="#bookCarousel"
-                data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
 
-            <span class="carousel-control-next-icon"
-                  aria-hidden="true">
+            <span class="carousel-control-next-icon" aria-hidden="true">
             </span>
 
             <span class="visually-hidden">
@@ -207,14 +189,12 @@
 
     <!-- ==================== PRODUCTS ==================== -->
 
-    <div class="album py-5"
-         style="background-color: #121212;">
+    <div class="album py-5" style="background-color: #121212;">
 
 
         <div class="text-center py-3">
 
-            <h1 class="display-3 fw-bold text-white p-4 rounded-4 d-inline-block"
-                style="
+            <h1 class="display-3 fw-bold text-white p-4 rounded-4 d-inline-block" style="
                 background: rgba(255,255,255,0.12);
                 backdrop-filter: blur(16px);
                 -webkit-backdrop-filter: blur(16px);
@@ -242,21 +222,32 @@
                 <div class="col">
 
 
-                    <div class="card h-100 border-secondary"
-                         style="background-color: #1e1e1e;">
+                    <div class="card h-100 border-secondary" style="background-color: #1e1e1e;">
 
 
                         <!-- Book Cover -->
 
                         {% if book.cover_image %}
 
-                        <img src="{{ book.cover_image.url }}"
-                             class="card-img-top"
-                             alt="{{ book.title }}"
-                             style="
-                             height: 500px;
-                             object-fit: cover;
-                             ">
+                        <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}" style="
+         height: 500px;
+         object-fit: cover;
+         ">
+
+                        {% else %}
+
+                        <div class="card-img-top d-flex align-items-center justify-content-center" style="
+         height: 500px;
+         background: linear-gradient(135deg, #2c2c2c, #151515);
+         color: #888;
+         ">
+
+                            <div class="text-center">
+                                <div style="font-size: 70px;">📚</div>
+                                <h5 class="mt-3">No Cover Available</h5>
+                            </div>
+
+                        </div>
 
                         {% endif %}
 
@@ -264,8 +255,7 @@
 
                         <!-- Rating -->
 
-                        <span class="fs-4 fw-bold text-success"
-                              style="
+                        <span class="fs-4 fw-bold text-success" style="
                               padding-left: 30px;
                               padding-top: 10px;
                               color: #2ecc71 !important;
@@ -279,8 +269,7 @@
 
                         <!-- Card Body -->
 
-                        <div class="card-body"
-                             style="
+                        <div class="card-body" style="
                              display: flex;
                              flex-direction: column;
                              color: #ffffff;
@@ -307,8 +296,7 @@
 
 
 
-                            <p class="card-text"
-                               style="color: #d1d1d1;">
+                            <p class="card-text" style="color: #d1d1d1;">
 
                                 {{ book.quote }}
 
@@ -318,8 +306,7 @@
 
                             <!-- Bottom Section -->
 
-                            <div class="d-flex justify-content-between align-items-center"
-                                 style="margin-top: auto;">
+                            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;">
 
 
                                 <!-- Read Button -->
@@ -329,8 +316,7 @@
 
                                     {% if user.is_authenticated %}
 
-                                    <a href="{% url 'read_book' book.id %}"
-                                       class="btn btn-sm btn-outline-light">
+                                    <a href="{% url 'read_book' book.id %}" class="btn btn-sm btn-outline-light">
 
                                         Read
 
@@ -339,7 +325,7 @@
                                     {% else %}
 
                                     <a href="{% url 'signin' %}?next={% url 'read_book' book.id %}"
-                                       class="btn btn-sm btn-outline-warning">
+                                        class="btn btn-sm btn-outline-warning">
 
                                         Login to Read
 
@@ -399,260 +385,257 @@
 <!-- ==================== CAROUSEL CSS ==================== -->
 
 <style>
-
-
-/* =========================
+    /* =========================
    CAROUSEL
    ========================= */
 
-#bookCarousel .carousel-item {
+    #bookCarousel .carousel-item {
 
-    position: relative;
+        position: relative;
 
-    height: 650px;
+        height: 650px;
 
-    overflow: hidden;
+        overflow: hidden;
 
-    background: #111;
+        background: #111;
 
-}
+    }
 
 
-/* =========================
+    /* =========================
    BLURRED BACKGROUND
    ========================= */
 
-#bookCarousel .slide-background {
+    #bookCarousel .slide-background {
 
-    position: absolute;
+        position: absolute;
 
-    top: -30px;
+        top: -30px;
 
-    left: -30px;
+        left: -30px;
 
-    width: calc(100% + 60px);
+        width: calc(100% + 60px);
 
-    height: calc(100% + 60px);
+        height: calc(100% + 60px);
 
-    background-position: center;
+        background-position: center;
 
-    background-size: cover;
+        background-size: cover;
 
-    background-repeat: no-repeat;
+        background-repeat: no-repeat;
 
-    filter: blur(25px);
+        filter: blur(25px);
 
-    transform: scale(1.08);
+        transform: scale(1.08);
 
-    opacity: 0.65;
+        opacity: 0.65;
 
-}
+    }
 
 
-/* =========================
+    /* =========================
    DARK OVERLAY
    ========================= */
 
-#bookCarousel .slide-overlay {
+    #bookCarousel .slide-overlay {
 
-    position: absolute;
+        position: absolute;
 
-    inset: 0;
+        inset: 0;
 
-    background: rgba(0, 0, 0, 0.45);
+        background: rgba(0, 0, 0, 0.45);
 
-    z-index: 1;
+        z-index: 1;
 
-}
+    }
 
 
-/* =========================
+    /* =========================
    ORIGINAL COVER
    ========================= */
 
-#bookCarousel .book-cover-wrapper {
+    #bookCarousel .book-cover-wrapper {
 
-    position: absolute;
+        position: absolute;
 
-    top: 50%;
+        top: 50%;
 
-    right: 8%;
+        right: 8%;
 
-    transform: translateY(-50%);
+        transform: translateY(-50%);
 
-    height: 580px;
+        height: 580px;
 
-    display: flex;
+        display: flex;
 
-    align-items: center;
+        align-items: center;
 
-    justify-content: center;
+        justify-content: center;
 
-    z-index: 2;
+        z-index: 2;
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.6);
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.6);
 
-}
+    }
 
 
-/*
+    /*
    width = auto
    means original aspect ratio
 */
 
-#bookCarousel .book-cover {
+    #bookCarousel .book-cover {
 
-    height: 580px;
+        height: 580px;
 
-    width: auto;
+        width: auto;
 
-    max-width: 450px;
+        max-width: 450px;
 
-    object-fit: contain;
+        object-fit: contain;
 
-    display: block;
+        display: block;
 
-    border-radius: 4px;
+        border-radius: 4px;
 
-}
+    }
 
 
-/* =========================
+    /* =========================
    CAPTION
    ========================= */
 
-#bookCarousel .carousel-caption {
-
-    position: absolute;
-
-    left: 6%;
-
-    right: auto;
-
-    bottom: 8%;
-
-    text-align: left;
-
-    z-index: 5;
-
-}
-
-
-#bookCarousel .caption-box {
-
-    padding: 20px 25px;
-
-    max-width: 600px;
-
-    border-radius: 18px;
-
-    background: rgba(0, 0, 0, 0.55);
-
-    backdrop-filter: blur(12px);
-
-    -webkit-backdrop-filter: blur(12px);
-
-    border: 1px solid rgba(255,255,255,0.15);
-
-}
-
-
-/* =========================
-   CONTROLS
-   ========================= */
-
-#bookCarousel .carousel-control-prev,
-#bookCarousel .carousel-control-next {
-
-    width: 8%;
-
-    z-index: 10;
-
-}
-
-
-#bookCarousel .carousel-indicators {
-
-    z-index: 10;
-
-}
-
-
-/* =========================
-   MOBILE
-   ========================= */
-
-@media (max-width: 768px) {
-
-
-    #bookCarousel .carousel-item {
-
-        height: 600px;
-
-    }
-
-
-    #bookCarousel .book-cover-wrapper {
-
-        height: 430px;
-
-        top: 42%;
-
-        right: 5%;
-
-    }
-
-
-    #bookCarousel .book-cover {
-
-        height: 430px;
-
-        max-width: 300px;
-
-    }
-
-
     #bookCarousel .carousel-caption {
 
-        left: 5%;
+        position: absolute;
 
-        right: 5%;
+        left: 6%;
 
-        bottom: 4%;
+        right: auto;
+
+        bottom: 8%;
+
+        text-align: left;
+
+        z-index: 5;
 
     }
 
 
     #bookCarousel .caption-box {
 
-        padding: 12px 15px;
+        padding: 20px 25px;
+
+        max-width: 600px;
+
+        border-radius: 18px;
+
+        background: rgba(0, 0, 0, 0.55);
+
+        backdrop-filter: blur(12px);
+
+        -webkit-backdrop-filter: blur(12px);
+
+        border: 1px solid rgba(255, 255, 255, 0.15);
 
     }
 
 
-    #bookCarousel .caption-box h1 {
+    /* =========================
+   CONTROLS
+   ========================= */
 
-        font-size: 1.5rem;
+    #bookCarousel .carousel-control-prev,
+    #bookCarousel .carousel-control-next {
+
+        width: 8%;
+
+        z-index: 10;
+
+    }
+
+
+    #bookCarousel .carousel-indicators {
+
+        z-index: 10;
 
     }
 
 
-    #bookCarousel .caption-box h4 {
+    /* =========================
+   MOBILE
+   ========================= */
 
-        font-size: 1rem;
+    @media (max-width: 768px) {
+
+
+        #bookCarousel .carousel-item {
+
+            height: 600px;
+
+        }
+
+
+        #bookCarousel .book-cover-wrapper {
+
+            height: 430px;
+
+            top: 42%;
+
+            right: 5%;
+
+        }
+
+
+        #bookCarousel .book-cover {
+
+            height: 430px;
+
+            max-width: 300px;
+
+        }
+
+
+        #bookCarousel .carousel-caption {
+
+            left: 5%;
+
+            right: 5%;
+
+            bottom: 4%;
+
+        }
+
+
+        #bookCarousel .caption-box {
+
+            padding: 12px 15px;
+
+        }
+
+
+        #bookCarousel .caption-box h1 {
+
+            font-size: 1.5rem;
+
+        }
+
+
+        #bookCarousel .caption-box h4 {
+
+            font-size: 1rem;
+
+        }
+
+
+        #bookCarousel .caption-box p {
+
+            display: none;
+
+        }
 
     }
-
-
-    #bookCarousel .caption-box p {
-
-        display: none;
-
-    }
-
-}
-
 </style>
 
 {% endblock body %}

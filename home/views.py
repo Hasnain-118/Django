@@ -298,3 +298,42 @@ def delete_book(request, book_id):
     )
 
     return redirect('manage_books')
+# =========================================================
+# Edit BOOK
+# =========================================================
+
+
+@login_required
+@user_passes_test(is_admin)
+def edit_book(request, book_id):
+
+    book = get_object_or_404(Book, id=book_id)
+
+    if request.method == 'POST':
+
+        form = BookForm(
+            request.POST,
+            request.FILES,
+            instance=book
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                'Book updated successfully!'
+            )
+
+            return redirect('manage_books')
+
+    else:
+
+        form = BookForm(instance=book)
+
+    return render(
+        request,
+        'edit_book.html',
+        {'form': form, 'book': book}
+    )
