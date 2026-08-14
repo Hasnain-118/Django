@@ -4,43 +4,183 @@
 
 {% block body %}
 
-<div class="position-relative d-flex align-items-center justify-content-center"
-     style="min-height: 100vh; overflow: hidden; background: linear-gradient(135deg, #111315, #191c1f, #22272b);">
+<style>
+    .signup-page {
+        min-height: 100vh;
+        padding: 50px 15px;
+        background: linear-gradient(135deg, #111315, #191c1f, #22272b);
+        position: relative;
+        overflow: hidden;
+    }
 
-    <!-- Background Glow -->
-    <div class="position-absolute top-0 start-0 w-100 h-100"
-         style="
-         background:
-         radial-gradient(circle at 20% 20%, rgba(139,92,246,0.18), transparent 35%),
-         radial-gradient(circle at 80% 80%, rgba(167,139,250,0.12), transparent 35%);
-         ">
-    </div>
+    .signup-page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.18), transparent 35%),
+            radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.12), transparent 35%);
+        pointer-events: none;
+    }
 
-    <!-- Signup Card -->
-    <div class="position-relative"
-         style="width: 90%; max-width: 600px;">
+    .signup-container {
+        position: relative;
+        width: 90%;
+        max-width: 650px;
+        margin: auto;
+    }
 
-        <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5"
-             style="
-             background: rgba(25, 28, 31, 0.88);
-             backdrop-filter: blur(16px);
-             -webkit-backdrop-filter: blur(16px);
-             border: 1px solid rgba(255, 255, 255, 0.1) !important;
-             box-shadow: 0 8px 32px rgba(0,0,0,0.45) !important;
-             ">
+    .signup-card {
+        background: rgba(25, 28, 31, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 18px;
+        padding: 40px 45px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    }
 
-            <!-- Heading -->
-            <h2 class="mb-2 fw-bold text-white text-center">
+    .signup-title {
+        color: #ffffff;
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .signup-subtitle {
+        color: #999fa5;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .signup-form p {
+        margin-bottom: 20px;
+    }
+
+    .signup-form label {
+        display: block;
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .signup-form input,
+    .signup-form select,
+    .signup-form textarea {
+        width: 100%;
+        padding: 11px 13px;
+        background: #22272b;
+        color: #ffffff;
+        border: 1px solid #3d444a;
+        border-radius: 8px;
+        outline: none;
+        transition: 0.2s ease;
+    }
+
+    .signup-form input:focus,
+    .signup-form select:focus,
+    .signup-form textarea:focus {
+        background: #22272b;
+        color: #ffffff;
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .signup-form .helptext,
+    .signup-form ul.helptext {
+        color: #999fa5;
+        font-size: 0.85rem;
+        margin-top: 7px;
+    }
+
+    .signup-form ul {
+        color: #999fa5;
+        font-size: 0.85rem;
+        padding-left: 20px;
+        margin-top: 7px;
+    }
+
+    .signup-form .errorlist {
+        color: #ff6b6b;
+        font-size: 0.85rem;
+        margin: 6px 0;
+        padding-left: 20px;
+    }
+
+    .signup-button {
+        width: 100%;
+        border: none;
+        border-radius: 10px;
+        padding: 13px;
+        margin-top: 5px;
+        background: #8b5cf6;
+        color: #ffffff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        transition: 0.2s ease;
+    }
+
+    .signup-button:hover {
+        background: #7c3aed;
+        transform: translateY(-1px);
+    }
+
+    .signin-text {
+        color: #999fa5;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 0;
+    }
+
+    .signin-link {
+        color: #a78bfa;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .signin-link:hover {
+        color: #c4b5fd;
+    }
+
+    @media (max-width: 576px) {
+        .signup-page {
+            padding: 30px 10px;
+        }
+
+        .signup-container {
+            width: 100%;
+        }
+
+        .signup-card {
+            padding: 30px 22px;
+        }
+
+        .signup-title {
+            font-size: 1.7rem;
+        }
+    }
+</style>
+
+
+<div class="signup-page">
+
+    <div class="signup-container">
+
+        <div class="signup-card">
+
+            <h2 class="signup-title">
                 Create Your Account
             </h2>
 
-            <p class="text-white-50 text-center mb-4">
+            <p class="signup-subtitle">
                 Join Hasnain's Digital Library
             </p>
 
-            <!-- Messages -->
+
             {% if messages %}
                 {% for message in messages %}
+
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
                          role="alert">
 
@@ -52,63 +192,30 @@
                         </button>
 
                     </div>
+
                 {% endfor %}
             {% endif %}
 
-            <!-- Form -->
-            <form method="POST">
+
+            <form method="POST" class="signup-form">
 
                 {% csrf_token %}
 
-                <!-- Django Form -->
-                {% for field in form %}
+                {{ form.as_p }}
 
-                    <div class="mb-3">
-
-                        <label class="form-label text-white fw-semibold">
-                            {{ field.label }}
-                        </label>
-
-                        {{ field }}
-
-                        {% if field.help_text %}
-                            <div class="form-text text-white-50">
-                                {{ field.help_text }}
-                            </div>
-                        {% endif %}
-
-                        {% for error in field.errors %}
-                            <div class="text-danger small mt-1">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
-
-                    </div>
-
-                {% endfor %}
-
-                <!-- Submit -->
-                <button type="submit"
-                        class="btn btn-primary btn-lg w-100 rounded-pill py-3 fw-bold mt-2"
-                        style="background-color: #8b5cf6; border-color: #8b5cf6;">
-
+                <button type="submit" class="signup-button">
                     Create Account
-
                 </button>
 
             </form>
 
-            <!-- Login Link -->
-            <p class="text-white-50 text-center mt-4 mb-0">
+
+            <p class="signin-text">
 
                 Already have an account?
 
-                <a href="{% url 'signin' %}"
-                   class="fw-bold text-decoration-none"
-                   style="color: #a78bfa;">
-
+                <a href="{% url 'signin' %}" class="signin-link">
                     Sign In
-
                 </a>
 
             </p>
@@ -117,7 +224,6 @@
 
     </div>
 
-    
 </div>
 
 {% endblock body %}
