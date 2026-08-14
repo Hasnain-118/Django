@@ -1,6 +1,403 @@
+{% extends 'base.html' %}
 
-{% extends "base.html" %}
+{% block title %}About - Hasnain's Digital Library{% endblock title %}
 
-{% block title %}About{% endblock title %}
+{% block body %}
 
-{% block body %}This is my About body{% endblock body %}
+<style>
+
+    body {
+        background-color: #111315 !important;
+        color: #ffffff;
+    }
+
+    .about-page {
+        min-height: 100vh;
+        padding: 70px 20px;
+    }
+
+    .about-container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .about-hero {
+        text-align: center;
+        padding: 50px 20px;
+        margin-bottom: 35px;
+        background: linear-gradient(
+            135deg,
+            #191c1f,
+            #22272b
+        );
+        border: 1px solid #30343a;
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .about-hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 15px;
+    }
+
+    .about-hero h1 span {
+        color: #8b5cf6;
+    }
+
+    .about-hero p {
+        max-width: 700px;
+        margin: auto;
+        color: #b8bec5;
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    .about-card {
+        height: 100%;
+        padding: 30px;
+        background-color: #191c1f;
+        border: 1px solid #30343a;
+        border-radius: 14px;
+        transition: 0.2s ease;
+    }
+
+    .about-card:hover {
+        border-color: #8b5cf6;
+        transform: translateY(-3px);
+    }
+
+    .about-card h3 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .about-card p {
+        color: #b8bec5;
+        line-height: 1.7;
+    }
+
+    .section-title {
+        color: #ffffff;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .feature-item {
+        padding: 18px;
+        background-color: #22272b;
+        border: 1px solid #3d444a;
+        border-radius: 10px;
+        height: 100%;
+    }
+
+    .feature-item h5 {
+        color: #ffffff;
+        margin-bottom: 8px;
+    }
+
+    .feature-item p {
+        color: #9da4ab;
+        margin-bottom: 0;
+    }
+
+    .tech-badge {
+        display: inline-block;
+        background-color: #22272b;
+        color: #d1d5d8;
+        border: 1px solid #3d444a;
+        border-radius: 8px;
+        padding: 10px 16px;
+        margin: 5px;
+    }
+
+    .tech-badge:hover {
+        border-color: #8b5cf6;
+        color: #ffffff;
+    }
+
+    .workflow {
+        text-align: center;
+        color: #d1d5d8;
+        font-size: 1.05rem;
+        padding: 25px;
+        background-color: #191c1f;
+        border: 1px solid #30343a;
+        border-radius: 12px;
+    }
+
+    .workflow span {
+        color: #8b5cf6;
+        font-weight: 600;
+    }
+
+    .closing-section {
+        text-align: center;
+        margin-top: 45px;
+        padding: 40px 20px;
+        border-top: 1px solid #30343a;
+    }
+
+    .closing-section h3 {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .closing-section p {
+        color: #9da4ab;
+        margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+
+        .about-page {
+            padding: 40px 15px;
+        }
+
+        .about-hero {
+            padding: 35px 20px;
+        }
+
+        .about-hero h1 {
+            font-size: 2.2rem;
+        }
+
+        .about-hero p {
+            font-size: 1rem;
+        }
+
+    }
+
+</style>
+
+
+<div class="about-page">
+
+    <div class="about-container">
+
+        <!-- Hero -->
+
+        <div class="about-hero">
+
+            <h1>
+                About <span>Hasnain's Digital Library</span>
+            </h1>
+
+            <p>
+                A simple digital space to discover, explore, organize,
+                and read books online.
+            </p>
+
+        </div>
+
+
+        <!-- About Library -->
+
+        <div class="row g-4 mb-5">
+
+            <div class="col-md-6">
+
+                <div class="about-card">
+
+                    <h3>What is this Library?</h3>
+
+                    <p>
+                        Hasnain's Digital Library is a web-based platform
+                        designed to organize books in one place. Users can
+                        browse the collection, explore different categories,
+                        view book information, and read available books online.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="about-card">
+
+                    <h3>Why I Built It</h3>
+
+                    <p>
+                        This project is part of my journey of learning web
+                        development with Django. It gives me a practical way
+                        to apply concepts such as models, views, templates,
+                        authentication, database management, file handling,
+                        and dynamic filtering.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Features -->
+
+        <h2 class="section-title">
+            What You Can Do
+        </h2>
+
+        <div class="row g-3 mb-5">
+
+            <div class="col-md-4">
+
+                <div class="feature-item">
+
+                    <h5>Browse Books</h5>
+
+                    <p>
+                        Explore the available collection of books.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-item">
+
+                    <h5>Categories</h5>
+
+                    <p>
+                        Find books based on different categories.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-item">
+
+                    <h5>Search</h5>
+
+                    <p>
+                        Quickly find books from the library.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-item">
+
+                    <h5>Book Details</h5>
+
+                    <p>
+                        View the author, rating, quote, and category.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-item">
+
+                    <h5>Read Books</h5>
+
+                    <p>
+                        Open available books and read them online.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-item">
+
+                    <h5>Admin Management</h5>
+
+                    <p>
+                        Authorized admins can add, edit, and delete books.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Technologies -->
+
+        <h2 class="section-title">
+            Built With
+        </h2>
+
+        <div class="text-center mb-5">
+
+            <span class="tech-badge">Python</span>
+
+            <span class="tech-badge">Django</span>
+
+            <span class="tech-badge">HTML</span>
+
+            <span class="tech-badge">CSS</span>
+
+            <span class="tech-badge">Bootstrap</span>
+
+            <span class="tech-badge">SQLite</span>
+
+        </div>
+
+
+        <!-- How It Works -->
+
+        <h2 class="section-title">
+            How It Works
+        </h2>
+
+        <div class="workflow">
+
+            <span>Browse</span>
+            →
+            <span>Choose Category</span>
+            →
+            <span>Select Book</span>
+            →
+            <span>View Details</span>
+            →
+            <span>Read</span>
+
+        </div>
+
+
+        <!-- Closing -->
+
+        <div class="closing-section">
+
+            <h3>
+                Built for a better digital reading experience.
+            </h3>
+
+            <p>
+                This project continues to grow as I learn and apply
+                new Django and web development concepts.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}
