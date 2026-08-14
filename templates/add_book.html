@@ -26,12 +26,12 @@
  
 </div> 
  
-{% endblock body %}
-
 
 <style>
 
-    /* Page */
+    /* =========================
+       PAGE
+    ========================= */
 
     body {
         background-color: #111315;
@@ -39,41 +39,53 @@
     }
 
 
-    /* Main container */
+    /* =========================
+       MAIN CONTAINER
+    ========================= */
 
     .container {
         max-width: 850px;
+        padding-bottom: 50px;
     }
 
 
-    /* Heading */
+    /* =========================
+       HEADING
+    ========================= */
 
     .container h2 {
         color: #ffffff;
-        font-weight: 600;
+        font-weight: 700;
         border-bottom: 1px solid #30343a;
         padding-bottom: 15px;
+        margin-bottom: 30px !important;
     }
 
 
-    /* Form */
+    /* =========================
+       FORM
+    ========================= */
 
     form p {
         margin-bottom: 20px;
     }
 
 
-    /* Labels */
+    /* =========================
+       LABELS
+    ========================= */
 
     form label {
         display: block;
         color: #d1d5d8;
-        font-weight: 500;
-        margin-bottom: 7px;
+        font-weight: 600;
+        margin-bottom: 8px;
     }
 
 
-    /* Text inputs */
+    /* =========================
+       INPUTS
+    ========================= */
 
     form input[type="text"],
     form input[type="number"],
@@ -87,12 +99,24 @@
         border: 1px solid #3d444a;
         color: #ffffff;
         border-radius: 8px;
-        padding: 10px 12px;
+        padding: 11px 13px;
         transition: 0.2s ease;
     }
 
 
-    /* Textarea */
+    /* =========================
+       PLACEHOLDER
+    ========================= */
+
+    form input::placeholder,
+    form textarea::placeholder {
+        color: #777f87;
+    }
+
+
+    /* =========================
+       TEXTAREA
+    ========================= */
 
     form textarea {
         min-height: 120px;
@@ -100,14 +124,28 @@
     }
 
 
-    /* File input */
+    /* =========================
+       FILE INPUT
+    ========================= */
 
     form input[type="file"] {
         padding: 8px;
+        cursor: pointer;
     }
 
 
-    /* Focus */
+    /* =========================
+       SELECT
+    ========================= */
+
+    form select {
+        cursor: pointer;
+    }
+
+
+    /* =========================
+       FOCUS
+    ========================= */
 
     form input:focus,
     form textarea:focus,
@@ -120,17 +158,21 @@
     }
 
 
-    /* Help text */
+    /* =========================
+       HELP TEXT
+    ========================= */
 
     form .helptext {
         display: block;
         color: #888f96;
         font-size: 0.85rem;
-        margin-top: 5px;
+        margin-top: 6px;
     }
 
 
-    /* Error messages */
+    /* =========================
+       ERROR MESSAGES
+    ========================= */
 
     form .errorlist {
         color: #ff6b6b;
@@ -139,14 +181,16 @@
     }
 
 
-    /* Add Book button */
+    /* =========================
+       ADD BOOK BUTTON
+    ========================= */
 
     form .btn-success {
         background-color: #8b5cf6 !important;
         border-color: #8b5cf6 !important;
         color: #ffffff;
-        border-radius: 8px;
-        padding: 9px 20px;
+        border-radius: 9px;
+        padding: 9px 22px;
         transition: 0.2s ease;
     }
 
@@ -154,18 +198,22 @@
     form .btn-success:hover {
         background-color: #7c3aed !important;
         border-color: #7c3aed !important;
+        transform: translateY(-1px);
     }
 
 
-    /* Cancel button */
+    /* =========================
+       CANCEL BUTTON
+    ========================= */
 
     form .btn-secondary {
         background-color: #22272b;
-        border-color: #3d444a;
+        border: 1px solid #3d444a;
         color: #d1d5d8;
-        border-radius: 8px;
-        padding: 9px 20px;
+        border-radius: 9px;
+        padding: 9px 22px;
         margin-left: 5px;
+        transition: 0.2s ease;
     }
 
 
@@ -176,12 +224,16 @@
     }
 
 
-    /* Mobile */
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 576px) {
 
         .container {
             margin-top: 30px !important;
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
         form .btn {
@@ -196,3 +248,6 @@
     }
 
 </style>
+
+
+{% endblock body %}
