@@ -5,14 +5,14 @@
 {% block body %}
 
 <div class="position-relative d-flex align-items-center justify-content-center"
-     style="min-height: 100vh; overflow: hidden; background: linear-gradient(135deg, #121212, #1e1e1e, #292929);">
+     style="min-height: 100vh; overflow: hidden; background: linear-gradient(135deg, #111315, #191c1f, #22272b);">
 
     <!-- Background Glow -->
     <div class="position-absolute top-0 start-0 w-100 h-100"
          style="
          background:
-         radial-gradient(circle at 20% 20%, rgba(13,110,253,0.25), transparent 35%),
-         radial-gradient(circle at 80% 80%, rgba(111,66,193,0.25), transparent 35%);
+         radial-gradient(circle at 20% 20%, rgba(139,92,246,0.18), transparent 35%),
+         radial-gradient(circle at 80% 80%, rgba(167,139,250,0.12), transparent 35%);
          ">
     </div>
 
@@ -22,11 +22,11 @@
 
         <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5"
              style="
-             background: rgba(255, 255, 255, 0.12);
+             background: rgba(25, 28, 31, 0.88);
              backdrop-filter: blur(16px);
              -webkit-backdrop-filter: blur(16px);
-             border: 1px solid rgba(255, 255, 255, 0.2) !important;
-             box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+             border: 1px solid rgba(255, 255, 255, 0.1) !important;
+             box-shadow: 0 8px 32px rgba(0,0,0,0.45) !important;
              ">
 
             <!-- Heading -->
@@ -89,7 +89,8 @@
 
                 <!-- Submit -->
                 <button type="submit"
-                        class="btn btn-primary btn-lg w-100 rounded-pill py-3 fw-bold mt-2">
+                        class="btn btn-primary btn-lg w-100 rounded-pill py-3 fw-bold mt-2"
+                        style="background-color: #8b5cf6; border-color: #8b5cf6;">
 
                     Create Account
 
@@ -103,7 +104,8 @@
                 Already have an account?
 
                 <a href="{% url 'signin' %}"
-                   class="text-info fw-bold text-decoration-none">
+                   class="fw-bold text-decoration-none"
+                   style="color: #a78bfa;">
 
                     Sign In
 
