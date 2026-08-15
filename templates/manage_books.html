@@ -6,127 +6,300 @@
 
 <style>
 
+    /* =========================
+       PAGE BACKGROUND
+    ========================= */
+
     body {
-        background-color: #111315 !important;
         color: #ffffff;
+
+        background-image:
+            linear-gradient(
+                rgba(17, 19, 21, 0.55),
+                rgba(17, 19, 21, 0.65)
+            ),
+            url('/static/bg.jpg');
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }
+
+    /* =========================
+       MAIN CONTAINER
+    ========================= */
 
     .manage-books-container {
-        max-width: 1100px;
-        padding-bottom: 50px;
+        max-width: 1150px;
+        margin-top: 50px !important;
+        padding-bottom: 60px;
     }
 
-    .manage-books-container h2 {
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .manage-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #30343a;
+    }
+
+    .manage-header h2 {
+        margin: 0;
         color: #ffffff;
         font-weight: 700;
-        border-bottom: 1px solid #30343a;
-        padding-bottom: 15px;
+        letter-spacing: -0.3px;
     }
 
-    .manage-books-table {
-        background-color: #191c1f !important;
-        border-color: #3d444a !important;
-        vertical-align: middle;
-    }
-
-    .manage-books-table thead th {
-        background-color: #22272b !important;
-        color: #ffffff !important;
-        border-color: #3d444a !important;
-        font-weight: 600;
-        padding: 14px;
-    }
-
-    .manage-books-table tbody td {
-        background-color: #191c1f !important;
-        color: #d1d5d8 !important;
-        border-color: #30343a !important;
-        padding: 12px;
-    }
-
-    .manage-books-table tbody tr:hover td {
-        background-color: #22272b !important;
-    }
-
-    .book-cover {
-        width: 60px;
-        height: 80px;
-        object-fit: cover;
-        border-radius: 6px;
-        border: 1px solid #3d444a;
-    }
-
-    .no-cover {
+    .manage-header p {
+        margin: 6px 0 0;
         color: #888f96;
         font-size: 0.9rem;
     }
 
+
+    /* =========================
+       TABLE CARD
+    ========================= */
+
+    .books-table-card {
+        background: #191c1f;
+        border: 1px solid #30343a;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .manage-books-table {
+        margin: 0;
+        border: 0 !important;
+        vertical-align: middle;
+    }
+
+    .manage-books-table thead th {
+        background: #22272b !important;
+        color: #a78bfa !important;
+        border: 0 !important;
+        border-bottom: 1px solid #3d444a !important;
+        padding: 16px 18px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .manage-books-table tbody td {
+        background: #191c1f !important;
+        color: #d1d5d8 !important;
+        border-color: #30343a !important;
+        padding: 14px 18px;
+    }
+
+    .manage-books-table tbody tr {
+        transition: 0.2s ease;
+    }
+
+    .manage-books-table tbody tr:hover td {
+        background: #202428 !important;
+    }
+
+
+    /* =========================
+       COVER
+    ========================= */
+
+    .book-cover {
+        width: 55px;
+        height: 75px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #3d444a;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .no-cover-box {
+        width: 55px;
+        height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: #22272b;
+        border: 1px solid #3d444a;
+        border-radius: 6px;
+        color: #777f87;
+        font-size: 0.7rem;
+    }
+
+
+    /* =========================
+       BOOK TITLE
+    ========================= */
+
+    .book-title {
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .book-author {
+        color: #888f96;
+        font-size: 0.85rem;
+        margin-top: 3px;
+    }
+
+
+    /* =========================
+       CATEGORY
+    ========================= */
+
+    .category-badge {
+        display: inline-block;
+        background: rgba(139, 92, 246, 0.12);
+        border: 1px solid rgba(139, 92, 246, 0.35);
+        color: #a78bfa;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+
+    /* =========================
+       ACTION BUTTONS
+    ========================= */
+
+    .action-buttons {
+        display: flex;
+        gap: 7px;
+    }
+
     .edit-btn {
-        background-color: #8b5cf6 !important;
-        border-color: #8b5cf6 !important;
+        background: #8b5cf6 !important;
+        border: 1px solid #8b5cf6 !important;
         color: #ffffff !important;
         border-radius: 7px;
         padding: 6px 14px;
+        font-size: 0.85rem;
+        transition: 0.2s ease;
     }
 
     .edit-btn:hover {
-        background-color: #7c3aed !important;
+        background: #7c3aed !important;
         border-color: #7c3aed !important;
+        transform: translateY(-1px);
     }
 
     .delete-btn {
-        background-color: #22272b !important;
-        border: 1px solid #ff6b6b !important;
-        color: #ff6b6b !important;
+        background: transparent !important;
+        border: 1px solid #444b52 !important;
+        color: #ff7777 !important;
         border-radius: 7px;
         padding: 6px 14px;
+        font-size: 0.85rem;
+        transition: 0.2s ease;
     }
 
     .delete-btn:hover {
-        background-color: #ff6b6b !important;
-        color: #ffffff !important;
+        background: #3a2222 !important;
+        border-color: #ff6b6b !important;
+        color: #ff8b8b !important;
+    }
+
+
+    /* =========================
+       BOTTOM BUTTONS
+    ========================= */
+
+    .bottom-actions {
+        margin-top: 22px;
+        display: flex;
+        gap: 10px;
     }
 
     .add-book-btn {
-        background-color: #8b5cf6 !important;
-        border-color: #8b5cf6 !important;
+        background: #8b5cf6 !important;
+        border: 1px solid #8b5cf6 !important;
         color: #ffffff !important;
         border-radius: 8px;
         padding: 9px 18px;
+        transition: 0.2s ease;
     }
 
     .add-book-btn:hover {
-        background-color: #7c3aed !important;
+        background: #7c3aed !important;
         border-color: #7c3aed !important;
+        transform: translateY(-1px);
     }
 
     .back-btn {
-        background-color: #22272b !important;
+        background: #22272b !important;
         border: 1px solid #3d444a !important;
         color: #d1d5d8 !important;
         border-radius: 8px;
         padding: 9px 18px;
+        transition: 0.2s ease;
     }
 
     .back-btn:hover {
-        background-color: #30343a !important;
+        background: #30343a !important;
         color: #ffffff !important;
+        border-color: #555b62 !important;
     }
 
+
+    /* =========================
+       NO BOOKS
+    ========================= */
+
     .no-books-alert {
-        background-color: #22272b !important;
+        background: #191c1f !important;
         border: 1px solid #3d444a !important;
-        color: #d1d5d8 !important;
+        color: #aeb4ba !important;
+        border-radius: 10px;
+        padding: 18px;
     }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 768px) {
 
         .manage-books-container {
             margin-top: 30px !important;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .manage-header {
+            display: block;
+        }
+
+        .manage-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .manage-header p {
+            font-size: 0.85rem;
+        }
+
+        .books-table-card {
+            border-radius: 8px;
         }
 
         .manage-books-table {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .manage-books-table th,
@@ -134,17 +307,23 @@
             white-space: nowrap;
         }
 
+        .action-buttons {
+            flex-direction: column;
+            gap: 5px;
+        }
+
         .edit-btn,
         .delete-btn {
-            display: block;
             width: 100%;
-            margin-bottom: 5px;
+        }
+
+        .bottom-actions {
+            flex-direction: column;
         }
 
         .add-book-btn,
         .back-btn {
             width: 100%;
-            margin-top: 5px;
         }
 
     }
@@ -152,25 +331,47 @@
 </style>
 
 
-<div class="container mt-5 manage-books-container">
+<div class="container manage-books-container">
 
-    <h2 class="mb-4">Manage Books</h2>
+    <!-- Header -->
+
+    <div class="manage-header">
+
+        <div>
+            <h2>Manage Books</h2>
+
+            <p>
+                Add, edit and manage books in your digital library.
+            </p>
+        </div>
+
+    </div>
+
 
     {% if books %}
 
-        <div class="table-responsive">
+        <div class="table-responsive books-table-card">
 
-            <table class="table table-dark table-striped table-bordered manage-books-table">
+            <table class="table manage-books-table">
 
                 <thead>
+
                     <tr>
+
                         <th>Cover</th>
-                        <th>Title</th>
+
+                        <th>Book</th>
+
                         <th>Author</th>
+
                         <th>Category</th>
-                        <th>Action</th>
+
+                        <th>Actions</th>
+
                     </tr>
+
                 </thead>
+
 
                 <tbody>
 
@@ -178,34 +379,85 @@
 
                     <tr>
 
+                        <!-- Cover -->
+
                         <td>
+
                             {% if book.cover_image %}
-                                <img src="{{ book.cover_image.url }}"
-                                     class="book-cover"
-                                     alt="{{ book.title }}">
+
+                                <img
+                                    src="{{ book.cover_image.url }}"
+                                    class="book-cover"
+                                    alt="{{ book.title }}"
+                                >
+
                             {% else %}
-                                <span class="no-cover">No Cover</span>
+
+                                <div class="no-cover-box">
+                                    No Cover
+                                </div>
+
                             {% endif %}
+
                         </td>
 
-                        <td>{{ book.title }}</td>
 
-                        <td>{{ book.author }}</td>
-
-                        <td>{{ book.get_category_display }}</td>
+                        <!-- Title -->
 
                         <td>
 
-                            <a href="{% url 'edit_book' book.id %}"
-                               class="btn btn-primary btn-sm edit-btn">
-                                Edit
-                            </a>
+                            <div class="book-title">
+                                {{ book.title }}
+                            </div>
 
-                            <a href="{% url 'delete_book' book.id %}"
-                               class="btn btn-danger btn-sm delete-btn"
-                               onclick="return confirm('Are you sure you want to delete this book?');">
-                                Delete
-                            </a>
+                        </td>
+
+
+                        <!-- Author -->
+
+                        <td>
+
+                            <div class="book-author">
+                                {{ book.author }}
+                            </div>
+
+                        </td>
+
+
+                        <!-- Category -->
+
+                        <td>
+
+                            <span class="category-badge">
+                                {{ book.get_category_display }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Actions -->
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <a
+                                    href="{% url 'edit_book' book.id %}"
+                                    class="btn btn-sm edit-btn"
+                                >
+                                    Edit
+                                </a>
+
+
+                                <a
+                                    href="{% url 'delete_book' book.id %}"
+                                    class="btn btn-sm delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this book?');"
+                                >
+                                    Delete
+                                </a>
+
+                            </div>
 
                         </td>
 
@@ -219,22 +471,38 @@
 
         </div>
 
+
     {% else %}
 
-        <div class="alert alert-info no-books-alert">
+        <div class="alert no-books-alert">
             No books available.
         </div>
 
     {% endif %}
 
-    <a href="{% url 'add_book' %}" class="btn btn-success add-book-btn">
-        Add New Book
-    </a>
 
-    <a href="{% url 'home' %}" class="btn btn-secondary back-btn">
-        Back to Home
-    </a>
+    <!-- Bottom Actions -->
+
+    <div class="bottom-actions">
+
+        <a
+            href="{% url 'add_book' %}"
+            class="btn add-book-btn"
+        >
+            + Add New Book
+        </a>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="btn back-btn"
+        >
+            Back to Home
+        </a>
+
+    </div>
 
 </div>
+
 
 {% endblock body %}
