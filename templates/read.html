@@ -6,49 +6,60 @@
 
 <style>
 
+    /* =====================================================
+       PAGE
+    ===================================================== */
+
     body {
-        background: #111315;
+        background-color: #111315 !important;
         color: #ffffff;
     }
 
-    /* =========================
-       MAIN PAGE
-    ========================= */
-
     .book-page {
         min-height: 100vh;
-        padding: 70px 20px;
+        padding: 70px 20px 80px;
+
         background:
-            radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.12), transparent 35%),
-            radial-gradient(circle at 85% 80%, rgba(167, 139, 250, 0.08), transparent 35%),
-            #111315;
+            linear-gradient(
+                rgba(17, 19, 21, 0.88),
+                rgba(17, 19, 21, 0.94)
+            ),
+            url('/static/bg.jpg');
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     }
 
 
-    /* =========================
-       BOOK CARD
-    ========================= */
+    /* =====================================================
+       MAIN BOOK CARD
+    ===================================================== */
 
     .book-detail-card {
-        max-width: 1000px;
+        max-width: 1050px;
         margin: auto;
 
-        background: rgba(25, 28, 31, 0.92);
+        background: rgba(25, 28, 31, 0.82);
 
-        border: 1px solid rgba(139, 92, 246, 0.45);
-        border-radius: 22px;
+        border: 1px solid rgba(139, 92, 246, 0.35);
+        border-radius: 20px;
 
         padding: 45px;
 
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+
         box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.45),
-            0 0 35px rgba(139, 92, 246, 0.08);
+            0 25px 70px rgba(0, 0, 0, 0.5),
+            0 0 35px rgba(139, 92, 246, 0.07);
     }
 
 
-    /* =========================
+    /* =====================================================
        COVER
-    ========================= */
+    ===================================================== */
 
     .book-cover-wrapper {
         display: flex;
@@ -57,28 +68,39 @@
     }
 
     .book-cover {
-        width: 260px;
-        height: 370px;
+        width: 270px;
+        height: 390px;
 
         object-fit: cover;
 
         border-radius: 10px;
 
-        border: 2px solid rgba(139, 92, 246, 0.7);
+        border: 2px solid rgba(139, 92, 246, 0.65);
 
         box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.6),
-            0 0 25px rgba(139, 92, 246, 0.15);
+            0 20px 50px rgba(0, 0, 0, 0.65),
+            0 0 30px rgba(139, 92, 246, 0.15);
+
+        transition: transform 0.3s ease,
+                    box-shadow 0.3s ease;
+    }
+
+    .book-cover:hover {
+        transform: translateY(-5px);
+
+        box-shadow:
+            0 25px 55px rgba(0, 0, 0, 0.7),
+            0 0 35px rgba(139, 92, 246, 0.25);
     }
 
 
-    /* =========================
+    /* =====================================================
        NO COVER
-    ========================= */
+    ===================================================== */
 
     .no-cover {
-        width: 260px;
-        height: 370px;
+        width: 270px;
+        height: 390px;
 
         display: flex;
         flex-direction: column;
@@ -89,7 +111,7 @@
 
         background: #22272b;
 
-        border: 2px solid rgba(139, 92, 246, 0.5);
+        border: 2px solid rgba(139, 92, 246, 0.45);
 
         color: #888f96;
     }
@@ -100,42 +122,51 @@
     }
 
 
-    /* =========================
+    /* =====================================================
        BOOK INFORMATION
-    ========================= */
+    ===================================================== */
 
     .book-info {
-        padding: 10px 15px;
+        padding: 5px 15px;
     }
 
     .book-title {
         font-size: 2.7rem;
         font-weight: 700;
+
         color: #ffffff;
-        margin-bottom: 8px;
+
+        line-height: 1.15;
+
+        margin-bottom: 10px;
     }
 
     .book-author {
         color: #aeb4ba;
-        font-size: 1.1rem;
-        margin-bottom: 20px;
+        font-size: 1.05rem;
+
+        margin-bottom: 22px;
+    }
+
+    .book-author strong {
+        color: #c4b5fd;
     }
 
 
-    /* =========================
+    /* =====================================================
        BADGES
-    ========================= */
+    ===================================================== */
 
     .book-badge {
         display: inline-block;
 
-        padding: 7px 13px;
+        padding: 7px 14px;
 
         margin-right: 7px;
 
         border-radius: 20px;
 
-        background: #22272b;
+        background: rgba(34, 39, 43, 0.9);
 
         border: 1px solid #3d444a;
 
@@ -144,36 +175,45 @@
         font-size: 0.9rem;
     }
 
+    .category-badge {
+        border-color: rgba(139, 92, 246, 0.35);
+        color: #c4b5fd;
+    }
+
     .rating-badge {
         color: #facc15;
-        border-color: rgba(250, 204, 21, 0.35);
+        border-color: rgba(250, 204, 21, 0.3);
     }
 
 
-    /* =========================
-       QUOTE / DESCRIPTION
-    ========================= */
+    /* =====================================================
+       DESCRIPTION
+    ===================================================== */
 
     .book-description {
         margin-top: 28px;
 
-        padding: 20px;
+        padding: 20px 22px;
 
         background: rgba(255, 255, 255, 0.035);
 
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
         border-left: 3px solid #8b5cf6;
 
-        border-radius: 8px;
+        border-radius: 9px;
 
         color: #c9ced3;
 
-        line-height: 1.7;
+        line-height: 1.75;
+
+        font-size: 0.98rem;
     }
 
 
-    /* =========================
+    /* =====================================================
        READ BUTTON
-    ========================= */
+    ===================================================== */
 
     .read-btn {
         display: inline-block;
@@ -182,13 +222,13 @@
 
         padding: 12px 30px;
 
-        border-radius: 10px;
+        border-radius: 9px;
 
         background: #8b5cf6;
 
         border: 1px solid #8b5cf6;
 
-        color: #ffffff;
+        color: #ffffff !important;
 
         font-size: 1rem;
 
@@ -196,60 +236,67 @@
 
         text-decoration: none;
 
-        transition: 0.2s ease;
+        transition: all 0.2s ease;
     }
 
     .read-btn:hover {
         background: #7c3aed;
-        border-color: #7c3aed;
 
-        color: #ffffff;
+        border-color: #7c3aed;
 
         transform: translateY(-2px);
 
-        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.25);
+        box-shadow:
+            0 8px 25px rgba(139, 92, 246, 0.3);
     }
 
 
-    /* =========================
-       BELOW CARD
-    ========================= */
+    /* =====================================================
+       EXTRA INFORMATION
+    ===================================================== */
 
     .book-extra {
-        max-width: 1000px;
+        max-width: 1050px;
 
-        margin: 35px auto 0;
+        margin: 25px auto 0;
 
         display: grid;
 
         grid-template-columns: repeat(3, 1fr);
 
-        gap: 18px;
+        gap: 16px;
     }
 
     .extra-box {
-        background: #191c1f;
+
+        background: rgba(25, 28, 31, 0.82);
 
         border: 1px solid #30343a;
 
-        border-radius: 14px;
+        border-radius: 13px;
 
         padding: 22px;
 
         text-align: center;
 
-        transition: 0.2s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        transition: all 0.2s ease;
     }
 
     .extra-box:hover {
+
         border-color: rgba(139, 92, 246, 0.5);
 
         transform: translateY(-3px);
+
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.25);
     }
 
     .extra-icon {
-        font-size: 28px;
-
+        font-size: 26px;
         margin-bottom: 8px;
     }
 
@@ -268,11 +315,12 @@
     }
 
 
-    /* =========================
+    /* =====================================================
        BACK BUTTON
-    ========================= */
+    ===================================================== */
 
     .back-btn {
+
         display: block;
 
         width: fit-content;
@@ -285,34 +333,38 @@
 
         border: 1px solid #3d444a;
 
+        background: rgba(25, 28, 31, 0.75);
+
         color: #b8bec5;
 
         text-decoration: none;
 
-        transition: 0.2s ease;
+        transition: all 0.2s ease;
     }
 
     .back-btn:hover {
+
         border-color: #8b5cf6;
 
-        color: #a78bfa;
+        color: #c4b5fd;
 
         background: #191c1f;
     }
 
 
-    /* =========================
+    /* =====================================================
        MOBILE
-    ========================= */
+    ===================================================== */
 
     @media (max-width: 768px) {
 
         .book-page {
-            padding: 35px 15px;
+            padding: 35px 15px 60px;
         }
 
         .book-detail-card {
             padding: 25px 18px;
+            border-radius: 14px;
         }
 
         .book-title {
@@ -325,13 +377,13 @@
         }
 
         .book-cover {
-            width: 210px;
-            height: 300px;
+            width: 220px;
+            height: 315px;
         }
 
         .no-cover {
-            width: 210px;
-            height: 300px;
+            width: 220px;
+            height: 315px;
         }
 
         .book-extra {
@@ -344,20 +396,48 @@
         }
     }
 
+
+    /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+    @media (max-width: 480px) {
+
+        .book-title {
+            font-size: 1.7rem;
+        }
+
+        .book-cover {
+            width: 190px;
+            height: 275px;
+        }
+
+        .no-cover {
+            width: 190px;
+            height: 275px;
+        }
+
+        .book-badge {
+            margin-bottom: 6px;
+        }
+    }
+
 </style>
 
 
 <div class="book-page">
 
-    <!-- =========================
+
+    <!-- =================================================
          MAIN BOOK CARD
-    ========================= -->
+    ================================================= -->
 
     <div class="book-detail-card">
 
         <div class="row align-items-center g-4">
 
-            <!-- COVER -->
+
+            <!-- ================= COVER ================= -->
 
             <div class="col-md-5">
 
@@ -392,34 +472,52 @@
             </div>
 
 
-            <!-- BOOK INFORMATION -->
+            <!-- ================= INFORMATION ================= -->
 
             <div class="col-md-7">
 
                 <div class="book-info">
 
+
                     <h1 class="book-title">
                         {{ book.title }}
                     </h1>
 
+
+                    {% if book.author %}
+
                     <p class="book-author">
-                        By <strong>{{ book.author }}</strong>
+
+                        By
+                        <strong>
+                            {{ book.author }}
+                        </strong>
+
                     </p>
+
+                    {% endif %}
 
 
                     <!-- BADGES -->
 
                     <div>
 
-                        <span class="book-badge">
+                        <span class="book-badge category-badge">
+
+                            📚
                             {{ book.get_category_display }}
+
                         </span>
+
 
                         {% if book.rating %}
 
-                            <span class="book-badge rating-badge">
-                                ⭐ {{ book.rating }}/5
-                            </span>
+                        <span class="book-badge rating-badge">
+
+                            ⭐
+                            {{ book.rating }}/5
+
+                        </span>
 
                         {% endif %}
 
@@ -428,22 +526,22 @@
 
                     <!-- DESCRIPTION -->
 
-                    {% if book.quote %}
+                    <div class="book-description">
 
-                        <div class="book-description">
+                        {% if book.quote %}
+
                             {{ book.quote }}
-                        </div>
 
-                    {% else %}
+                        {% else %}
 
-                        <div class="book-description">
                             No description is available for this book.
-                        </div>
 
-                    {% endif %}
+                        {% endif %}
+
+                    </div>
 
 
-                    <!-- READ BUTTON -->
+                    <!-- READ -->
 
                     {% if book.pdf_file %}
 
@@ -452,7 +550,9 @@
                             target="_blank"
                             class="read-btn"
                         >
+
                             📖 Read Book
+
                         </a>
 
                     {% elif book.external_link %}
@@ -462,7 +562,9 @@
                             target="_blank"
                             class="read-btn"
                         >
+
                             📖 Read Book
+
                         </a>
 
                     {% else %}
@@ -472,7 +574,9 @@
                             disabled
                             style="opacity: 0.5; cursor: not-allowed;"
                         >
+
                             📖 Book Not Available
+
                         </button>
 
                     {% endif %}
@@ -486,11 +590,12 @@
     </div>
 
 
-    <!-- =========================
-         EXTRA INFORMATION
-    ========================= -->
+    <!-- =================================================
+         BOOK INFORMATION BOXES
+    ================================================= -->
 
     <div class="book-extra">
+
 
         <div class="extra-box">
 
@@ -522,9 +627,13 @@
             <div class="extra-text">
 
                 {% if book.rating %}
+
                     {{ book.rating }} / 5
+
                 {% else %}
+
                     Not Rated
+
                 {% endif %}
 
             </div>
@@ -543,7 +652,9 @@
             </div>
 
             <div class="extra-text">
+
                 {{ book.author }}
+
             </div>
 
         </div>
@@ -551,14 +662,19 @@
     </div>
 
 
-    <!-- BACK -->
+    <!-- =================================================
+         BACK
+    ================================================= -->
 
     <a
         href="{% url 'home' %}"
         class="back-btn"
     >
+
         ← Back to Library
+
     </a>
+
 
 </div>
 

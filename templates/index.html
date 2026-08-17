@@ -189,7 +189,7 @@
 
     <!-- ==================== PRODUCTS ==================== -->
 
-    <div class="album py-5" style="background-color: #121212;">
+    <div class="album py-5 home-background">
 
 
         <div class="text-center py-3">
@@ -386,77 +386,80 @@
 
 <style>
 
+    /* =========================
+       GLOBAL PAGE BACKGROUND
+    ========================= */
+
+    body {
+        background-color: #111315 !important;
+        color: #ffffff;
+
+        background-image:
+            linear-gradient(
+                rgba(17, 19, 21, 0.72),
+                rgba(17, 19, 21, 0.82)
+            ),
+            url('/static/bg.jpg');
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 
 
-    
     /* =========================
        CAROUSEL
     ========================= */
 
+    #bookCarousel {
+        background: transparent !important;
+    }
+
+    #bookCarousel .carousel-inner {
+        background: transparent !important;
+    }
+
     #bookCarousel .carousel-item {
-
         position: relative;
-
-        height: 650px;
-
+        height: 700px;
         overflow: hidden;
 
-        background: #111315;
-
+        /* No separate slide background */
+        background: transparent !important;
     }
 
 
     /* =========================
-       BLURRED BACKGROUND
+       HIDE BOOK COVER BACKGROUND
     ========================= */
 
     #bookCarousel .slide-background {
-
-        position: absolute;
-
-        top: -30px;
-
-        left: -30px;
-
-        width: calc(100% + 60px);
-
-        height: calc(100% + 60px);
-
-        background-position: center;
-
-        background-size: cover;
-
-        background-repeat: no-repeat;
-
-        filter: blur(25px);
-
-        transform: scale(1.08);
-
-        opacity: 0.55;
-
+        display: none !important;
     }
 
 
     /* =========================
-       DARK OVERLAY
+       VERY SUBTLE OVERLAY
+       Keeps text readable without
+       making the slide look separate
     ========================= */
 
     #bookCarousel .slide-overlay {
-
         position: absolute;
-
         inset: 0;
 
         background:
             linear-gradient(
                 90deg,
-                rgba(17, 19, 21, 0.92),
-                rgba(17, 19, 21, 0.55),
-                rgba(17, 19, 21, 0.35)
+                rgba(17, 19, 21, 0.25),
+                rgba(17, 19, 21, 0.08),
+                rgba(17, 19, 21, 0.20)
             );
 
         z-index: 1;
 
+        pointer-events: none;
     }
 
 
@@ -465,11 +468,9 @@
     ========================= */
 
     #bookCarousel .book-cover-wrapper {
-
         position: absolute;
 
         top: 50%;
-
         right: 8%;
 
         transform: translateY(-50%);
@@ -477,158 +478,214 @@
         height: 580px;
 
         display: flex;
-
         align-items: center;
-
         justify-content: center;
 
         z-index: 2;
 
-        box-shadow:
-            0 20px 50px rgba(0, 0, 0, 0.65);
-
+        filter: drop-shadow(
+            0 25px 35px rgba(0, 0, 0, 0.65)
+        );
     }
 
 
-    #bookCarousel .book-cover {
-
-        height: 580px;
-
+    #bookCarousel .book-cover-wrapper img {
+        height: 600px;
         width: auto;
 
         max-width: 450px;
 
         object-fit: contain;
 
-        display: block;
-
         border-radius: 6px;
 
-        border: 1px solid rgba(255, 255, 255, 0.12);
-
+        border: 1px solid rgba(139, 92, 246, 0.20);
     }
 
 
     /* =========================
-       CAPTION
+       PREMIUM CAPTION
     ========================= */
 
     #bookCarousel .carousel-caption {
-
         position: absolute;
 
         left: 6%;
-
         right: auto;
-
-        bottom: 8%;
+        bottom: 9%;
 
         text-align: left;
 
         z-index: 5;
-
     }
 
 
     #bookCarousel .caption-box {
-
-        padding: 20px 25px;
+        padding: 24px 28px;
 
         max-width: 600px;
 
-        border-radius: 16px;
+        border-radius: 18px;
 
-        background: rgba(25, 28, 31, 0.82);
+        background: rgba(17, 19, 21, 0.62);
 
-        backdrop-filter: blur(14px);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
 
-        -webkit-backdrop-filter: blur(14px);
-
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.22);
 
         box-shadow:
-            0 10px 35px rgba(0, 0, 0, 0.35);
+            0 15px 40px rgba(0, 0, 0, 0.35);
 
+        transition: 0.3s ease;
     }
 
 
-    /* Caption heading */
+    #bookCarousel .caption-box:hover {
+        border-color: rgba(139, 92, 246, 0.45);
 
-    #bookCarousel .caption-box h1 {
-
-        color: #ffffff;
-
-    }
-
-
-    /* Author / secondary heading */
-
-    #bookCarousel .caption-box h4 {
-
-        color: #a78bfa;
-
-    }
-
-
-    /* Description */
-
-    #bookCarousel .caption-box p {
-
-        color: #c4c7ca;
-
+        box-shadow:
+            0 18px 45px rgba(0, 0, 0, 0.45);
     }
 
 
     /* =========================
-       RATING / ACCENT
+       CAPTION TEXT
+    ========================= */
+
+    #bookCarousel .caption-box h1 {
+        color: #ffffff;
+
+        letter-spacing: 0.3px;
+
+        text-shadow:
+            0 3px 15px rgba(0, 0, 0, 0.5);
+    }
+
+
+    #bookCarousel .caption-box h4 {
+        color: #a78bfa;
+
+        font-weight: 500;
+    }
+
+
+    #bookCarousel .caption-box p {
+        color: #d1d5d8;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       RATING
     ========================= */
 
     #bookCarousel .caption-box .rating {
-
         color: #a78bfa;
-
     }
 
 
     /* =========================
-       CONTROLS
+       READ BUTTONS
+    ========================= */
+
+    #bookCarousel .btn-light {
+        background: #ffffff;
+
+        color: #111315;
+
+        border: none;
+
+        border-radius: 9px;
+
+        padding: 10px 22px;
+
+        font-weight: 600;
+
+        transition: 0.25s ease;
+    }
+
+
+    #bookCarousel .btn-light:hover {
+        background: #a78bfa;
+
+        color: #ffffff;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 20px rgba(139, 92, 246, 0.3);
+    }
+
+
+    #bookCarousel .btn-warning {
+        background: #8b5cf6 !important;
+
+        border-color: #8b5cf6 !important;
+
+        color: #ffffff !important;
+
+        border-radius: 9px;
+
+        padding: 10px 22px;
+
+        font-weight: 600;
+
+        transition: 0.25s ease;
+    }
+
+
+    #bookCarousel .btn-warning:hover {
+        background: #7c3aed !important;
+
+        border-color: #7c3aed !important;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 20px rgba(139, 92, 246, 0.35);
+    }
+
+
+    /* =========================
+       CAROUSEL CONTROLS
     ========================= */
 
     #bookCarousel .carousel-control-prev,
     #bookCarousel .carousel-control-next {
-
         width: 8%;
 
         z-index: 10;
-
     }
 
 
     #bookCarousel .carousel-control-prev-icon,
     #bookCarousel .carousel-control-next-icon {
-
-        width: 42px;
-
-        height: 42px;
+        width: 44px;
+        height: 44px;
 
         padding: 10px;
 
         border-radius: 50%;
 
-        background-color: rgba(25, 28, 31, 0.75);
+        background-color: rgba(17, 19, 21, 0.60);
 
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(139, 92, 246, 0.25);
 
-        background-size: 45%;
+        background-size: 42%;
 
+        transition: 0.25s ease;
     }
 
 
     #bookCarousel .carousel-control-prev-icon:hover,
     #bookCarousel .carousel-control-next-icon:hover {
-
         background-color: #8b5cf6;
 
+        border-color: #8b5cf6;
+
+        transform: scale(1.08);
     }
 
 
@@ -637,31 +694,95 @@
     ========================= */
 
     #bookCarousel .carousel-indicators {
-
         z-index: 10;
-
     }
 
 
     #bookCarousel .carousel-indicators button {
-
         width: 28px;
-
         height: 4px;
+
+        margin: 0 4px;
+
+        border: none;
 
         border-radius: 10px;
 
-        border: 0;
+        background-color: rgba(255, 255, 255, 0.30);
 
-        background-color: rgba(255, 255, 255, 0.35);
-
+        transition: 0.25s ease;
     }
 
 
     #bookCarousel .carousel-indicators button.active {
+        width: 40px;
 
         background-color: #8b5cf6;
 
+        box-shadow:
+            0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+
+    /* =========================
+       BOOK SECTION
+    ========================= */
+
+    .home-background {
+        background: transparent !important;
+    }
+
+
+    /* =========================
+       BOOK CARDS
+    ========================= */
+
+    .home-background .card {
+        background: rgba(25, 28, 31, 0.78) !important;
+
+        border: 1px solid rgba(139, 92, 246, 0.20) !important;
+
+        border-radius: 14px;
+
+        overflow: hidden;
+
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.25);
+
+        transition: 0.3s ease;
+    }
+
+
+    .home-background .card:hover {
+        transform: translateY(-6px);
+
+        border-color: rgba(139, 92, 246, 0.55) !important;
+
+        box-shadow:
+            0 18px 40px rgba(0, 0, 0, 0.40);
+    }
+
+
+    /* =========================
+       READ BUTTON
+    ========================= */
+
+    .btn-outline-light {
+        border-radius: 8px;
+
+        transition: 0.25s ease;
+    }
+
+
+    .btn-outline-light:hover {
+        background-color: #8b5cf6;
+
+        border-color: #8b5cf6;
+
+        color: #ffffff;
     }
 
 
@@ -671,74 +792,56 @@
 
     @media (max-width: 768px) {
 
-
         #bookCarousel .carousel-item {
-
             height: 600px;
-
         }
 
 
         #bookCarousel .book-cover-wrapper {
-
             height: 430px;
 
             top: 42%;
 
             right: 5%;
-
         }
 
 
-        #bookCarousel .book-cover {
-
+        #bookCarousel .book-cover-wrapper img {
             height: 430px;
 
             max-width: 300px;
-
         }
 
 
         #bookCarousel .carousel-caption {
-
             left: 5%;
 
             right: 5%;
 
             bottom: 4%;
-
         }
 
 
         #bookCarousel .caption-box {
+            padding: 14px 16px;
 
-            padding: 12px 15px;
-
-            background: rgba(25, 28, 31, 0.88);
-
+            background: rgba(17, 19, 21, 0.70);
         }
 
 
         #bookCarousel .caption-box h1 {
-
             font-size: 1.5rem;
-
         }
 
 
         #bookCarousel .caption-box h4 {
-
             font-size: 1rem;
-
         }
 
 
         #bookCarousel .caption-box p {
-
             display: none;
-
         }
-
 
     }
 
@@ -750,49 +853,34 @@
     @media (max-width: 480px) {
 
         #bookCarousel .carousel-item {
-
             height: 560px;
-
         }
 
 
         #bookCarousel .book-cover-wrapper {
-
             height: 380px;
 
             top: 40%;
-
         }
 
 
-        #bookCarousel .book-cover {
-
+        #bookCarousel .book-cover-wrapper img {
             height: 380px;
 
             max-width: 260px;
-
         }
 
 
         #bookCarousel .carousel-caption {
-
             bottom: 3%;
-
         }
 
 
         #bookCarousel .caption-box h1 {
-
             font-size: 1.25rem;
-
         }
 
     }
 
-    .btn-outline-light {
-    border-radius: 8px;
-}
-
 </style>
-
 {% endblock body %}
