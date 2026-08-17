@@ -10,22 +10,33 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
 
+from django.core.paginator import Paginator
+from django.db.models import Q
+
 # =========================================================
 # HOME
 # =========================================================
 def index(request):
+
     books = Book.objects.all().order_by('-id')
-    latest_books = Book.objects.all().order_by('-id')[:3]
 
-    print("ALL BOOKS:", books.count())
-    print("LATEST BOOKS:", latest_books.count())
+    paginator = Paginator(books, 12)
 
-    context = {
-        'books': books,
-        'latest_books': latest_books,
-    }
+    page_number = request.GET.get('page')
 
-    return render(request, 'index.html', context)
+    page_obj = paginator.get_page(page_number)
+
+    latest_books = Book.objects.order_by('-id')[:3]
+
+    return render(
+        request,
+        'index.html',
+        {
+            'books': page_obj,
+            'page_obj': page_obj,
+            'latest_books': latest_books,
+        }
+    )
 
 
 # =========================================================

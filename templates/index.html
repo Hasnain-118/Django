@@ -380,11 +380,96 @@
 
 </div>
 
+{% if page_obj.has_other_pages %}
 
+<nav class="pagination-container">
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">
+            Previous
+        </a>
+    {% endif %}
+
+
+    {% for num in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == num %}
+
+            <span class="active-page">
+                {{ num }}
+            </span>
+
+        {% else %}
+
+            <a href="?page={{ num }}">
+                {{ num }}
+            </a>
+
+        {% endif %}
+
+    {% endfor %}
+
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">
+            Next
+        </a>
+    {% endif %}
+
+</nav>
+
+{% endif %}
 
 <!-- ==================== CAROUSEL CSS ==================== -->
 
 <style>
+
+    .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0 20px;
+    flex-wrap: wrap;
+}
+
+.pagination-container a,
+.pagination-container span {
+    min-width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    color: #d1d5d8;
+
+    background: rgba(25, 28, 31, 0.9);
+
+    border: 1px solid #3d444a;
+
+    transition: 0.2s ease;
+}
+
+.pagination-container a:hover {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.pagination-container .active-page {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+    color: #ffffff;
+    font-weight: 700;
+}
 
     /* =========================
        GLOBAL PAGE BACKGROUND
@@ -883,4 +968,6 @@
     }
 
 </style>
+
+
 {% endblock body %}
