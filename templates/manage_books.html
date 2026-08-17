@@ -26,6 +26,7 @@
         background-attachment: fixed;
     }
 
+
     /* =========================
        MAIN CONTAINER
     ========================= */
@@ -45,22 +46,175 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         margin-bottom: 25px;
         padding-bottom: 18px;
+
         border-bottom: 1px solid #30343a;
     }
 
     .manage-header h2 {
         margin: 0;
+
         color: #ffffff;
+
         font-weight: 700;
         letter-spacing: -0.3px;
     }
 
     .manage-header p {
         margin: 6px 0 0;
+
         color: #888f96;
+
         font-size: 0.9rem;
+    }
+
+
+    /* =========================
+       SEARCH BAR
+    ========================= */
+
+    .manage-search {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        width: 100%;
+        max-width: 650px;
+
+        margin: 0 auto 25px;
+
+        padding: 8px;
+
+        background: rgba(25, 28, 31, 0.88);
+
+        border: 1px solid #30343a;
+
+        border-radius: 12px;
+
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.25);
+
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+
+    /* =========================
+       SEARCH INPUT
+    ========================= */
+
+    .manage-search input {
+        flex: 1;
+
+        min-width: 0;
+
+        height: 44px;
+
+        padding: 10px 15px;
+
+        background: #22272b;
+
+        border: 1px solid #3d444a;
+
+        border-radius: 8px;
+
+        color: #ffffff;
+
+        font-size: 0.95rem;
+
+        outline: none;
+
+        transition: 0.2s ease;
+    }
+
+    .manage-search input::placeholder {
+        color: #777f87;
+    }
+
+    .manage-search input:focus {
+        background: #22272b;
+
+        border-color: #8b5cf6;
+
+        box-shadow:
+            0 0 0 3px rgba(139, 92, 246, 0.12);
+    }
+
+
+    /* =========================
+       SEARCH BUTTON
+    ========================= */
+
+    .manage-search button {
+        height: 44px;
+
+        padding: 0 20px;
+
+        background: #8b5cf6;
+
+        border: 1px solid #8b5cf6;
+
+        border-radius: 8px;
+
+        color: #ffffff;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
+    }
+
+    .manage-search button:hover {
+        background: #7c3aed;
+
+        border-color: #7c3aed;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 6px 15px rgba(139, 92, 246, 0.25);
+    }
+
+
+    /* =========================
+       CLEAR BUTTON
+    ========================= */
+
+    .manage-search a {
+        height: 44px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 16px;
+
+        background: #22272b;
+
+        border: 1px solid #3d444a;
+
+        border-radius: 8px;
+
+        color: #b8bec5;
+
+        text-decoration: none;
+
+        font-size: 0.9rem;
+
+        transition: 0.2s ease;
+    }
+
+    .manage-search a:hover {
+        background: #30343a;
+
+        border-color: #555b62;
+
+        color: #ffffff;
     }
 
 
@@ -70,10 +224,15 @@
 
     .books-table-card {
         background: #191c1f;
+
         border: 1px solid #30343a;
+
         border-radius: 12px;
+
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.25);
     }
 
 
@@ -83,27 +242,42 @@
 
     .manage-books-table {
         margin: 0;
+
         border: 0 !important;
+
         vertical-align: middle;
     }
 
     .manage-books-table thead th {
         background: #22272b !important;
+
         color: #a78bfa !important;
+
         border: 0 !important;
+
         border-bottom: 1px solid #3d444a !important;
+
         padding: 16px 18px;
+
         font-size: 0.85rem;
+
         font-weight: 600;
+
         text-transform: uppercase;
+
         letter-spacing: 0.5px;
     }
 
     .manage-books-table tbody td {
         background: #191c1f !important;
+
         color: #d1d5d8 !important;
+
         border-color: #30343a !important;
+
         padding: 14px 18px;
+
+        vertical-align: middle;
     }
 
     .manage-books-table tbody tr {
@@ -121,24 +295,39 @@
 
     .book-cover {
         width: 55px;
+
         height: 75px;
+
         object-fit: cover;
+
         border-radius: 6px;
+
         border: 1px solid #3d444a;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+        box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .no-cover-box {
         width: 55px;
+
         height: 75px;
+
         display: flex;
+
         align-items: center;
         justify-content: center;
+
         text-align: center;
+
         background: #22272b;
+
         border: 1px solid #3d444a;
+
         border-radius: 6px;
+
         color: #777f87;
+
         font-size: 0.7rem;
     }
 
@@ -149,12 +338,15 @@
 
     .book-title {
         color: #ffffff;
+
         font-weight: 600;
     }
 
     .book-author {
         color: #888f96;
+
         font-size: 0.85rem;
+
         margin-top: 3px;
     }
 
@@ -165,11 +357,17 @@
 
     .category-badge {
         display: inline-block;
+
         background: rgba(139, 92, 246, 0.12);
+
         border: 1px solid rgba(139, 92, 246, 0.35);
+
         color: #a78bfa;
+
         padding: 5px 10px;
+
         border-radius: 20px;
+
         font-size: 0.8rem;
     }
 
@@ -180,39 +378,132 @@
 
     .action-buttons {
         display: flex;
+
         gap: 7px;
     }
 
     .edit-btn {
         background: #8b5cf6 !important;
+
         border: 1px solid #8b5cf6 !important;
+
         color: #ffffff !important;
+
         border-radius: 7px;
+
         padding: 6px 14px;
+
         font-size: 0.85rem;
+
         transition: 0.2s ease;
     }
 
     .edit-btn:hover {
         background: #7c3aed !important;
+
         border-color: #7c3aed !important;
+
         transform: translateY(-1px);
     }
 
     .delete-btn {
         background: transparent !important;
+
         border: 1px solid #444b52 !important;
+
         color: #ff7777 !important;
+
         border-radius: 7px;
+
         padding: 6px 14px;
+
         font-size: 0.85rem;
+
         transition: 0.2s ease;
     }
 
     .delete-btn:hover {
         background: #3a2222 !important;
+
         border-color: #ff6b6b !important;
+
         color: #ff8b8b !important;
+    }
+
+
+    /* =========================
+       PAGINATION
+    ========================= */
+
+    .pagination-container {
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 8px;
+
+        margin: 30px 0 10px;
+
+        flex-wrap: wrap;
+    }
+
+    .pagination-container a,
+    .pagination-container span {
+        min-width: 42px;
+
+        height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 0 12px;
+
+        border-radius: 9px;
+
+        text-decoration: none;
+
+        color: #d1d5d8;
+
+        background: rgba(25, 28, 31, 0.95);
+
+        border: 1px solid #3d444a;
+
+        transition: 0.2s ease;
+    }
+
+    .pagination-container a:hover {
+        background: #8b5cf6;
+
+        border-color: #8b5cf6;
+
+        color: #ffffff;
+
+        transform: translateY(-2px);
+    }
+
+    .pagination-container .active-page {
+        background: #8b5cf6;
+
+        border-color: #8b5cf6;
+
+        color: #ffffff;
+
+        font-weight: 700;
+    }
+
+    .pagination-info {
+        text-align: center;
+
+        color: #888f96;
+
+        font-size: 0.85rem;
+
+        margin-top: 10px;
     }
 
 
@@ -222,37 +513,53 @@
 
     .bottom-actions {
         margin-top: 22px;
+
         display: flex;
+
         gap: 10px;
     }
 
     .add-book-btn {
         background: #8b5cf6 !important;
+
         border: 1px solid #8b5cf6 !important;
+
         color: #ffffff !important;
+
         border-radius: 8px;
+
         padding: 9px 18px;
+
         transition: 0.2s ease;
     }
 
     .add-book-btn:hover {
         background: #7c3aed !important;
+
         border-color: #7c3aed !important;
+
         transform: translateY(-1px);
     }
 
     .back-btn {
         background: #22272b !important;
+
         border: 1px solid #3d444a !important;
+
         color: #d1d5d8 !important;
+
         border-radius: 8px;
+
         padding: 9px 18px;
+
         transition: 0.2s ease;
     }
 
     .back-btn:hover {
         background: #30343a !important;
+
         color: #ffffff !important;
+
         border-color: #555b62 !important;
     }
 
@@ -263,9 +570,13 @@
 
     .no-books-alert {
         background: #191c1f !important;
+
         border: 1px solid #3d444a !important;
+
         color: #aeb4ba !important;
+
         border-radius: 10px;
+
         padding: 18px;
     }
 
@@ -278,7 +589,9 @@
 
         .manage-books-container {
             margin-top: 30px !important;
+
             padding-left: 12px;
+
             padding-right: 12px;
         }
 
@@ -292,6 +605,23 @@
 
         .manage-header p {
             font-size: 0.85rem;
+        }
+
+        .manage-search {
+            flex-wrap: wrap;
+        }
+
+        .manage-search input {
+            width: 100%;
+            flex-basis: 100%;
+        }
+
+        .manage-search button {
+            flex: 1;
+        }
+
+        .manage-search a {
+            flex: 1;
         }
 
         .books-table-card {
@@ -309,6 +639,7 @@
 
         .action-buttons {
             flex-direction: column;
+
             gap: 5px;
         }
 
@@ -326,245 +657,92 @@
             width: 100%;
         }
 
+        .pagination-container {
+            gap: 5px;
+        }
+
+        .pagination-container a,
+        .pagination-container span {
+            min-width: 38px;
+
+            height: 38px;
+
+            padding: 0 9px;
+
+            font-size: 0.85rem;
+        }
     }
-
-    /* =========================
-   SEARCH BAR
-========================= */
-
-.manage-search {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    width: 100%;
-    max-width: 650px;
-
-    margin: 0 auto 25px;
-
-    padding: 8px;
-
-    background: rgba(25, 28, 31, 0.88);
-
-    border: 1px solid #30343a;
-    border-radius: 12px;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.25);
-
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-
-
-/* =========================
-   SEARCH INPUT
-========================= */
-
-.manage-search input {
-    flex: 1;
-
-    min-width: 0;
-
-    height: 44px;
-
-    padding: 10px 15px;
-
-    background: #22272b;
-
-    border: 1px solid #3d444a;
-    border-radius: 8px;
-
-    color: #ffffff;
-
-    font-size: 0.95rem;
-
-    outline: none;
-
-    transition: 0.2s ease;
-}
-
-
-.manage-search input::placeholder {
-    color: #777f87;
-}
-
-
-.manage-search input:focus {
-    background: #22272b;
-
-    border-color: #8b5cf6;
-
-    box-shadow:
-        0 0 0 3px rgba(139, 92, 246, 0.12);
-}
-
-
-/* =========================
-   SEARCH BUTTON
-========================= */
-
-.manage-search button {
-    height: 44px;
-
-    padding: 0 20px;
-
-    background: #8b5cf6;
-
-    border: 1px solid #8b5cf6;
-
-    border-radius: 8px;
-
-    color: #ffffff;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-
-.manage-search button:hover {
-    background: #7c3aed;
-
-    border-color: #7c3aed;
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 6px 15px rgba(139, 92, 246, 0.25);
-}
-
-
-/* =========================
-   CLEAR BUTTON
-========================= */
-
-.manage-search a {
-    height: 44px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 16px;
-
-    background: #22272b;
-
-    border: 1px solid #3d444a;
-
-    border-radius: 8px;
-
-    color: #b8bec5;
-
-    text-decoration: none;
-
-    font-size: 0.9rem;
-
-    transition: 0.2s ease;
-}
-
-
-.manage-search a:hover {
-    background: #30343a;
-
-    border-color: #555b62;
-
-    color: #ffffff;
-}
-
-
-
-.pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin: 40px 0 20px;
-    flex-wrap: wrap;
-}
-
-.pagination-container a,
-.pagination-container span {
-    min-width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 14px;
-
-    border-radius: 9px;
-
-    text-decoration: none;
-
-    color: #d1d5d8;
-
-    background: rgba(25, 28, 31, 0.9);
-
-    border: 1px solid #3d444a;
-
-    transition: 0.2s ease;
-}
-
-.pagination-container a:hover {
-    background: #8b5cf6;
-    border-color: #8b5cf6;
-    color: #ffffff;
-    transform: translateY(-2px);
-}
-
-.pagination-container .active-page {
-    background: #8b5cf6;
-    border-color: #8b5cf6;
-    color: #ffffff;
-    font-weight: 700;
-}
 
 </style>
 
 
 <div class="container manage-books-container">
 
-    <!-- Header -->
+
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <div class="manage-header">
 
         <div>
-            <h2>Manage Books</h2>
+
+            <h2>
+                Manage Books
+            </h2>
 
             <p>
                 Add, edit and manage books in your digital library.
             </p>
+
         </div>
 
     </div>
 
-<form method="GET" action="{% url 'manage_books' %}" class="manage-search">
 
-    <input
-        type="search"
-        name="q"
-        value="{{ query }}"
-        placeholder="Search books..."
-        aria-label="Search books"
+    <!-- =========================
+         SEARCH
+    ========================= -->
+
+    <form
+        method="GET"
+        action="{% url 'manage_books' %}"
+        class="manage-search"
     >
 
-    <button type="submit">
-        Search
-    </button>
+        <input
+            type="search"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search books by title or author..."
+            aria-label="Search books"
+        >
 
-    {% if query %}
-        <a href="{% url 'manage_books' %}">
-            Clear
-        </a>
-    {% endif %}
+        <button type="submit">
+            Search
+        </button>
 
-</form>
+        {% if query %}
+
+            <a href="{% url 'manage_books' %}">
+                Clear
+            </a>
+
+        {% endif %}
+
+    </form>
+
+
+    <!-- =========================
+         BOOKS
+    ========================= -->
 
     {% if books %}
+
+
+        <!-- =========================
+             TABLE
+        ========================= -->
 
         <div class="table-responsive books-table-card">
 
@@ -574,15 +752,25 @@
 
                     <tr>
 
-                        <th>Cover</th>
+                        <th>
+                            Cover
+                        </th>
 
-                        <th>Book</th>
+                        <th>
+                            Book
+                        </th>
 
-                        <th>Author</th>
+                        <th>
+                            Author
+                        </th>
 
-                        <th>Category</th>
+                        <th>
+                            Category
+                        </th>
 
-                        <th>Actions</th>
+                        <th>
+                            Actions
+                        </th>
 
                     </tr>
 
@@ -595,7 +783,8 @@
 
                     <tr>
 
-                        <!-- Cover -->
+
+                        <!-- COVER -->
 
                         <td>
 
@@ -618,7 +807,7 @@
                         </td>
 
 
-                        <!-- Title -->
+                        <!-- BOOK TITLE -->
 
                         <td>
 
@@ -629,7 +818,7 @@
                         </td>
 
 
-                        <!-- Author -->
+                        <!-- AUTHOR -->
 
                         <td>
 
@@ -640,7 +829,7 @@
                         </td>
 
 
-                        <!-- Category -->
+                        <!-- CATEGORY -->
 
                         <td>
 
@@ -651,11 +840,14 @@
                         </td>
 
 
-                        <!-- Actions -->
+                        <!-- ACTIONS -->
 
                         <td>
 
                             <div class="action-buttons">
+
+
+                                <!-- EDIT -->
 
                                 <a
                                     href="{% url 'edit_book' book.id %}"
@@ -665,62 +857,30 @@
                                 </a>
 
 
+                                <!-- DELETE -->
+
                                 <a
                                     href="{% url 'delete_book' book.id %}"
                                     class="btn btn-sm delete-btn"
-                                    onclick="return confirm('Are you sure you want to delete this book?');"
+
+                                    onclick="
+                                        return confirm(
+                                            'Are you sure you want to delete this book?'
+                                        );
+                                    "
                                 >
                                     Delete
                                 </a>
+
 
                             </div>
 
                         </td>
 
+
                     </tr>
 
                     {% endfor %}
-
-
-                    {% if page_obj.has_other_pages %}
-
-<nav class="pagination-container">
-
-    {% if page_obj.has_previous %}
-        <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">
-            Previous
-        </a>
-    {% endif %}
-
-
-    {% for num in page_obj.paginator.page_range %}
-
-        {% if page_obj.number == num %}
-
-            <span class="active-page">
-                {{ num }}
-            </span>
-
-        {% else %}
-
-            <a href="?q={{ query }}&page={{ num }}">
-                {{ num }}
-            </a>
-
-        {% endif %}
-
-    {% endfor %}
-
-
-    {% if page_obj.has_next %}
-        <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">
-            Next
-        </a>
-    {% endif %}
-
-</nav>
-
-{% endif %}
 
                 </tbody>
 
@@ -729,18 +889,125 @@
         </div>
 
 
+        <!-- =========================
+             PAGINATION
+        ========================= -->
+
+        {% if page_obj.has_other_pages %}
+
+            <nav
+                class="pagination-container"
+                aria-label="Book pagination"
+            >
+
+
+                <!-- PREVIOUS -->
+
+                {% if page_obj.has_previous %}
+
+                    <a
+                        href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}"
+                    >
+                        Previous
+                    </a>
+
+                {% endif %}
+
+
+                <!-- PAGE NUMBERS -->
+
+                {% for num in page_obj.paginator.page_range %}
+
+                    {% if page_obj.number == num %}
+
+                        <span class="active-page">
+                            {{ num }}
+                        </span>
+
+                    {% else %}
+
+                        <a
+                            href="?q={{ query|urlencode }}&page={{ num }}"
+                        >
+                            {{ num }}
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                <!-- NEXT -->
+
+                {% if page_obj.has_next %}
+
+                    <a
+                        href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}"
+                    >
+                        Next
+                    </a>
+
+                {% endif %}
+
+
+            </nav>
+
+
+            <!-- PAGINATION INFO -->
+
+            <div class="pagination-info">
+
+                Page
+                {{ page_obj.number }}
+
+                of
+                {{ page_obj.paginator.num_pages }}
+
+                —
+
+                {{ page_obj.paginator.count }}
+
+                books
+
+            </div>
+
+        {% endif %}
+
+
     {% else %}
 
+
+        <!-- =========================
+             NO BOOKS / NO SEARCH RESULT
+        ========================= -->
+
         <div class="alert no-books-alert">
-            No books available.
+
+            {% if query %}
+
+                No books found for
+                <strong>"{{ query }}"</strong>.
+
+            {% else %}
+
+                No books available.
+
+            {% endif %}
+
         </div>
+
 
     {% endif %}
 
 
-    <!-- Bottom Actions -->
+    <!-- =========================
+         BOTTOM ACTIONS
+    ========================= -->
 
     <div class="bottom-actions">
+
+
+        <!-- ADD BOOK -->
 
         <a
             href="{% url 'add_book' %}"
@@ -750,6 +1017,8 @@
         </a>
 
 
+        <!-- HOME -->
+
         <a
             href="{% url 'home' %}"
             class="btn back-btn"
@@ -757,7 +1026,9 @@
             Back to Home
         </a>
 
+
     </div>
+
 
 </div>
 

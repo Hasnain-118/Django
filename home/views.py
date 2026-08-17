@@ -299,26 +299,34 @@ def add_book(request):
 
 @login_required
 @user_passes_test(is_admin)
+
 def manage_books(request):
 
-    query = request.GET.get('q', '')
+    query = request.GET.get('q', '').strip()
+
+    books = Book.objects.all().order_by('-id')
 
     if query:
-        books = Book.objects.filter(
-            title__icontains=query
+        books = books.filter(
+            Q(title__icontains=query) |
+            Q(author__icontains=query)
         )
-    else:
-        books = Book.objects.all()
+
+    paginator = Paginator(books, 10)
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
 
     return render(
         request,
         'manage_books.html',
         {
-            'books': books,
-            'query': query
+            'books': page_obj,
+            'page_obj': page_obj,
+            'query': query,
         }
     )
-
 
 # =========================================================
 # DELETE BOOK
