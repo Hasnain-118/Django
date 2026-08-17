@@ -290,12 +290,22 @@ def add_book(request):
 @user_passes_test(is_admin)
 def manage_books(request):
 
-    books = Book.objects.all()
+    query = request.GET.get('q', '')
+
+    if query:
+        books = Book.objects.filter(
+            title__icontains=query
+        )
+    else:
+        books = Book.objects.all()
 
     return render(
         request,
         'manage_books.html',
-        {'books': books}
+        {
+            'books': books,
+            'query': query
+        }
     )
 
 
