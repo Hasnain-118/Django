@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results - Hasnain's Digital Library{% endblock title %}
+
+{% block body %}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+        <h2 class="text-white">Search Results</h2>
+
+        {% if query %}
+            <p class="text-secondary">
+                Results for: <strong class="text-white">"{{ query }}"</strong>
+            </p>
+        {% endif %}
+    </div>
+
+    {% if books %}
+
+        <div class="row g-4">
+
+            {% for book in books %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card h-100 bg-dark text-white border-secondary">
+
+                        {% if book.cover_image %}
+                            <img src="{{ book.cover_image.url }}"
+                                 class="card-img-top"
+                                 alt="{{ book.title }}"
+                                 style="height: 300px; object-fit: cover;">
+                        {% endif %}
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                {{ book.title }}
+                            </h5>
+
+                            <p class="text-secondary mb-2">
+                                {{ book.author }}
+                            </p>
+
+                            {% if book.quote %}
+                                <p class="small text-secondary">
+                                    "{{ book.quote }}"
+                                </p>
+                            {% endif %}
+
+                            {% if book.rating %}
+                                <p>
+                                    ⭐ {{ book.rating }}
+                                </p>
+                            {% endif %}
+
+                            <a href="{% url 'read_book' book.id %}"
+                               class="btn btn-outline-light">
+                                Read Book
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center py-5">
+
+            {% if query %}
+                <h4 class="text-white">No books found</h4>
+                <p class="text-secondary">
+                    No results found for "{{ query }}".
+                </p>
+            {% else %}
+                <h4 class="text-white">Search for a book</h4>
+                <p class="text-secondary">
+                    Enter a book title, author, or keyword in the search box.
+                </p>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock body %}

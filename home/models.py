@@ -20,31 +20,26 @@ class Contact(models.Model):
     def __str__(self):
         return self.name
 
-
-# =========================================================
-# BOOK MODEL
-# =========================================================
-
 class Book(models.Model):
 
     CATEGORY_CHOICES = [
-    ('fiction', 'Fiction'),
-    ('manga', 'Manga'),
-    ('manhwa', 'Manhwa'),
-    ('classic', 'Classics'),
-    ('mystery', 'Mystery & Thriller'),
-    ('romance', 'Romance'),
-    ('fantasy', 'Fantasy'),
-    ('sci-fi', 'Science Fiction'),
-]
+        ('fiction', 'Fiction'),
+        ('manga', 'Manga'),
+        ('manhwa', 'Manhwa'),
+        ('classic', 'Classics'),
+        ('mystery', 'Mystery & Thriller'),
+        ('romance', 'Romance'),
+        ('fantasy', 'Fantasy'),
+        ('sci-fi', 'Science Fiction'),
+    ]
 
     title = models.CharField(max_length=100)
 
-    author = models.CharField(max_length=100, blank=True)
+    author = models.CharField(
+        max_length=100,
+        blank=True
+    )
 
-    # OPTIONAL
-    # If user does not upload a cover,
-    # Open Library will try to find one.
     cover_image = models.ImageField(
         upload_to='book_covers/',
         blank=True,
@@ -88,10 +83,12 @@ class Book(models.Model):
 
     def fetch_cover_from_open_library(self):
 
-        query = self.title
+        query = self.title.strip()
 
         if self.author:
-            query += f" {self.author}"
+            query += f" {self.author.strip()}"
+
+        print(f"\nSearching Open Library for: {query}")
 
         try:
 
@@ -113,9 +110,13 @@ class Book(models.Model):
 
             books = data.get("docs", [])
 
+            print(
+                f"Open Library results: {len(books)}"
+            )
+
             if not books:
                 print(
-                    f"No Open Library result found for: {self.title}"
+                    f"No result found for: {self.title}"
                 )
                 return
 
@@ -132,8 +133,12 @@ class Book(models.Model):
                     continue
 
                 image_url = (
-                    f"https://covers.openlibrary.org/"
+                    "https://covers.openlibrary.org/"
                     f"b/id/{cover_id}-L.jpg"
+                )
+
+                print(
+                    f"Trying cover ID: {cover_id}"
                 )
 
                 image_response = requests.get(
@@ -148,7 +153,6 @@ class Book(models.Model):
                 if image_response.status_code != 200:
                     continue
 
-                # Make sure response is actually an image
                 content_type = image_response.headers.get(
                     "Content-Type",
                     ""
@@ -157,22 +161,31 @@ class Book(models.Model):
                 if not content_type.startswith("image/"):
                     continue
 
+                # Avoid Open Library placeholder image
+                if len(image_response.content) < 5000:
+                    continue
+
                 file_name = (
                     self.title
+                    .strip()
                     .replace(" ", "_")
                     .replace("/", "_")
                     .replace("\\", "_")
+                    .replace(":", "_")
                     + ".jpg"
                 )
 
                 self.cover_image.save(
                     file_name,
-                    ContentFile(image_response.content),
+                    ContentFile(
+                        image_response.content
+                    ),
                     save=False
                 )
 
                 print(
-                    f"Cover downloaded for: {self.title}"
+                    f"SUCCESS: Cover downloaded for "
+                    f"{self.title}"
                 )
 
                 return
@@ -182,18 +195,25 @@ class Book(models.Model):
             # SECOND: TRY ISBN
             # =================================================
 
+            print(
+                "No usable cover ID found. "
+                "Trying ISBN..."
+            )
+
             for result in books:
 
-                isbn_list = result.get("isbn", [])
+                isbn_list = result.get(
+                    "isbn",
+                    []
+                )
 
                 if not isbn_list:
                     continue
 
-                # Try first few ISBNs instead of only one
                 for isbn in isbn_list[:5]:
 
                     image_url = (
-                        f"https://covers.openlibrary.org/"
+                        "https://covers.openlibrary.org/"
                         f"b/isbn/{isbn}-L.jpg"
                     )
 
@@ -209,45 +229,69 @@ class Book(models.Model):
                     if image_response.status_code != 200:
                         continue
 
-                    content_type = image_response.headers.get(
-                        "Content-Type",
-                        ""
+                    content_type = (
+                        image_response.headers.get(
+                            "Content-Type",
+                            ""
+                        )
                     )
 
-                    if not content_type.startswith("image/"):
+                    if not content_type.startswith(
+                        "image/"
+                    ):
+                        continue
+
+                    # Avoid placeholder images
+                    if len(image_response.content) < 5000:
                         continue
 
                     file_name = (
                         self.title
+                        .strip()
                         .replace(" ", "_")
                         .replace("/", "_")
                         .replace("\\", "_")
+                        .replace(":", "_")
                         + ".jpg"
                     )
 
                     self.cover_image.save(
                         file_name,
-                        ContentFile(image_response.content),
+                        ContentFile(
+                            image_response.content
+                        ),
                         save=False
                     )
 
                     print(
-                        f"Cover downloaded using ISBN: "
-                        f"{self.title}"
+                        f"SUCCESS: Cover downloaded "
+                        f"using ISBN for {self.title}"
                     )
 
                     return
 
 
+            # =================================================
+            # NO COVER FOUND
+            # =================================================
+
             print(
-                f"No cover available for: {self.title}"
+                f"NO COVER AVAILABLE: "
+                f"{self.title}"
             )
 
         except requests.RequestException as e:
 
             print(
-                f"Open Library error for "
-                f"{self.title}: {e}"
+                f"Open Library request error "
+                f"for {self.title}: {e}"
+            )
+
+        except Exception as e:
+
+            print(
+                f"Unexpected error fetching cover "
+                f"for {self.title}: {e}"
             )
 
 
@@ -257,8 +301,8 @@ class Book(models.Model):
 
     def save(self, *args, **kwargs):
 
-        # Only fetch automatically when
-        # user did NOT upload a cover.
+        # If the user did not upload a cover,
+        # automatically try Open Library.
 
         if not self.cover_image:
 

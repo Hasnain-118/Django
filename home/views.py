@@ -28,6 +28,30 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+# =========================================================
+# SEARCH  BOOKS
+# =========================================================
+
+def search_books(request):
+    query = request.GET.get('q', '').strip()
+
+    books = Book.objects.none()
+
+    if query:
+        books = Book.objects.filter(
+            title__icontains=query
+        ) | Book.objects.filter(
+            author__icontains=query
+        ) | Book.objects.filter(
+            quote__icontains=query
+        )
+
+    context = {
+        'query': query,
+        'books': books,
+    }
+
+    return render(request, 'search_results.html', context)
 
 # =========================================================
 # BASIC PAGES
@@ -364,3 +388,5 @@ def category_books(request, category_slug):
         'category_books.html',
         context
     )
+
+

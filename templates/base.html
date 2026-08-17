@@ -458,21 +458,25 @@
                     <!-- SEARCH -->
 
                     <form class="d-flex navbar-search"
-                        role="search">
+      role="search"
+      method="GET"
+      action="{% url 'search_books' %}">
 
-                        <input class="form-control"
-                            type="search"
-                            placeholder="Search books..."
-                            aria-label="Search">
+    <input class="form-control"
+           type="search"
+           name="q"
+           placeholder="Search books..."
+           aria-label="Search"
+           value="{{ request.GET.q|default:'' }}">
 
-                        <button class="btn search-btn"
-                            type="submit">
+    <button class="btn search-btn"
+            type="submit">
 
-                            Search
+        Search
 
-                        </button>
+    </button>
 
-                    </form>
+</form>
 
 
 
