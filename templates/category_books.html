@@ -8,505 +8,678 @@
 
 <style>
 
-    /* =====================================================
-       CATEGORY PAGE
-    ===================================================== */
+/* =====================================================
+   CATEGORY PAGE
+===================================================== */
+
+.category-page {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(17, 19, 21, 0.88),
+            rgba(17, 19, 21, 0.94)
+        ),
+        url('/static/bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    padding: 45px 0 70px;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   CATEGORY HEADER
+===================================================== */
+
+.category-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.category-title {
+    display: inline-block;
+
+    padding: 22px 45px;
+
+    color: #ffffff;
+
+    font-size: clamp(2rem, 5vw, 3.8rem);
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    background: rgba(25, 28, 31, 0.62);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(167, 139, 250, 0.28);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.45),
+        0 0 30px rgba(139, 92, 246, 0.07);
+
+    text-shadow:
+        0 3px 20px rgba(0, 0, 0, 0.7);
+}
+
+.category-line {
+    width: 65px;
+    height: 3px;
+
+    background: #8b5cf6;
+
+    border-radius: 20px;
+
+    margin: 18px auto 0;
+
+    box-shadow:
+        0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+
+/* =====================================================
+   BOOK GRID
+===================================================== */
+
+.category-books {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* =====================================================
+   BOOK CARD
+===================================================== */
+
+.book-card {
+    height: 100%;
+    overflow: hidden;
+
+    background: rgba(25, 28, 31, 0.78);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(139, 92, 246, 0.25);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.4);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-7px);
+
+    border-color: rgba(139, 92, 246, 0.7);
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.55),
+        0 0 25px rgba(139, 92, 246, 0.10);
+}
+
+
+/* =====================================================
+   BOOK COVER
+===================================================== */
+
+.book-cover {
+    width: 100%;
+    height: 500px;
+
+    object-fit: cover;
+
+    display: block;
+
+    background: #191c1f;
+
+    transition: transform 0.35s ease;
+}
+
+.book-card:hover .book-cover {
+    transform: scale(1.025);
+}
+
+
+/* =====================================================
+   NO COVER
+===================================================== */
+
+.no-cover {
+    height: 500px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #22272b,
+            #151719
+        );
+
+    color: #888f96;
+}
+
+.no-cover-icon {
+    font-size: 65px;
+
+    opacity: 0.75;
+
+    margin-bottom: 12px;
+}
+
+.no-cover-text {
+    color: #888f96;
+
+    font-size: 0.9rem;
+}
+
+
+/* =====================================================
+   RATING
+===================================================== */
+
+.book-rating {
+    display: inline-block;
+
+    margin-top: 15px;
+    margin-left: 20px;
+
+    padding: 5px 10px;
+
+    color: #a78bfa;
+
+    background: rgba(139, 92, 246, 0.10);
+
+    border: 1px solid rgba(139, 92, 246, 0.20);
+
+    border-radius: 20px;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   CARD BODY
+===================================================== */
+
+.book-card-body {
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 230px;
+
+    padding: 20px;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.book-title {
+    color: #ffffff;
+
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
+    margin-top: 12px;
+
+    margin-bottom: 7px;
+}
+
+
+/* =====================================================
+   AUTHOR
+===================================================== */
+
+.book-author {
+    color: #9ca3af;
+
+    font-size: 0.9rem;
+
+    margin-bottom: 12px;
+}
+
+
+/* =====================================================
+   QUOTE / DESCRIPTION
+===================================================== */
+
+.book-quote {
+    color: #c4c7ca;
+
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   BOTTOM SECTION
+===================================================== */
+
+.book-bottom {
+    margin-top: auto;
+
+    padding-top: 15px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* =====================================================
+   READ BUTTON
+===================================================== */
+
+.read-btn {
+    color: #ffffff !important;
+
+    border: 1px solid #8b5cf6 !important;
+
+    background: rgba(139, 92, 246, 0.08) !important;
+
+    border-radius: 8px;
+
+    padding: 7px 17px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.read-btn:hover {
+    background: #8b5cf6 !important;
+
+    border-color: #8b5cf6 !important;
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   CATEGORY LABEL
+===================================================== */
+
+.book-category {
+    color: #9ca3af;
+
+    font-size: 0.8rem;
+
+    padding: 5px 9px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border-radius: 6px;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-books {
+    max-width: 600px;
+
+    margin: 70px auto;
+
+    padding: 40px 25px;
+
+    text-align: center;
+
+    background: rgba(25, 28, 31, 0.72);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(139, 92, 246, 0.22);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.empty-icon {
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+.empty-books h4 {
+    color: #ffffff;
+
+    margin-bottom: 8px;
+}
+
+.empty-books p {
+    color: #888f96;
+
+    margin-bottom: 0;
+}
+
+
+/* =====================================================
+   MOBILE — 2 COLUMNS
+===================================================== */
+
+@media (max-width: 768px) {
 
     .category-page {
-        min-height: 100vh;
+        padding: 25px 10px 50px;
 
-        background:
-            linear-gradient(
-                rgba(17, 19, 21, 0.88),
-                rgba(17, 19, 21, 0.94)
-            ),
-            url('/static/bg.jpg');
-
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-
-        padding: 45px 0 70px;
-
-        color: #ffffff;
+        background-attachment: scroll;
     }
-
-
-    /* =====================================================
-       CATEGORY HEADER
-    ===================================================== */
 
     .category-header {
-        text-align: center;
-        margin-bottom: 45px;
+        margin-bottom: 25px;
     }
-
 
     .category-title {
-        display: inline-block;
+        max-width: 95%;
 
-        padding: 22px 45px;
+        padding: 13px 20px;
 
-        color: #ffffff;
+        font-size: 1.7rem;
 
-        font-size: clamp(2rem, 5vw, 3.8rem);
-
-        font-weight: 700;
-
-        letter-spacing: 1px;
-
-        background: rgba(25, 28, 31, 0.62);
-
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-
-        border: 1px solid rgba(167, 139, 250, 0.28);
-
-        border-radius: 18px;
-
-        box-shadow:
-            0 15px 45px rgba(0, 0, 0, 0.45),
-            0 0 30px rgba(139, 92, 246, 0.07);
-
-        text-shadow:
-            0 3px 20px rgba(0, 0, 0, 0.7);
+        border-radius: 12px;
     }
-
 
     .category-line {
-        width: 65px;
-        height: 3px;
+        width: 50px;
 
-        background: #8b5cf6;
+        height: 2px;
 
-        border-radius: 20px;
-
-        margin: 18px auto 0;
-
-        box-shadow:
-            0 0 15px rgba(139, 92, 246, 0.5);
+        margin-top: 11px;
     }
 
 
-    /* =====================================================
-       BOOK GRID
-    ===================================================== */
+    /* ================================
+       2 COLUMN BOOK GRID
+    ================================= */
 
-    .category-books {
-        max-width: 1200px;
-        margin: auto;
+    .category-books .row {
+        margin-left: -6px;
+        margin-right: -6px;
+    }
+
+    .category-books .col-md-4 {
+        width: 50%;
+
+        padding-left: 6px;
+        padding-right: 6px;
+
+        margin-bottom: 14px;
     }
 
 
-    /* =====================================================
+    /* ================================
        BOOK CARD
-    ===================================================== */
+    ================================= */
 
     .book-card {
-
-        height: 100%;
-
-        overflow: hidden;
-
-        background: rgba(25, 28, 31, 0.78);
-
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-
-        border: 1px solid rgba(139, 92, 246, 0.25);
-
-        border-radius: 14px;
+        border-radius: 10px;
 
         box-shadow:
-            0 12px 35px rgba(0, 0, 0, 0.4);
-
-        transition:
-            transform 0.25s ease,
-            border-color 0.25s ease,
-            box-shadow 0.25s ease;
+            0 7px 20px rgba(0, 0, 0, 0.35);
     }
-
 
     .book-card:hover {
-
-        transform: translateY(-7px);
-
-        border-color: rgba(139, 92, 246, 0.7);
-
-        box-shadow:
-            0 20px 45px rgba(0, 0, 0, 0.55),
-            0 0 25px rgba(139, 92, 246, 0.10);
+        transform: translateY(-3px);
     }
 
 
-    /* =====================================================
+    /* ================================
        BOOK COVER
-    ===================================================== */
+    ================================= */
 
-    .book-cover {
-
-        width: 100%;
-
-        height: 500px;
-
-        object-fit: cover;
-
-        display: block;
-
-        background: #191c1f;
-
-        transition: transform 0.35s ease;
+    .book-cover,
+    .no-cover {
+        height: 270px;
     }
-
 
     .book-card:hover .book-cover {
-
-        transform: scale(1.025);
+        transform: none;
     }
 
 
-    /* =====================================================
-       NO COVER
-    ===================================================== */
-
-    .no-cover {
-
-        height: 500px;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        text-align: center;
-
-        background:
-            linear-gradient(
-                135deg,
-                #22272b,
-                #151719
-            );
-
-        color: #888f96;
-    }
-
-
-    .no-cover-icon {
-
-        font-size: 65px;
-
-        opacity: 0.75;
-
-        margin-bottom: 12px;
-    }
-
-
-    .no-cover-text {
-
-        color: #888f96;
-
-        font-size: 0.9rem;
-    }
-
-
-    /* =====================================================
-       RATING
-    ===================================================== */
-
-    .book-rating {
-
-        display: inline-block;
-
-        margin-top: 15px;
-        margin-left: 20px;
-
-        padding: 5px 10px;
-
-        color: #a78bfa;
-
-        background: rgba(139, 92, 246, 0.10);
-
-        border: 1px solid rgba(139, 92, 246, 0.20);
-
-        border-radius: 20px;
-
-        font-size: 0.9rem;
-
-        font-weight: 600;
-    }
-
-
-    /* =====================================================
+    /* ================================
        CARD BODY
-    ===================================================== */
+    ================================= */
 
     .book-card-body {
+        min-height: 185px;
 
-        display: flex;
-
-        flex-direction: column;
-
-        min-height: 230px;
-
-        padding: 20px;
+        padding: 12px;
     }
 
 
-    /* =====================================================
+    /* ================================
+       RATING
+    ================================= */
+
+    .book-rating {
+        margin: 0;
+
+        padding: 4px 7px;
+
+        font-size: 0.72rem;
+    }
+
+
+    /* ================================
        TITLE
-    ===================================================== */
+    ================================= */
 
     .book-title {
-
-        color: #ffffff;
-
-        font-size: 1.15rem;
-
-        font-weight: 700;
-
-        margin-top: 12px;
-
-        margin-bottom: 7px;
-    }
-
-
-    /* =====================================================
-       AUTHOR
-    ===================================================== */
-
-    .book-author {
-
-        color: #9ca3af;
-
         font-size: 0.9rem;
 
-        margin-bottom: 12px;
-    }
+        line-height: 1.3;
 
+        margin-top: 8px;
 
-    /* =====================================================
-       QUOTE / DESCRIPTION
-    ===================================================== */
-
-    .book-quote {
-
-        color: #c4c7ca;
-
-        font-size: 0.9rem;
-
-        line-height: 1.6;
+        margin-bottom: 4px;
 
         display: -webkit-box;
 
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
 
         -webkit-box-orient: vertical;
 
         overflow: hidden;
-
-        margin-bottom: 20px;
     }
 
 
-    /* =====================================================
-       BOTTOM SECTION
-    ===================================================== */
+    /* ================================
+       AUTHOR
+    ================================= */
+
+    .book-author {
+        font-size: 0.75rem;
+
+        margin-bottom: 7px;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    /* ================================
+       QUOTE
+    ================================= */
+
+    .book-quote {
+        font-size: 0.75rem;
+
+        line-height: 1.45;
+
+        -webkit-line-clamp: 2;
+
+        margin-bottom: 10px;
+    }
+
+
+    /* ================================
+       BOTTOM
+    ================================= */
 
     .book-bottom {
+        padding-top: 9px;
 
-        margin-top: auto;
-
-        padding-top: 15px;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-        display: flex;
-
-        justify-content: space-between;
-
-        align-items: center;
-
-        gap: 10px;
+        gap: 5px;
     }
 
 
-    /* =====================================================
+    /* ================================
        READ BUTTON
-    ===================================================== */
+    ================================= */
 
     .read-btn {
-
-        color: #ffffff !important;
-
-        border: 1px solid #8b5cf6 !important;
-
-        background: rgba(139, 92, 246, 0.08) !important;
-
-        border-radius: 8px;
-
-        padding: 7px 17px;
-
-        font-weight: 600;
-
-        transition: all 0.2s ease;
-    }
-
-
-    .read-btn:hover {
-
-        background: #8b5cf6 !important;
-
-        border-color: #8b5cf6 !important;
-
-        color: #ffffff !important;
-
-        transform: translateY(-1px);
-    }
-
-
-    /* =====================================================
-       CATEGORY LABEL
-    ===================================================== */
-
-    .book-category {
-
-        color: #9ca3af;
-
-        font-size: 0.8rem;
-
         padding: 5px 9px;
 
-        background: rgba(255, 255, 255, 0.04);
+        font-size: 0.72rem;
 
         border-radius: 6px;
     }
 
 
-    /* =====================================================
-       EMPTY STATE
-    ===================================================== */
+    /* ================================
+       CATEGORY
+    ================================= */
 
-    .empty-books {
+    .book-category {
+        max-width: 50%;
 
-        max-width: 600px;
+        padding: 4px 6px;
 
-        margin: 70px auto;
+        font-size: 0.65rem;
 
-        padding: 40px 25px;
+        overflow: hidden;
 
-        text-align: center;
+        text-overflow: ellipsis;
 
-        background: rgba(25, 28, 31, 0.72);
-
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-
-        border: 1px solid rgba(139, 92, 246, 0.22);
-
-        border-radius: 16px;
-
-        box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.4);
+        white-space: nowrap;
     }
 
 
-    .empty-icon {
+    /* ================================
+       NO COVER
+    ================================= */
 
-        font-size: 55px;
-
-        margin-bottom: 15px;
+    .no-cover-icon {
+        font-size: 42px;
     }
 
+    .no-cover-text {
+        font-size: 0.75rem;
+    }
+}
 
-    .empty-books h4 {
 
-        color: #ffffff;
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
 
-        margin-bottom: 8px;
+@media (max-width: 375px) {
+
+    .category-page {
+        padding-left: 7px;
+
+        padding-right: 7px;
     }
 
+    .category-books .row {
+        margin-left: -4px;
 
-    .empty-books p {
-
-        color: #888f96;
-
-        margin-bottom: 0;
+        margin-right: -4px;
     }
 
+    .category-books .col-md-4 {
+        padding-left: 4px;
 
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media (max-width: 768px) {
-
-        .category-page {
-
-            padding-top: 30px;
-        }
-
-
-        .category-title {
-
-            padding: 17px 28px;
-
-            border-radius: 14px;
-        }
-
-
-        .category-header {
-
-            margin-bottom: 30px;
-        }
-
-
-        .book-cover,
-        .no-cover {
-
-            height: 430px;
-        }
-
-
-        .book-card-body {
-
-            min-height: 220px;
-        }
-
+        padding-right: 4px;
     }
 
-
-    @media (max-width: 576px) {
-
-        .category-page {
-
-            padding-left: 12px;
-            padding-right: 12px;
-        }
-
-
-        .category-title {
-
-            font-size: 2rem;
-
-            padding: 15px 22px;
-        }
-
-
-        .book-cover,
-        .no-cover {
-
-            height: 400px;
-        }
-
-
-        .book-bottom {
-
-            flex-direction: row;
-        }
-
+    .book-cover,
+    .no-cover {
+        height: 240px;
     }
+
+    .book-card-body {
+        padding: 10px;
+
+        min-height: 175px;
+    }
+
+    .book-title {
+        font-size: 0.84rem;
+    }
+
+    .book-author {
+        font-size: 0.7rem;
+    }
+
+    .book-quote {
+        font-size: 0.7rem;
+    }
+
+    .read-btn {
+        padding: 4px 7px;
+
+        font-size: 0.68rem;
+    }
+
+    .book-category {
+        font-size: 0.6rem;
+    }
+}
 
 </style>
 
@@ -517,14 +690,13 @@
 
 <div class="category-page">
 
+
     <!-- ================= HEADER ================= -->
 
     <div class="category-header">
 
         <h1 class="category-title">
-
             {{ category_display }}
-
         </h1>
 
         <div class="category-line"></div>
@@ -536,161 +708,103 @@
 
     <div class="container category-books">
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-2 g-4">
 
-            {% for book in books %}
+        {% for book in books %}
 
-            <div class="col">
+        <div class="col">
 
-                <div class="book-card">
+            <div class="book-card">
 
+                {% if book.cover_image %}
 
-                    <!-- ================= COVER ================= -->
+                <img
+                    src="{{ book.cover_image.url }}"
+                    class="book-cover"
+                    alt="{{ book.title }}"
+                >
 
-                    {% if book.cover_image %}
+                {% else %}
 
-                    <img
-                        src="{{ book.cover_image.url }}"
-                        class="book-cover"
-                        alt="{{ book.title }}">
-
-                    {% else %}
-
-                    <div class="no-cover">
-
-                        <div>
-
-                            <div class="no-cover-icon">
-                                📚
-                            </div>
-
-                            <div class="no-cover-text">
-                                No Cover Available
-                            </div>
-
+                <div class="no-cover">
+                    <div>
+                        <div class="no-cover-icon">📚</div>
+                        <div class="no-cover-text">
+                            No Cover Available
                         </div>
-
                     </div>
+                </div>
 
+                {% endif %}
+
+                <div>
+                    <span class="book-rating">
+                        {{ book.rating }} ⭐
+                    </span>
+                </div>
+
+                <div class="book-card-body">
+
+                    <h5 class="book-title">
+                        {{ book.title }}
+                    </h5>
+
+                    {% if book.author %}
+                    <div class="book-author">
+                        By {{ book.author }}
+                    </div>
                     {% endif %}
 
+                    {% if book.quote %}
+                    <p class="book-quote">
+                        {{ book.quote }}
+                    </p>
+                    {% endif %}
 
-                    <!-- ================= RATING ================= -->
+                    <div class="book-bottom">
 
-                    <div>
+                        <a
+                            href="{% url 'read_book' book.id %}"
+                            class="btn btn-sm read-btn"
+                        >
+                            Read
+                        </a>
 
-                        <span class="book-rating">
-
-                            {{ book.rating }} ⭐
-
+                        <span class="book-category">
+                            {{ book.get_category_display }}
                         </span>
 
                     </div>
 
-
-                    <!-- ================= CARD BODY ================= -->
-
-                    <div class="book-card-body">
-
-
-                        <!-- Title -->
-
-                        <h5 class="book-title">
-
-                            {{ book.title }}
-
-                        </h5>
-
-
-                        <!-- Author -->
-
-                        {% if book.author %}
-
-                        <div class="book-author">
-
-                            By {{ book.author }}
-
-                        </div>
-
-                        {% endif %}
-
-
-                        <!-- Quote -->
-
-                        {% if book.quote %}
-
-                        <p class="book-quote">
-
-                            {{ book.quote }}
-
-                        </p>
-
-                        {% endif %}
-
-
-                        <!-- Bottom -->
-
-                        <div class="book-bottom">
-
-
-                            <!-- Read -->
-
-                            <a
-                                href="{% url 'read_book' book.id %}"
-                                class="btn btn-sm read-btn">
-
-                                Read
-
-                            </a>
-
-
-                            <!-- Category -->
-
-                            <span class="book-category">
-
-                                {{ book.get_category_display }}
-
-                            </span>
-
-
-                        </div>
-
-                    </div>
-
                 </div>
 
             </div>
-
-            {% empty %}
-
-
-            <!-- ================= EMPTY ================= -->
-
-            <div class="col-12">
-
-                <div class="empty-books">
-
-                    <div class="empty-icon">
-                        📚
-                    </div>
-
-                    <h4>
-                        No Books Found
-                    </h4>
-
-                    <p>
-                        There are no books available in this category yet.
-                    </p>
-
-                </div>
-
-            </div>
-
-            {% endfor %}
 
         </div>
 
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="empty-books">
+
+                <div class="empty-icon">📚</div>
+
+                <h4>No Books Found</h4>
+
+                <p>
+                    There are no books available in this category yet.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
     </div>
+
+</div>
 
 </div>
 
