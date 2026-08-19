@@ -33,9 +33,19 @@ admin.site.index_title = "Welcome to the Hasnain Admin Portal"
 
 
 urlpatterns = [
+
+    # Django Admin
     path('admin/', admin.site.urls),
+
+    # django-allauth
+    path('accounts/', include('allauth.urls')),
+
+    # Home App
     path('', include('home.urls')),
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+] + static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
 
  
