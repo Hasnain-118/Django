@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from home import views
 urlpatterns = [
     path("", views.index, name="home"),
@@ -16,5 +16,6 @@ urlpatterns = [
     path('edit-book/<int:book_id>/',views.edit_book,name='edit_book'),
     path("category/<str:category_slug>/",views.category_books,name="category_books"),
     path('search/', views.search_books, name='search_books'),
+    path('accounts/', include('allauth.urls')),
 ]
 

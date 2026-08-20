@@ -1,5 +1,7 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load socialaccount %}
+{% load static %}
+{% load i18n %}
 
 {% block title %}Sign Up - Hasnain's Digital Library{% endblock title %}
 
@@ -9,7 +11,10 @@
     .signup-page {
         min-height: 100vh;
         padding: 50px 15px;
-        background: linear-gradient(135deg, #0b0d0f, #15181c, #1e2227);
+        background-image: url("{% static 'bg.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         position: relative;
         overflow: hidden;
         display: flex;
@@ -21,9 +26,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background:
-            radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.15), transparent 40%),
-            radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.10), transparent 40%);
+        background: rgba(0, 0, 0, 0.6);
         pointer-events: none;
     }
 
@@ -32,35 +35,22 @@
         width: 90%;
         max-width: 520px;
         margin: auto;
+        z-index: 1;
     }
 
     .signup-card {
-        background: rgba(18, 20, 23, 0.75) !important;
-        backdrop-filter: blur(18px) !important;
-        -webkit-backdrop-filter: blur(18px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 18px;
+        background: rgba(18, 20, 23, 0.55) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 20px;
         padding: 40px 45px;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6) !important;
     }
 
-    /* Fix for all text colors inside card */
     .signup-card,
     .signup-card * {
         color: #ffffff !important;
-    }
-
-    .signup-card .text-muted,
-    .signup-card .signup-subtitle {
-        color: #b0b8c0 !important;
-    }
-
-    .signup-card a:not(.btn-google):not(.signup-button) {
-        color: #a78bfa !important;
-    }
-
-    .signup-card a:not(.btn-google):not(.signup-button):hover {
-        color: #c4b5fd !important;
     }
 
     .signup-title {
@@ -72,9 +62,10 @@
     }
 
     .signup-subtitle {
-        color: #b0b8c0 !important;
+        color: #c8ced6 !important;
         text-align: center;
         margin-bottom: 30px;
+        font-size: 0.95rem;
     }
 
     .signup-form p {
@@ -83,37 +74,34 @@
 
     .signup-form label {
         display: block;
-        color: #d1d5db !important;
+        color: #e5e7eb !important;
         font-weight: 600;
         margin-bottom: 7px;
+        font-size: 0.9rem;
     }
 
-    .signup-form input,
-    .signup-form select,
-    .signup-form textarea {
+    .signup-form input {
         width: 100%;
-        padding: 11px 13px;
-        background: #22272b !important;
+        padding: 12px 14px;
+        background: rgba(34, 39, 43, 0.7) !important;
         color: #ffffff !important;
-        border: 1px solid #3d444a;
-        border-radius: 8px;
+        border: 1px solid rgba(61, 68, 74, 0.6) !important;
+        border-radius: 10px;
         outline: none;
-        transition: 0.2s ease;
+        transition: 0.3s ease;
         box-sizing: border-box;
+        font-size: 0.95rem;
     }
 
-    .signup-form input::placeholder,
-    .signup-form textarea::placeholder {
+    .signup-form input::placeholder {
         color: #8d959c !important;
     }
 
-    .signup-form input:focus,
-    .signup-form select:focus,
-    .signup-form textarea:focus {
-        background: #252a2f !important;
+    .signup-form input:focus {
+        background: rgba(37, 42, 47, 0.8) !important;
         color: #ffffff !important;
-        border-color: #8b5cf6;
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15) !important;
     }
 
     .signup-form .helptext,
@@ -130,9 +118,6 @@
         margin-top: 7px;
     }
 
-    /* =========================================================
-       ERROR MESSAGES (Form errors)
-    ========================================================= */
     .signup-form .errorlist {
         color: #ff8585 !important;
         font-size: 0.82rem;
@@ -160,40 +145,36 @@
     .signup-button {
         width: 100%;
         border: none;
-        border-radius: 10px;
-        padding: 13px;
+        border-radius: 12px;
+        padding: 14px;
         margin-top: 5px;
-        background: #8b5cf6 !important;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
         color: #ffffff !important;
         font-size: 1rem;
         font-weight: 700;
-        transition: 0.2s ease;
+        transition: all 0.3s ease;
         cursor: pointer;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
     }
 
     .signup-button:hover {
-        background: #7c3aed !important;
-        transform: translateY(-1px);
-        color: #ffffff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.4);
     }
-
-    /* =========================
-       DIVIDER
-    ========================= */
 
     .divider {
         display: flex;
         align-items: center;
         text-align: center;
         color: #8d959c;
-        margin: 22px 0 18px;
+        margin: 25px 0 20px;
     }
 
     .divider::before,
     .divider::after {
         content: '';
         flex: 1;
-        border-bottom: 1px solid #3d444a;
+        border-bottom: 1px solid rgba(61, 68, 74, 0.5);
     }
 
     .divider::before {
@@ -210,153 +191,107 @@
         color: #9ca3af !important;
     }
 
-    /* =========================
-       GOOGLE BUTTON
-    ========================= */
-
     .btn-google {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 12px !important;
-
         width: 100%;
-        padding: 12px 18px !important;
+        padding: 13px 18px !important;
         margin-top: 5px !important;
-
         background: #ffffff !important;
         color: #3c4043 !important;
-
         border: 1px solid #dadce0 !important;
-        border-radius: 10px !important;
-
+        border-radius: 12px !important;
         font-weight: 600 !important;
         font-size: 0.95rem !important;
-
-        transition: all 0.2s ease !important;
+        transition: all 0.3s ease !important;
         text-decoration: none !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .btn-google:hover {
         background: #f8f9fa !important;
         border-color: #c5c7c9 !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
         text-decoration: none !important;
         color: #202124 !important;
+        transform: translateY(-1px);
     }
 
     .btn-google svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         flex-shrink: 0;
     }
 
-    .signin-text {
-        color: #b0b8c0 !important;
+    .signin-link {
+        color: #c8ced6 !important;
         text-align: center;
         margin-top: 25px;
         margin-bottom: 0;
+        font-size: 0.95rem;
     }
 
-    .signin-link {
+    .signin-link a {
         color: #a78bfa !important;
         font-weight: 700;
         text-decoration: none;
+        transition: 0.2s;
     }
 
-    .signin-link:hover {
+    .signin-link a:hover {
         color: #c4b5fd !important;
     }
 
-    /* =========================================================
-       DJANGO MESSAGES (Navbar/Page alerts)
-    ========================================================= */
+    /* Alert Messages */
     .signup-card .alert {
-        background: rgba(139, 92, 246, 0.12) !important;
+        background: rgba(139, 92, 246, 0.15) !important;
         border: 1px solid rgba(139, 92, 246, 0.25) !important;
         color: #e5e7eb !important;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 12px 16px;
         margin-bottom: 16px;
-        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
 
     .signup-card .alert-success {
-        background: rgba(52, 211, 153, 0.12) !important;
+        background: rgba(52, 211, 153, 0.15) !important;
         border-color: rgba(52, 211, 153, 0.25) !important;
         color: #a7f3d0 !important;
     }
 
     .signup-card .alert-error,
     .signup-card .alert-danger {
-        background: rgba(239, 68, 68, 0.12) !important;
+        background: rgba(239, 68, 68, 0.15) !important;
         border-color: rgba(239, 68, 68, 0.25) !important;
         color: #fca5a5 !important;
     }
 
-    .signup-card .alert-info {
-        background: rgba(59, 130, 246, 0.12) !important;
-        border-color: rgba(59, 130, 246, 0.25) !important;
-        color: #93c5fd !important;
-    }
-
-    .signup-card .alert-warning {
-        background: rgba(251, 191, 36, 0.12) !important;
-        border-color: rgba(251, 191, 36, 0.25) !important;
-        color: #fcd34d !important;
-    }
-
-    /* =========================================================
-       CROSS ICON (Close button)
-    ========================================================= */
-    .signup-card .alert .btn-close {
+    .signup-card .btn-close {
         color: #ffffff !important;
         background: transparent !important;
         border: none !important;
         font-size: 1.2rem !important;
-        line-height: 1;
-        padding: 4px 8px;
-        cursor: pointer;
         opacity: 0.5;
         transition: opacity 0.2s ease;
-        flex-shrink: 0;
-        margin-left: 10px;
     }
 
-    .signup-card .alert .btn-close:hover {
+    .signup-card .btn-close:hover {
         opacity: 1;
     }
 
-    .signup-card .alert .btn-close::before {
+    .signup-card .btn-close::before {
         content: "✕";
         font-size: 1.1rem;
         color: #ffffff;
     }
 
-    /* Bootstrap close button override */
-    .signup-card .alert .btn-close {
-        background: transparent !important;
-        box-shadow: none !important;
-        width: auto !important;
-        height: auto !important;
-        padding: 4px 8px !important;
-        opacity: 0.6;
-    }
-
-    .signup-card .alert .btn-close:hover {
-        opacity: 1;
-    }
-
     @media (max-width: 576px) {
         .signup-page {
             padding: 30px 10px;
-        }
-
-        .signup-container {
-            width: 100%;
         }
 
         .signup-card {
@@ -379,11 +314,10 @@
 
         .btn-google {
             font-size: 0.85rem;
-            padding: 10px 14px !important;
+            padding: 11px 14px !important;
         }
     }
 </style>
-
 
 <div class="signup-page">
 
@@ -391,40 +325,24 @@
 
         <div class="signup-card">
 
-            <h2 class="signup-title">
-                Create Your Account
-            </h2>
+            <h2 class="signup-title">✨ Create Your Account</h2>
 
             <p class="signup-subtitle">
                 Join Hasnain's Digital Library
             </p>
 
-            <!-- ============================
-                 DJANGO MESSAGES (Navbar)
-            ============================ -->
+            <!-- Messages -->
             {% if messages %}
                 {% for message in messages %}
-
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
-                         role="alert">
-
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                         <span>{{ message }}</span>
-
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="alert"
-                                aria-label="Close">
-                        </button>
-
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-
                 {% endfor %}
             {% endif %}
 
-            <!-- ============================
-                 SIGNUP FORM
-            ============================ -->
-            <form method="POST" class="signup-form">
+            <!-- Sign Up Form -->
+            <form method="POST" action="{% url 'account_signup' %}" class="signup-form">
 
                 {% csrf_token %}
 
@@ -442,8 +360,7 @@
             </div>
 
             <!-- Google Sign In Button -->
-            <a href="/accounts/google/login/"
-               class="btn-google">
+            <a href="{% provider_login_url 'google' %}" class="btn-google">
 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
                     <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
@@ -456,14 +373,9 @@
 
             </a>
 
-            <p class="signin-text">
-
+            <p class="signin-link">
                 Already have an account?
-
-                <a href="{% url 'signin' %}" class="signin-link">
-                    Sign In
-                </a>
-
+                <a href="{% url 'account_login' %}">Sign In</a>
             </p>
 
         </div>

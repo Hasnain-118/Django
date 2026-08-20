@@ -144,10 +144,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-# Authentication settings
-LOGIN_URL = 'signin'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+
+# ====================
+# AUTHENTICATION SETTINGS
+# ====================
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -156,16 +156,60 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
+# Login/Logout URLs
+LOGIN_URL = 'account_login'  # <-- CHANGED: signin → account_login
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 
-# settings.py
+# ====================
+# SOCIAL ACCOUNT PROVIDERS
+# ====================
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile', 'email'],
     }
 }
-# Add these too (if not already present)
+
+
+# ====================
+# SOCIAL ACCOUNT SETTINGS
+# ====================
+
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
+
+# ====================
+# ACCOUNT SETTINGS
+# ====================
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+
+# ====================
+# MESSAGE TAGS (for Bootstrap alerts)
+# ====================
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
+
+# ====================
+# EMAIL SETTINGS (Development)
+# ====================
+
+# Console backend - prints emails in terminal
+# Perfect for development and testing
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

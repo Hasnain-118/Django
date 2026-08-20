@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Sign Out - Hasnain's Digital Library{% endblock title %}
+
+{% block body %}
+
+<style>
+    .logout-page {
+        min-height: 100vh;
+        padding: 50px 15px;
+        background-image: url("{% static 'bg.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logout-page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        pointer-events: none;
+    }
+
+    .logout-container {
+        position: relative;
+        width: 90%;
+        max-width: 480px;
+        margin: auto;
+        z-index: 1;
+    }
+
+    .logout-card {
+        background: rgba(18, 20, 23, 0.55) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 20px;
+        padding: 40px 45px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6) !important;
+        text-align: center;
+    }
+
+    .logout-card,
+    .logout-card * {
+        color: #ffffff !important;
+    }
+
+    .logout-title {
+        color: #ffffff !important;
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .logout-subtitle {
+        color: #c8ced6 !important;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+
+    .logout-icon {
+        font-size: 4.5rem;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .logout-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .btn-logout {
+        padding: 13px 35px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+        color: #ffffff !important;
+        font-size: 1rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-cancel {
+        padding: 13px 35px;
+        border: 1px solid rgba(61, 68, 74, 0.6) !important;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: #c8ced6 !important;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-cancel:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 576px) {
+        .logout-card {
+            padding: 30px 22px;
+        }
+
+        .logout-title {
+            font-size: 1.7rem;
+        }
+
+        .logout-buttons {
+            flex-direction: column;
+        }
+
+        .btn-logout,
+        .btn-cancel {
+            width: 100%;
+            text-align: center;
+            padding: 14px;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .logout-card {
+            padding: 24px 16px;
+        }
+
+        .logout-title {
+            font-size: 1.4rem;
+        }
+
+        .logout-icon {
+            font-size: 3.5rem;
+        }
+    }
+</style>
+
+<div class="logout-page">
+
+    <div class="logout-container">
+
+        <div class="logout-card">
+
+            <span class="logout-icon">🚪</span>
+
+            <h2 class="logout-title">Sign Out</h2>
+
+            <p class="logout-subtitle">
+                Are you sure you want to sign out of your account?
+            </p>
+
+            <form method="POST" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+
+                <div class="logout-buttons">
+                    <button type="submit" class="btn-logout">
+                        Yes, Sign Out
+                    </button>
+
+                    <a href="{% url 'home' %}" class="btn-cancel">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}

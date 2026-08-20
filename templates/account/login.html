@@ -1,0 +1,421 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Sign In - Hasnain's Digital Library{% endblock title %}
+
+{% block body %}
+
+<style>
+    .signin-page {
+        min-height: 100vh;
+        padding: 50px 15px;
+        background-image: url("{% static 'bg.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .signin-page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        pointer-events: none;
+    }
+
+    .signin-container {
+        position: relative;
+        width: 90%;
+        max-width: 480px;
+        margin: auto;
+        z-index: 1;
+    }
+
+    .signin-card {
+        background: rgba(18, 20, 23, 0.55) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 20px;
+        padding: 40px 45px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .signin-card,
+    .signin-card * {
+        color: #ffffff !important;
+    }
+
+    .signin-title {
+        color: #ffffff !important;
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .signin-subtitle {
+        color: #c8ced6 !important;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+
+    .signin-form p {
+        margin-bottom: 20px;
+    }
+
+    .signin-form label {
+        display: block;
+        color: #e5e7eb !important;
+        font-weight: 600;
+        margin-bottom: 7px;
+        font-size: 0.9rem;
+    }
+
+    .signin-form input {
+        width: 100%;
+        padding: 12px 14px;
+        background: rgba(34, 39, 43, 0.7) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(61, 68, 74, 0.6) !important;
+        border-radius: 10px;
+        outline: none;
+        transition: 0.3s ease;
+        box-sizing: border-box;
+        font-size: 0.95rem;
+    }
+
+    .signin-form input::placeholder {
+        color: #8d959c !important;
+    }
+
+    .signin-form input:focus {
+        background: rgba(37, 42, 47, 0.8) !important;
+        color: #ffffff !important;
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15) !important;
+    }
+
+    .signin-form .errorlist {
+        color: #ff8585 !important;
+        font-size: 0.82rem;
+        margin: 6px 0;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .signin-form .errorlist li {
+        color: #ff8585 !important;
+        padding: 6px 12px;
+        background: rgba(239, 68, 68, 0.10);
+        border-left: 3px solid #ef4444;
+        border-radius: 4px;
+        margin-bottom: 4px;
+    }
+
+    .signin-form .errorlist li::before {
+        content: "✕ ";
+        color: #ef4444;
+        font-weight: 700;
+        margin-right: 6px;
+    }
+
+    .signin-form .helptext {
+        color: #8d959c !important;
+        font-size: 0.82rem;
+        margin-top: 7px;
+    }
+
+    .signin-button {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        margin-top: 5px;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+        color: #ffffff !important;
+        font-size: 1rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    }
+
+    .signin-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.4);
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #8d959c;
+        margin: 25px 0 20px;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid rgba(61, 68, 74, 0.5);
+    }
+
+    .divider::before {
+        margin-right: 15px;
+    }
+
+    .divider::after {
+        margin-left: 15px;
+    }
+
+    .divider span {
+        padding: 0 10px;
+        font-size: 0.85rem;
+        color: #9ca3af !important;
+    }
+
+    .btn-google {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        width: 100%;
+        padding: 13px 18px !important;
+        margin-top: 5px !important;
+        background: #ffffff !important;
+        color: #3c4043 !important;
+        border: 1px solid #dadce0 !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn-google:hover {
+        background: #f8f9fa !important;
+        border-color: #c5c7c9 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+        text-decoration: none !important;
+        color: #202124 !important;
+        transform: translateY(-1px);
+    }
+
+    .btn-google svg {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+    }
+
+    .forgot-password {
+        text-align: right;
+        margin-top: -8px;
+        margin-bottom: 18px;
+    }
+
+    .forgot-password a {
+        color: #9ca3af !important;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .forgot-password a:hover {
+        color: #a78bfa !important;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .remember-me input {
+        width: 18px;
+        height: 18px;
+        accent-color: #8b5cf6;
+        cursor: pointer;
+    }
+
+    .remember-me label {
+        margin-bottom: 0 !important;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #c8ced6 !important;
+    }
+
+    .signup-link {
+        color: #c8ced6 !important;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 0;
+        font-size: 0.95rem;
+    }
+
+    .signup-link a {
+        color: #a78bfa !important;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .signup-link a:hover {
+        color: #c4b5fd !important;
+    }
+
+    /* Alert Messages */
+    .signin-card .alert {
+        background: rgba(139, 92, 246, 0.15) !important;
+        border: 1px solid rgba(139, 92, 246, 0.25) !important;
+        color: #e5e7eb !important;
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .signin-card .alert-success {
+        background: rgba(52, 211, 153, 0.15) !important;
+        border-color: rgba(52, 211, 153, 0.25) !important;
+        color: #a7f3d0 !important;
+    }
+
+    .signin-card .alert-error,
+    .signin-card .alert-danger {
+        background: rgba(239, 68, 68, 0.15) !important;
+        border-color: rgba(239, 68, 68, 0.25) !important;
+        color: #fca5a5 !important;
+    }
+
+    .signin-card .btn-close {
+        color: #ffffff !important;
+        background: transparent !important;
+        border: none !important;
+        font-size: 1.2rem !important;
+        opacity: 0.5;
+        transition: opacity 0.2s ease;
+    }
+
+    .signin-card .btn-close:hover {
+        opacity: 1;
+    }
+
+    .signin-card .btn-close::before {
+        content: "✕";
+        font-size: 1.1rem;
+        color: #ffffff;
+    }
+
+    @media (max-width: 576px) {
+        .signin-page {
+            padding: 30px 10px;
+        }
+
+        .signin-card {
+            padding: 30px 22px;
+        }
+
+        .signin-title {
+            font-size: 1.7rem;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .signin-card {
+            padding: 24px 16px;
+        }
+
+        .signin-title {
+            font-size: 1.4rem;
+        }
+
+        .btn-google {
+            font-size: 0.85rem;
+            padding: 11px 14px !important;
+        }
+    }
+</style>
+
+<div class="signin-page">
+
+    <div class="signin-container">
+
+        <div class="signin-card">
+
+            <h2 class="signin-title">✨ Sign In</h2>
+
+            <p class="signin-subtitle">
+                Welcome back to Hasnain's Digital Library
+            </p>
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <span>{{ message }}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Sign In Form -->
+            <form method="POST" action="{% url 'account_login' %}" class="signin-form">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <div class="forgot-password">
+                    <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
+                </div>
+
+                <button type="submit" class="signin-button">
+                    Sign In
+                </button>
+
+            </form>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+
+            <!-- Google Sign In Button -->
+            <a href="{% provider_login_url 'google' %}" class="btn-google">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                    <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+                    <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                    <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                </svg>
+
+                Sign in with Google
+
+            </a>
+
+            <p class="signup-link">
+                Don't have an account?
+                <a href="{% url 'account_signup' %}">Sign Up</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}

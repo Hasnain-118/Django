@@ -70,6 +70,144 @@
         color: #c4b5fd !important;
     }
 
+    /* =========================
+       GOOGLE BUTTON
+    ========================= */
+
+    .btn-google {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+
+        width: 100%;
+        padding: 12px 18px !important;
+        margin-top: 15px !important;
+
+        background: #ffffff !important;
+        color: #3c4043 !important;
+
+        border: 1px solid #dadce0 !important;
+        border-radius: 10px !important;
+
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+
+        transition: all 0.2s ease !important;
+        text-decoration: none !important;
+    }
+
+    .btn-google:hover {
+        background: #f8f9fa !important;
+        border-color: #c5c7c9 !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+        text-decoration: none !important;
+        color: #202124 !important;
+    }
+
+    .btn-google svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    /* =========================
+       DIVIDER
+    ========================= */
+
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #8d959c;
+        margin: 22px 0 18px;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #3d444a;
+    }
+
+    .divider::before {
+        margin-right: 15px;
+    }
+
+    .divider::after {
+        margin-left: 15px;
+    }
+
+    .divider span {
+        padding: 0 10px;
+        font-size: 0.85rem;
+        color: #9ca3af;
+    }
+
+    /* =========================
+       GLASS CARD OVERRIDE
+    ========================= */
+
+    .glass-card {
+        background: rgba(18, 20, 23, 0.75) !important;
+        backdrop-filter: blur(18px) !important;
+        -webkit-backdrop-filter: blur(18px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    /* Fix for any black text inside card */
+    .glass-card,
+    .glass-card * {
+        color: #ffffff !important;
+    }
+
+    .glass-card .text-muted,
+    .glass-card .text-white-50 {
+        color: #b0b8c0 !important;
+    }
+
+    .glass-card a:not(.btn-google):not(.btn-primary) {
+        color: #a78bfa !important;
+    }
+
+    .glass-card a:not(.btn-google):not(.btn-primary):hover {
+        color: #c4b5fd !important;
+    }
+
+    /* Alert messages */
+    .glass-card .alert {
+        background: rgba(139, 92, 246, 0.12) !important;
+        border: 1px solid rgba(139, 92, 246, 0.25) !important;
+        color: #e5e7eb !important;
+        border-radius: 8px;
+    }
+
+    .glass-card .alert-success {
+        background: rgba(52, 211, 153, 0.12) !important;
+        border-color: rgba(52, 211, 153, 0.25) !important;
+        color: #a7f3d0 !important;
+    }
+
+    .glass-card .alert-error,
+    .glass-card .alert-danger {
+        background: rgba(239, 68, 68, 0.12) !important;
+        border-color: rgba(239, 68, 68, 0.25) !important;
+        color: #fca5a5 !important;
+    }
+
+    .glass-card .alert-info {
+        background: rgba(59, 130, 246, 0.12) !important;
+        border-color: rgba(59, 130, 246, 0.25) !important;
+        color: #93c5fd !important;
+    }
+
+    .glass-card .alert-warning {
+        background: rgba(251, 191, 36, 0.12) !important;
+        border-color: rgba(251, 191, 36, 0.25) !important;
+        color: #fcd34d !important;
+    }
+
 </style>
 
 
@@ -77,14 +215,16 @@
      style="
      min-height: 100vh;
      overflow: hidden;
-     background: linear-gradient(135deg, #111315, #191c1f, #22272b);
+     background: linear-gradient(135deg, #0b0d0f, #15181c, #1e2227);
      ">
 
+    <!-- Background Glow -->
     <div class="position-absolute top-0 start-0 w-100 h-100"
          style="
          background:
-         radial-gradient(circle at 20% 20%, rgba(139,92,246,0.18), transparent 35%),
-         radial-gradient(circle at 80% 80%, rgba(167,139,250,0.12), transparent 35%);
+         radial-gradient(circle at 20% 20%, rgba(139,92,246,0.15), transparent 40%),
+         radial-gradient(circle at 80% 80%, rgba(167,139,250,0.10), transparent 40%);
+         pointer-events: none;
          ">
     </div>
 
@@ -92,25 +232,15 @@
     <div class="position-relative"
          style="width: 90%; max-width: 500px;">
 
-        <div class="card border-0 rounded-4 p-4 p-md-5"
-             style="
-             background: rgba(25, 28, 31, 0.88);
-             backdrop-filter: blur(16px);
-             -webkit-backdrop-filter: blur(16px);
-             border: 1px solid rgba(255,255,255,0.1) !important;
-             box-shadow: 0 8px 32px rgba(0,0,0,0.45) !important;
-             ">
+        <div class="card border-0 rounded-4 p-4 p-md-5 glass-card">
 
-
-            <h2 class="mb-2 fw-bold text-white text-center">
+            <h2 class="mb-2 fw-bold text-center" style="color: #ffffff !important;">
                 Sign In
             </h2>
 
-
-            <p class="text-white-50 text-center mb-4">
+            <p class="text-center mb-4" style="color: #b0b8c0 !important;">
                 Welcome back to Hasnain's Digital Library
             </p>
-
 
             {% if messages %}
 
@@ -136,44 +266,55 @@
                        name="next"
                        value="{{ request.GET.next }}">
 
-
                 {{ form.as_p }}
-
 
                 <button type="submit"
                         class="btn btn-primary btn-lg w-100 rounded-3 py-3 fw-bold"
                         style="
                         background-color: #8b5cf6;
                         border-color: #8b5cf6;
+                        color: #ffffff;
                         ">
 
                     Sign In
 
                 </button>
 
-
-
-
-                <a href="http://127.0.0.1:8000/accounts/google/login/" class="btn btn-outline-light w-100 mb-3">
-    Sign in with Google
-</a>
             </form>
 
+            <!-- Divider -->
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
 
-            <p class="text-white-50 text-center mt-4 mb-0">
+            <!-- Google Sign In Button -->
+            <a href="/accounts/google/login/"
+               class="btn-google">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+                    <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+                    <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+                    <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+                </svg>
+
+                Sign in with Google
+
+            </a>
+
+            <p class="text-center mt-4 mb-0" style="color: #b0b8c0 !important;">
 
                 Don't have an account?
 
                 <a href="{% url 'signup' %}"
                    class="fw-bold text-decoration-none"
-                   style="color: #a78bfa;">
+                   style="color: #a78bfa !important;">
 
                     Sign Up
 
                 </a>
 
             </p>
-
 
         </div>
 

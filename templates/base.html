@@ -458,25 +458,25 @@
                     <!-- SEARCH -->
 
                     <form class="d-flex navbar-search"
-      role="search"
-      method="GET"
-      action="{% url 'search_books' %}">
+                          role="search"
+                          method="GET"
+                          action="{% url 'search_books' %}">
 
-    <input class="form-control"
-           type="search"
-           name="q"
-           placeholder="Search books..."
-           aria-label="Search"
-           value="{{ request.GET.q|default:'' }}">
+                        <input class="form-control"
+                               type="search"
+                               name="q"
+                               placeholder="Search books..."
+                               aria-label="Search"
+                               value="{{ request.GET.q|default:'' }}">
 
-    <button class="btn search-btn"
-            type="submit">
+                        <button class="btn search-btn"
+                                type="submit">
 
-        Search
+                            Search
 
-    </button>
+                        </button>
 
-</form>
+                    </form>
 
 
 
@@ -563,7 +563,7 @@
                                     <li>
 
                                         <a class="dropdown-item logout"
-                                            href="{% url 'signout' %}">
+                                            href="{% url 'account_logout' %}">
 
                                             🚪 Logout
 
@@ -586,7 +586,7 @@
 
                             </span>
 
-                            <a href="{% url 'signout' %}"
+                            <a href="{% url 'account_logout' %}"
                                 class="btn btn-outline-light auth-btn">
 
                                 Logout
@@ -600,7 +600,7 @@
 
                         <!-- GUEST -->
 
-                        <a href="{% url 'signin' %}"
+                        <a href="{% url 'account_login' %}"
                             class="btn btn-outline-light auth-btn">
 
                             Sign In
@@ -608,7 +608,7 @@
                         </a>
 
 
-                        <a href="{% url 'signup' %}"
+                        <a href="{% url 'account_signup' %}"
                             class="btn auth-btn signup-btn">
 
                             Sign Up
