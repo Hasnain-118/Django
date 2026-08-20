@@ -4,91 +4,230 @@
 
 {% block body %}
 
-<div class="container py-5">
+<style>
+    .search-page {
+        min-height: 100vh;
+        background: url('/static/bg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+        padding: 40px 0 60px 0;
+    }
 
-    <div class="mb-4">
-        <h2 class="text-white">Search Results</h2>
+    /* Dark overlay for readability */
+    .search-page::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 19, 21, 0.82);
+        z-index: 1;
+    }
 
-        {% if query %}
-            <p class="text-secondary">
-                Results for: <strong class="text-white">"{{ query }}"</strong>
-            </p>
-        {% endif %}
-    </div>
+    .search-content {
+        position: relative;
+        z-index: 2;
+    }
 
-    {% if books %}
+    /* Glassmorphism card effect */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        transition: all 0.3s ease;
+    }
 
-        <div class="row g-4">
+    .glass-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(139, 92, 246, 0.3) !important;
+        box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15);
+    }
 
-            {% for book in books %}
+    .glass-card .card-body {
+        background: transparent !important;
+    }
 
-                <div class="col-md-6 col-lg-4">
+    .glass-card .card-title {
+        color: #ffffff;
+    }
 
-                    <div class="card h-100 bg-dark text-white border-secondary">
+    .glass-card .text-secondary {
+        color: #b8bec5 !important;
+    }
 
-                        {% if book.cover_image %}
-                            <img src="{{ book.cover_image.url }}"
-                                 class="card-img-top"
-                                 alt="{{ book.title }}"
-                                 style="height: 300px; object-fit: cover;">
-                        {% endif %}
+    .search-title {
+        text-shadow: 0 2px 20px rgba(139, 92, 246, 0.2);
+    }
 
-                        <div class="card-body">
+    /* Input/Button in overlay */
+    .search-page .form-control {
+        background: rgba(34, 39, 43, 0.85) !important;
+        border-color: rgba(61, 68, 74, 0.6) !important;
+        color: white !important;
+        backdrop-filter: blur(5px);
+    }
 
-                            <h5 class="card-title">
-                                {{ book.title }}
-                            </h5>
+    .search-page .form-control:focus {
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2) !important;
+    }
 
-                            <p class="text-secondary mb-2">
-                                {{ book.author }}
-                            </p>
+    .search-page .btn-outline-light {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #d1d5d8;
+        transition: 0.3s;
+    }
 
-                            {% if book.quote %}
-                                <p class="small text-secondary">
-                                    "{{ book.quote }}"
-                                </p>
+    .search-page .btn-outline-light:hover {
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        border-color: #8b5cf6;
+        color: white;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Empty state styling */
+    .empty-state {
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px dashed rgba(139, 92, 246, 0.2);
+        border-radius: 20px;
+        padding: 60px 30px;
+        backdrop-filter: blur(5px);
+    }
+
+    .empty-state h4 {
+        color: #ffffff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .empty-state .text-secondary {
+        color: #b8bec5 !important;
+    }
+
+    .empty-state i {
+        color: #8b5cf6;
+        opacity: 0.5;
+    }
+
+    @media (max-width: 576px) {
+        .search-page {
+            padding: 20px 0 40px 0;
+        }
+        .glass-card:hover {
+            transform: none;
+        }
+    }
+</style>
+
+<div class="search-page">
+
+    <div class="container search-content py-4">
+
+        <div class="mb-4 text-center text-md-start">
+            <h2 class="text-white search-title">
+                <i class="fas fa-search me-2" style="color: #8b5cf6;"></i>
+                Search Results
+            </h2>
+
+            {% if query %}
+                <p class="text-secondary" style="font-size: 1.05rem;">
+                    Results for: <strong class="text-white">"{{ query }}"</strong>
+                </p>
+            {% endif %}
+        </div>
+
+        {% if books %}
+
+            <div class="row g-4">
+
+                {% for book in books %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card h-100 glass-card text-white">
+
+                            {% if book.cover_image %}
+                                <img src="{{ book.cover_image.url }}"
+                                     class="card-img-top"
+                                     alt="{{ book.title }}"
+                                     style="height: 280px; object-fit: cover; border-radius: 12px 12px 0 0;">
                             {% endif %}
 
-                            {% if book.rating %}
-                                <p>
-                                    ⭐ {{ book.rating }}
-                                </p>
-                            {% endif %}
+                            <div class="card-body">
 
-                            <a href="{% url 'read_book' book.id %}"
-                               class="btn btn-outline-light">
-                                Read Book
-                            </a>
+                                <h5 class="card-title">
+                                    {{ book.title }}
+                                </h5>
+
+                                <p class="text-secondary mb-2">
+                                    <i class="fas fa-user-edit me-1" style="color: #8b5cf6; font-size: 0.8rem;"></i>
+                                    {{ book.author }}
+                                </p>
+
+                                {% if book.quote %}
+                                    <p class="small text-secondary fst-italic">
+                                        "{{ book.quote }}"
+                                    </p>
+                                {% endif %}
+
+                                {% if book.rating %}
+                                    <p class="mb-2" style="color: #fbbf24;">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= book.rating %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <span class="text-secondary ms-1" style="font-size: 0.85rem;">({{ book.rating }})</span>
+                                    </p>
+                                {% endif %}
+
+                                <a href="{% url 'read_book' book.id %}"
+                                   class="btn btn-outline-light mt-2">
+                                    <i class="fas fa-book-open me-1"></i> Read Book
+                                </a>
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                {% endfor %}
 
-            {% endfor %}
+            </div>
 
-        </div>
+        {% else %}
 
-    {% else %}
+            <div class="empty-state text-center">
 
-        <div class="text-center py-5">
+                {% if query %}
+                    <i class="fas fa-book-open" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                    <h4 class="text-white">No books found</h4>
+                    <p class="text-secondary">
+                        No results found for <strong class="text-white">"{{ query }}"</strong>.
+                    </p>
+                    <p class="text-secondary small">
+                        Try searching with different keywords or browse categories.
+                    </p>
+                    <a href="{% url 'home' %}" class="btn btn-outline-light mt-3">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Home
+                    </a>
+                {% else %}
+                    <i class="fas fa-search" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                    <h4 class="text-white">Search for a book</h4>
+                    <p class="text-secondary">
+                        Enter a book title, author, or keyword in the search box above.
+                    </p>
+                {% endif %}
 
-            {% if query %}
-                <h4 class="text-white">No books found</h4>
-                <p class="text-secondary">
-                    No results found for "{{ query }}".
-                </p>
-            {% else %}
-                <h4 class="text-white">Search for a book</h4>
-                <p class="text-secondary">
-                    Enter a book title, author, or keyword in the search box.
-                </p>
-            {% endif %}
+            </div>
 
-        </div>
+        {% endif %}
 
-    {% endif %}
+    </div>
 
 </div>
 

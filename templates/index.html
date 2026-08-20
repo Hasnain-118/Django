@@ -4,1557 +4,917 @@
 
 {% block body %}
 
-<div class="container-fluid my-0 px-0">
-
-
-    <!-- ==================== CAROUSEL ==================== -->
-
-    <div id="bookCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-
-
-        <!-- Carousel Indicators -->
-
-        {% if latest_books|length > 1 %}
-
-        <div class="carousel-indicators">
-
-            {% for book in latest_books %}
-
-            <button type="button" data-bs-target="#bookCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
-                class="{% if forloop.first %}active{% endif %}" {% if forloop.first %}aria-current="true" {% endif %}
-                aria-label="Slide {{ forloop.counter }}">
-            </button>
-
-            {% endfor %}
-
-        </div>
-
-        {% endif %}
-
-
-        <!-- Carousel Items -->
-
-        <div class="carousel-inner">
-
-            {% for book in latest_books %}
-
-            <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative" style="height: 700px;">
-
-
-                <!-- ==================== BLURRED BACKGROUND ==================== -->
-
-                {% if book.cover_image %}
-
-                <div class="slide-background" style="background-image: url('{{ book.cover_image.url }}');">
-                </div>
-
-
-                <!-- Dark overlay -->
-
-                <div class="slide-overlay"></div>
-
-
-                <!-- ==================== ORIGINAL BOOK COVER ==================== -->
-
-                <div class="book-cover-wrapper">
-
-    <img 
-        src="{{ book.cover_image.url }}" 
-        class="book-cover"
-        alt="{{ book.title }}"
-    >
-
-</div>
-
-                {% endif %}
-
-
-
-                <!-- ==================== CAPTION ==================== -->
-
-                <div class="carousel-caption">
-
-                    <div class="caption-box">
-
-
-                        <h1 class="display-4 fw-bold">
-                            {{ book.title }}
-                        </h1>
-
-
-                        {% if book.author %}
-
-                        <h4 class="mb-3">
-                            By {{ book.author }}
-                        </h4>
-
-                        {% endif %}
-
-
-                        {% if book.quote %}
-
-                        <p class="lead">
-                            {{ book.quote }}
-                        </p>
-
-                        {% endif %}
-
-
-                        {% if user.is_authenticated %}
-
-                        <a href="{% url 'read_book' book.id %}" class="btn btn-light btn-lg mt-2">
-
-                            Read Now
-
-                        </a>
-
-                        {% else %}
-
-                        <a href="{% url 'signin' %}?next={% url 'read_book' book.id %}"
-                            class="btn btn-warning btn-lg mt-2">
-
-                            Login to Read
-
-                        </a>
-
-                        {% endif %}
-
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-            {% empty %}
-
-
-            <!-- ==================== NO BOOKS ==================== -->
-
-            <div class="carousel-item active">
-
-                <div class="d-flex align-items-center justify-content-center bg-dark" style="height: 650px;">
-
-                    <h2 class="text-white">
-                        No books added yet
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            {% endfor %}
-
-        </div>
-
-
-
-        <!-- ==================== PREVIOUS BUTTON ==================== -->
-
-        {% if latest_books|length > 1 %}
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-
-            <span class="carousel-control-prev-icon" aria-hidden="true">
-            </span>
-
-            <span class="visually-hidden">
-                Previous
-            </span>
-
-        </button>
-
-
-
-        <!-- ==================== NEXT BUTTON ==================== -->
-
-        <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-
-            <span class="carousel-control-next-icon" aria-hidden="true">
-            </span>
-
-            <span class="visually-hidden">
-                Next
-            </span>
-
-        </button>
-
-        {% endif %}
-
-
-    </div>
-
-
-
-    <!-- ==================== PRODUCTS ==================== -->
-
-    <div class="album py-5 home-background">
-
-
-        <div class="text-center py-3">
-
-            <h1 class="display-3 fw-bold text-white p-4 rounded-4 d-inline-block" style="
-                background: rgba(255,255,255,0.12);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(255,255,255,0.3);
-                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-                text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-                letter-spacing: 2px;
-                ">
-
-                Read Your Favorite Books
-
-            </h1>
-
-        </div>
-
-
-
-        <div class="container">
-
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-
-
-                {% for book in books %}
-
-                <div class="col">
-
-
-                    <div class="card h-100 border-secondary" style="background-color: #1e1e1e;">
-
-
-                        <!-- Book Cover -->
-
-                        {% if book.cover_image %}
-
-                        <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}" style="
-         height: 500px;
-         object-fit: cover;
-         ">
-
-                        {% else %}
-
-                        <div class="card-img-top d-flex align-items-center justify-content-center" style="
-         height: 500px;
-         background: linear-gradient(135deg, #2c2c2c, #151515);
-         color: #888;
-         ">
-
-                            <div class="text-center">
-                                <div style="font-size: 70px;">📚</div>
-                                <h5 class="mt-3">No Cover Available</h5>
-                            </div>
-
-                        </div>
-
-                        {% endif %}
-
-
-
-                        <!-- Rating -->
-
-                        <span class="fs-4 fw-bold text-success" style="
-                              padding-left: 30px;
-                              padding-top: 10px;
-                              color: #2ecc71 !important;
-                              ">
-
-                            {{ book.rating }}⭐
-
-                        </span>
-
-
-
-                        <!-- Card Body -->
-
-                        <div class="card-body" style="
-                             display: flex;
-                             flex-direction: column;
-                             color: #ffffff;
-                             ">
-
-
-                            <h5 style="color: #ffffff !important;">
-
-                                <b>
-                                    {{ book.title }}
-                                </b>
-
-                            </h5>
-
-
-
-                            {% if book.author %}
-
-                            <p style="color: #aaaaaa;">
-                                By {{ book.author }}
-                            </p>
-
-                            {% endif %}
-
-
-
-                            <p class="card-text" style="color: #d1d1d1;">
-
-                                {{ book.quote }}
-
-                            </p>
-
-
-
-                            <!-- Bottom Section -->
-
-                            <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;">
-
-
-                                <!-- Read Button -->
-
-                                <div class="btn-group">
-
-
-                                    {% if user.is_authenticated %}
-
-                                    <a href="{% url 'read_book' book.id %}" class="btn btn-sm btn-outline-light">
-
-                                        Read
-
-                                    </a>
-
-                                    {% else %}
-
-                                    <a href="{% url 'signin' %}?next={% url 'read_book' book.id %}"
-                                        class="btn btn-sm btn-outline-warning">
-
-                                        Login to Read
-
-                                    </a>
-
-                                    {% endif %}
-
-
-                                </div>
-
-
-
-                                <!-- Category -->
-
-                                <small style="color: #b0b0b0;">
-
-                                    {{ book.get_category_display }}
-
-                                </small>
-
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                {% empty %}
-
-
-                <div class="col-12">
-
-                    <p class="text-white text-center">
-                        No books available.
-                    </p>
-
-                </div>
-
-
-                {% endfor %}
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-{% if page_obj.has_other_pages %}
-
-<nav class="pagination-container">
-
-    {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}">
-            Previous
-        </a>
-    {% endif %}
-
-
-    {% for num in page_obj.paginator.page_range %}
-
-        {% if page_obj.number == num %}
-
-            <span class="active-page">
-                {{ num }}
-            </span>
-
-        {% else %}
-
-            <a href="?page={{ num }}">
-                {{ num }}
-            </a>
-
-        {% endif %}
-
-    {% endfor %}
-
-
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">
-            Next
-        </a>
-    {% endif %}
-
-</nav>
-
-{% endif %}
-
-<!-- ==================== CAROUSEL CSS ==================== -->
-
 <style>
+    /* =========================================================
+       GLOBAL BACKGROUND
+    ========================================================= */
+    .home-page-wrapper {
+        min-height: 100vh;
+        background: url('/static/bg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+    }
 
-/* =========================================================
-   GLOBAL
-========================================================= */
+    .home-page-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 19, 21, 0.78);
+        z-index: 0;
+    }
 
-body {
-    background-color: #111315 !important;
-    color: #ffffff;
+    .home-page-wrapper > * {
+        position: relative;
+        z-index: 1;
+    }
 
-    background-image:
-        linear-gradient(
-            rgba(17, 19, 21, 0.72),
-            rgba(17, 19, 21, 0.82)
-        ),
-        url('/static/bg.jpg');
+    /* =========================================================
+       CAROUSEL
+    ========================================================= */
+    #bookCarousel {
+        background: transparent !important;
+    }
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
+    #bookCarousel .carousel-inner {
+        background: transparent !important;
+    }
 
+    #bookCarousel .carousel-item {
+        position: relative;
+        height: 700px;
+        overflow: hidden;
+        background: transparent !important;
+    }
 
-/* =========================================================
-   CAROUSEL
-========================================================= */
+    /* Hide blurred background */
+    #bookCarousel .slide-background {
+        display: none !important;
+    }
 
-#bookCarousel {
-    background: transparent !important;
-}
-
-#bookCarousel .carousel-inner {
-    background: transparent !important;
-}
-
-#bookCarousel .carousel-item {
-    position: relative;
-    height: 700px;
-    overflow: hidden;
-    background: transparent !important;
-}
-
-
-/* Hide blurred background */
-
-#bookCarousel .slide-background {
-    display: none !important;
-}
-
-
-/* Overlay */
-
-#bookCarousel .slide-overlay {
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
+    /* Overlay */
+    #bookCarousel .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
             90deg,
             rgba(17, 19, 21, 0.35),
             rgba(17, 19, 21, 0.08),
             rgba(17, 19, 21, 0.30)
         );
-
-    z-index: 1;
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   CAROUSEL BOOK COVER
-========================================================= */
-
-#bookCarousel .book-cover-wrapper {
-    position: absolute;
-
-    top: 50%;
-    right: 8%;
-
-    transform: translateY(-50%);
-
-    width: 400px;
-    height: 580px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 2;
-
-    overflow: hidden;
-
-    border-radius: 10px;
-
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.65);
-}
-
-
-#bookCarousel .book-cover {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-    object-position: center;
-
-    border-radius: 10px;
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-
-/* =========================================================
-   CAROUSEL CAPTION
-========================================================= */
-
-#bookCarousel .carousel-caption {
-    position: absolute;
-
-    left: 6%;
-    right: auto;
-    bottom: 9%;
-
-    text-align: left;
-
-    z-index: 5;
-}
-
-
-#bookCarousel .caption-box {
-    max-width: 600px;
-
-    padding: 24px 28px;
-
-    border-radius: 18px;
-
-    background: rgba(17, 19, 21, 0.68);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    border: 1px solid rgba(139, 92, 246, 0.22);
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.35);
-}
-
-
-#bookCarousel .caption-box h1 {
-    color: #ffffff;
-
-    letter-spacing: 0.3px;
-
-    text-shadow:
-        0 3px 15px rgba(0, 0, 0, 0.5);
-}
-
-
-#bookCarousel .caption-box h4 {
-    color: #a78bfa;
-    font-weight: 500;
-}
-
-
-#bookCarousel .caption-box p {
-    color: #d1d5d8;
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   CAROUSEL BUTTONS
-========================================================= */
-
-#bookCarousel .btn-light {
-    background: #ffffff;
-    color: #111315;
-
-    border: none;
-    border-radius: 9px;
-
-    padding: 10px 22px;
-
-    font-weight: 600;
-
-    transition: 0.25s ease;
-}
-
-
-#bookCarousel .btn-light:hover {
-    background: #a78bfa;
-    color: #ffffff;
-
-    transform: translateY(-2px);
-}
-
-
-#bookCarousel .btn-warning {
-    background: #8b5cf6 !important;
-    border-color: #8b5cf6 !important;
-
-    color: #ffffff !important;
-
-    border-radius: 9px;
-
-    padding: 10px 22px;
-
-    font-weight: 600;
-}
-
-
-#bookCarousel .btn-warning:hover {
-    background: #7c3aed !important;
-    border-color: #7c3aed !important;
-}
-
-
-/* =========================================================
-   CAROUSEL CONTROLS
-========================================================= */
-
-#bookCarousel .carousel-control-prev,
-#bookCarousel .carousel-control-next {
-    width: 8%;
-    z-index: 10;
-}
-
-
-#bookCarousel .carousel-control-prev-icon,
-#bookCarousel .carousel-control-next-icon {
-
-    width: 44px;
-    height: 44px;
-
-    padding: 10px;
-
-    border-radius: 50%;
-
-    background-color: rgba(17, 19, 21, 0.65);
-
-    border: 1px solid rgba(139, 92, 246, 0.25);
-
-    background-size: 42%;
-
-    transition: 0.25s ease;
-}
-
-
-#bookCarousel .carousel-control-prev-icon:hover,
-#bookCarousel .carousel-control-next-icon:hover {
-
-    background-color: #8b5cf6;
-
-    border-color: #8b5cf6;
-
-    transform: scale(1.08);
-}
-
-
-/* =========================================================
-   INDICATORS
-========================================================= */
-
-#bookCarousel .carousel-indicators {
-    z-index: 10;
-}
-
-
-#bookCarousel .carousel-indicators button {
-
-    width: 28px;
-    height: 4px;
-
-    margin: 0 4px;
-
-    border: none;
-    border-radius: 10px;
-
-    background-color: rgba(255, 255, 255, 0.30);
-
-    transition: 0.25s ease;
-}
-
-
-#bookCarousel .carousel-indicators button.active {
-
-    width: 40px;
-
-    background-color: #8b5cf6;
-
-    box-shadow:
-        0 0 10px rgba(139, 92, 246, 0.5);
-}
-
-
-/* =========================================================
-   BOOK SECTION
-========================================================= */
-
-.home-background {
-    background: transparent !important;
-}
-
-
-/* =========================================================
-   BOOK GRID
-========================================================= */
-
-/*
-   Your existing HTML already has:
-
-   row row-cols-1 row-cols-sm-2 row-cols-md-3
-
-   So we directly control Bootstrap's .row here.
-*/
-
-.home-background .row {
-
-    display: grid !important;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 24px;
-
-    margin-left: 0;
-    margin-right: 0;
-}
-
-
-.home-background .row > .col {
-
-    width: 100% !important;
-
-    padding: 0 !important;
-}
-
-
-/* =========================================================
-   BOOK CARDS
-========================================================= */
-
-.home-background .card {
-
-    width: 100%;
-
-    height: 100%;
-
-    background:
-        rgba(25, 28, 31, 0.82) !important;
-
-    border:
-        1px solid rgba(139, 92, 246, 0.20) !important;
-
-    border-radius: 14px;
-
-    overflow: hidden;
-
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.25);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-}
-
-
-.home-background .card:hover {
-
-    transform: translateY(-6px);
-
-    border-color:
-        rgba(139, 92, 246, 0.55) !important;
-
-    box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.40);
-}
-
-
-/* =========================================================
-   BOOK COVER
-========================================================= */
-
-.home-background .card-img-top {
-
-    width: 100%;
-
-    height: 420px;
-
-    object-fit: cover;
-
-    object-position: center;
-
-    display: block;
-}
-
-
-/* =========================================================
-   RATING
-========================================================= */
-
-.home-background .card > span {
-
-    display: block;
-
-    padding-left: 18px !important;
-    padding-top: 12px !important;
-    padding-bottom: 2px;
-
-    color: #a78bfa !important;
-
-    font-size: 1rem !important;
-}
-
-
-/* =========================================================
-   CARD BODY
-========================================================= */
-
-.home-background .card-body {
-
-    padding: 18px;
-
-    color: #ffffff;
-
-    display: flex;
-    flex-direction: column;
-}
-
-
-.home-background .card-body h5 {
-
-    color: #ffffff !important;
-
-    font-size: 1.05rem;
-
-    line-height: 1.4;
-
-    margin-bottom: 6px;
-}
-
-
-.home-background .card-body p {
-
-    line-height: 1.5;
-}
-
-
-.home-background .card-body p[style*="aaaaaa"] {
-
-    color: #999fa5 !important;
-
-    font-size: 0.85rem;
-
-    margin-bottom: 8px;
-}
-
-
-.home-background .card-text {
-
-    color: #c8ccd0 !important;
-
-    font-size: 0.88rem;
-
-    display: -webkit-box;
-
-    -webkit-line-clamp: 3;
-
-    -webkit-box-orient: vertical;
-
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   CARD BOTTOM
-========================================================= */
-
-.home-background .card-body
-.d-flex.justify-content-between {
-
-    margin-top: auto;
-
-    padding-top: 12px;
-}
-
-
-.home-background .card-body small {
-
-    color: #aeb4ba !important;
-
-    font-size: 0.75rem;
-}
-
-
-/* =========================================================
-   READ BUTTON
-========================================================= */
-
-.home-background .btn-outline-light {
-
-    border-radius: 8px;
-
-    padding: 6px 14px;
-
-    transition: 0.25s ease;
-}
-
-
-.home-background .btn-outline-light:hover {
-
-    background-color: #8b5cf6;
-
-    border-color: #8b5cf6;
-
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   PAGINATION
-========================================================= */
-
-.pagination-container {
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 8px;
-
-    margin: 40px 0 30px;
-
-    flex-wrap: wrap;
-}
-
-
-.pagination-container a,
-.pagination-container span {
-
-    min-width: 42px;
-    height: 42px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 14px;
-
-    border-radius: 9px;
-
-    text-decoration: none;
-
-    color: #d1d5d8;
-
-    background:
-        rgba(25, 28, 31, 0.9);
-
-    border:
-        1px solid #3d444a;
-
-    transition: 0.2s ease;
-}
-
-
-.pagination-container a:hover {
-
-    background: #8b5cf6;
-
-    border-color: #8b5cf6;
-
-    color: #ffffff;
-
-    transform: translateY(-2px);
-}
-
-
-.pagination-container .active-page {
-
-    background: #8b5cf6;
-
-    border-color: #8b5cf6;
-
-    color: #ffffff;
-
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 991px) {
-
-    .home-background .row {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 18px;
+        z-index: 1;
+        pointer-events: none;
     }
 
-
-    .home-background .card-img-top {
-
-        height: 360px;
-    }
-
-
+    /* =========================================================
+       CAROUSEL BOOK COVER
+    ========================================================= */
     #bookCarousel .book-cover-wrapper {
-
-        width: 320px;
-        height: 470px;
-
-        right: 5%;
+        position: absolute;
+        top: 50%;
+        right: 8%;
+        transform: translateY(-50%);
+        width: 400px;
+        height: 580px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
     }
-
-
-    #bookCarousel .carousel-caption {
-
-        left: 5%;
-    }
-
-
-    #bookCarousel .caption-box {
-
-        max-width: 480px;
-
-        padding: 20px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE — 2 COLUMNS
-========================================================= */
-
-@media (max-width: 768px) {
-
-    /* ---------- Carousel ---------- */
-
-    #bookCarousel .carousel-item {
-
-        height: 620px !important;
-    }
-
-
-    #bookCarousel .book-cover-wrapper {
-
-        top: 38%;
-
-        right: 50%;
-
-        transform:
-            translate(50%, -50%);
-
-        width: 230px;
-        height: 330px;
-
-        border-radius: 9px;
-    }
-
 
     #bookCarousel .book-cover {
-
-        border-radius: 9px;
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
     }
 
-
+    /* =========================================================
+       CAROUSEL CAPTION
+    ========================================================= */
     #bookCarousel .carousel-caption {
-
-        left: 12px;
-        right: 12px;
-
-        bottom: 28px;
-
-        text-align: center;
+        position: absolute;
+        left: 6%;
+        right: auto;
+        bottom: 9%;
+        text-align: left;
+        z-index: 5;
     }
-
 
     #bookCarousel .caption-box {
-
-        max-width: 100%;
-
-        padding: 14px 16px;
-
-        border-radius: 14px;
-
-        background:
-            rgba(17, 19, 21, 0.82);
+        max-width: 600px;
+        padding: 24px 28px;
+        border-radius: 18px;
+        background: rgba(17, 19, 21, 0.68);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(139, 92, 246, 0.22);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
     }
-
 
     #bookCarousel .caption-box h1 {
-
-        font-size: 1.25rem;
-
-        margin-bottom: 5px;
+        color: #ffffff;
+        letter-spacing: 0.3px;
+        text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
     }
-
 
     #bookCarousel .caption-box h4 {
-
-        font-size: 0.9rem;
-
-        margin-bottom: 8px !important;
+        color: #a78bfa;
+        font-weight: 500;
     }
-
 
     #bookCarousel .caption-box p {
-
-        display: none;
+        color: #d1d5d8;
+        line-height: 1.6;
     }
 
-
-    #bookCarousel .caption-box .btn {
-
-        font-size: 0.8rem;
-
-        padding: 7px 14px;
+    /* =========================================================
+       CAROUSEL BUTTONS
+    ========================================================= */
+    #bookCarousel .btn-light {
+        background: #ffffff;
+        color: #111315;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 22px;
+        font-weight: 600;
+        transition: 0.25s ease;
     }
 
+    #bookCarousel .btn-light:hover {
+        background: #a78bfa;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
 
+    #bookCarousel .btn-warning {
+        background: #8b5cf6 !important;
+        border-color: #8b5cf6 !important;
+        color: #ffffff !important;
+        border-radius: 9px;
+        padding: 10px 22px;
+        font-weight: 600;
+    }
+
+    #bookCarousel .btn-warning:hover {
+        background: #7c3aed !important;
+        border-color: #7c3aed !important;
+    }
+
+    /* =========================================================
+       CAROUSEL CONTROLS
+    ========================================================= */
     #bookCarousel .carousel-control-prev,
     #bookCarousel .carousel-control-next {
-
-        width: 12%;
+        width: 8%;
+        z-index: 10;
     }
-
 
     #bookCarousel .carousel-control-prev-icon,
     #bookCarousel .carousel-control-next-icon {
-
-        width: 34px;
-        height: 34px;
+        width: 44px;
+        height: 44px;
+        padding: 10px;
+        border-radius: 50%;
+        background-color: rgba(17, 19, 21, 0.65);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+        background-size: 42%;
+        transition: 0.25s ease;
     }
 
-
-    /* ---------- Section heading ---------- */
-
-    .home-background .display-3 {
-
-        font-size: 1.65rem !important;
-
-        padding: 14px 18px !important;
-
-        letter-spacing: 1px !important;
-
-        border-radius: 14px !important;
-
-        margin-left: 10px;
-        margin-right: 10px;
+    #bookCarousel .carousel-control-prev-icon:hover,
+    #bookCarousel .carousel-control-next-icon:hover {
+        background-color: #8b5cf6;
+        border-color: #8b5cf6;
+        transform: scale(1.08);
     }
 
+    /* =========================================================
+       INDICATORS
+    ========================================================= */
+    #bookCarousel .carousel-indicators {
+        z-index: 10;
+    }
 
-    /* ---------- 2 COLUMN GRID ---------- */
+    #bookCarousel .carousel-indicators button {
+        width: 28px;
+        height: 4px;
+        margin: 0 4px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.30);
+        transition: 0.25s ease;
+    }
 
+    #bookCarousel .carousel-indicators button.active {
+        width: 40px;
+        background-color: #8b5cf6;
+        box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    }
+
+    /* =========================================================
+       BOOK SECTION
+    ========================================================= */
+    .home-background {
+        background: transparent !important;
+    }
+
+    /* =========================================================
+       BOOK GRID
+    ========================================================= */
     .home-background .row {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr)) !important;
-
-        gap: 12px !important;
-
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
         margin-left: 0;
         margin-right: 0;
     }
 
-
     .home-background .row > .col {
-
         width: 100% !important;
-
-        min-width: 0;
+        padding: 0 !important;
     }
 
-
-    /* ---------- Cards ---------- */
-
+    /* =========================================================
+       BOOK CARDS - Glassmorphism
+    ========================================================= */
     .home-background .card {
-
-        border-radius: 11px;
-
-        min-width: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(25, 28, 31, 0.82) !important;
+        border: 1px solid rgba(139, 92, 246, 0.20) !important;
+        border-radius: 14px;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
+    .home-background .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(139, 92, 246, 0.55) !important;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.40);
+    }
 
-    /* ---------- Covers ---------- */
-
+    /* =========================================================
+       BOOK COVER
+    ========================================================= */
     .home-background .card-img-top {
-
-        width: 100% !important;
-
-        height: 230px !important;
-
-        object-fit: cover !important;
-
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
         object-position: center;
-
         display: block;
     }
 
-
-    /* ---------- Card body ---------- */
-
-    .home-background .card-body {
-
-        padding: 11px !important;
-
-        min-width: 0;
+    /* =========================================================
+       RATING
+    ========================================================= */
+    .home-background .card > span {
+        display: block;
+        padding-left: 18px !important;
+        padding-top: 12px !important;
+        padding-bottom: 2px;
+        color: #a78bfa !important;
+        font-size: 1rem !important;
     }
 
+    /* =========================================================
+       CARD BODY
+    ========================================================= */
+    .home-background .card-body {
+        padding: 18px;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+    }
 
     .home-background .card-body h5 {
-
-        font-size: 0.9rem;
-
-        line-height: 1.25;
-
-        margin-bottom: 5px;
-
-        display: -webkit-box;
-
-        -webkit-line-clamp: 2;
-
-        -webkit-box-orient: vertical;
-
-        overflow: hidden;
+        color: #ffffff !important;
+        font-size: 1.05rem;
+        line-height: 1.4;
+        margin-bottom: 6px;
     }
 
-
-    .home-background .card-body
-    p[style*="aaaaaa"] {
-
-        font-size: 0.72rem;
-
-        margin-bottom: 5px;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
+    .home-background .card-body p {
+        line-height: 1.5;
     }
 
-
-    .home-background .card-text {
-
-        font-size: 0.72rem;
-
-        line-height: 1.35;
-
-        -webkit-line-clamp: 2;
-
+    .home-background .card-body p[style*="aaaaaa"] {
+        color: #999fa5 !important;
+        font-size: 0.85rem;
         margin-bottom: 8px;
     }
 
-
-    /* ---------- Rating ---------- */
-
-    .home-background .card > span {
-
-        padding-left: 11px !important;
-
-        padding-top: 8px !important;
-
-        font-size: 0.82rem !important;
+    .home-background .card-text {
+        color: #c8ccd0 !important;
+        font-size: 0.88rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
-
-    /* ---------- Bottom ---------- */
-
-    .home-background .card-body
-    .d-flex.justify-content-between {
-
-        gap: 6px;
-
-        align-items: center;
-
-        padding-top: 7px;
+    /* =========================================================
+       CARD BOTTOM
+    ========================================================= */
+    .home-background .card-body .d-flex.justify-content-between {
+        margin-top: auto;
+        padding-top: 12px;
     }
-
-
-    .home-background .btn-outline-light {
-
-        font-size: 0.7rem;
-
-        padding: 5px 9px;
-    }
-
 
     .home-background .card-body small {
-
-        font-size: 0.65rem;
-
-        max-width: 90px;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
+        color: #aeb4ba !important;
+        font-size: 0.75rem;
     }
 
+    /* =========================================================
+       READ BUTTON
+    ========================================================= */
+    .home-background .btn-outline-light {
+        border-radius: 8px;
+        padding: 6px 14px;
+        transition: 0.25s ease;
+    }
 
-    /* ---------- Pagination ---------- */
+    .home-background .btn-outline-light:hover {
+        background-color: #8b5cf6;
+        border-color: #8b5cf6;
+        color: #ffffff;
+    }
 
+    /* =========================================================
+       SECTION HEADING
+    ========================================================= */
+    .home-background .display-3 {
+        background: rgba(255,255,255,0.08) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.15);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        letter-spacing: 2px;
+    }
+
+    /* =========================================================
+       PAGINATION
+    ========================================================= */
     .pagination-container {
-
-        gap: 5px;
-
-        margin-top: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 40px 0 30px;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 2;
     }
-
 
     .pagination-container a,
     .pagination-container span {
-
-        min-width: 36px;
-
-        height: 36px;
-
-        padding: 0 9px;
-
-        font-size: 0.78rem;
-    }
-}
-
-
-/* =========================================================
-   SMALL PHONES — STILL 2 COLUMNS
-========================================================= */
-
-@media (max-width: 480px) {
-
-    /* ---------- Carousel ---------- */
-
-    #bookCarousel .carousel-item {
-
-        height: 570px !important;
-    }
-
-
-    #bookCarousel .book-cover-wrapper {
-
-        width: 190px;
-
-        height: 275px;
-
-        top: 37%;
-    }
-
-
-    #bookCarousel .carousel-caption {
-
-        bottom: 22px;
-    }
-
-
-    #bookCarousel .caption-box {
-
-        padding: 11px 12px;
-
-        border-radius: 12px;
-    }
-
-
-    #bookCarousel .caption-box h1 {
-
-        font-size: 1.05rem;
-    }
-
-
-    #bookCarousel .caption-box h4 {
-
-        font-size: 0.78rem;
-    }
-
-
-    #bookCarousel .caption-box .btn {
-
-        font-size: 0.72rem;
-
-        padding: 6px 11px;
-    }
-
-
-    /* ---------- Heading ---------- */
-
-    .home-background .display-3 {
-
-        font-size: 1.3rem !important;
-
-        padding: 12px 14px !important;
-    }
-
-
-    /* ---------- 2 COLUMN GRID ---------- */
-
-    .home-background .row {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr)) !important;
-
-        gap: 9px !important;
-    }
-
-
-    /* ---------- Cover ---------- */
-
-    .home-background .card-img-top {
-
-        height: 190px !important;
-    }
-
-
-    /* ---------- Card ---------- */
-
-    .home-background .card {
-
+        min-width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
         border-radius: 9px;
+        text-decoration: none;
+        color: #d1d5d8;
+        background: rgba(25, 28, 31, 0.9);
+        border: 1px solid #3d444a;
+        transition: 0.2s ease;
     }
 
-
-    .home-background .card-body {
-
-        padding: 9px !important;
+    .pagination-container a:hover {
+        background: #8b5cf6;
+        border-color: #8b5cf6;
+        color: #ffffff;
+        transform: translateY(-2px);
     }
 
-
-    .home-background .card-body h5 {
-
-        font-size: 0.78rem;
-
-        line-height: 1.2;
+    .pagination-container .active-page {
+        background: #8b5cf6;
+        border-color: #8b5cf6;
+        color: #ffffff;
+        font-weight: 700;
     }
 
+    /* =========================================================
+       RESPONSIVE - TABLET
+    ========================================================= */
+    @media (max-width: 991px) {
+        .home-background .row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
 
-    .home-background .card-body
-    p[style*="aaaaaa"] {
+        .home-background .card-img-top {
+            height: 360px;
+        }
 
-        font-size: 0.64rem;
+        #bookCarousel .book-cover-wrapper {
+            width: 320px;
+            height: 470px;
+            right: 5%;
+        }
+
+        #bookCarousel .carousel-caption {
+            left: 5%;
+        }
+
+        #bookCarousel .caption-box {
+            max-width: 480px;
+            padding: 20px;
+        }
     }
 
+    /* =========================================================
+       RESPONSIVE - MOBILE (2 COLUMNS)
+    ========================================================= */
+    @media (max-width: 768px) {
+        /* Carousel */
+        #bookCarousel .carousel-item {
+            height: 620px !important;
+        }
 
-    .home-background .card-text {
+        #bookCarousel .book-cover-wrapper {
+            top: 38%;
+            right: 50%;
+            transform: translate(50%, -50%);
+            width: 230px;
+            height: 330px;
+            border-radius: 9px;
+        }
 
-        font-size: 0.65rem;
+        #bookCarousel .book-cover {
+            border-radius: 9px;
+        }
 
-        -webkit-line-clamp: 2;
+        #bookCarousel .carousel-caption {
+            left: 12px;
+            right: 12px;
+            bottom: 28px;
+            text-align: center;
+        }
+
+        #bookCarousel .caption-box {
+            max-width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(17, 19, 21, 0.82);
+        }
+
+        #bookCarousel .caption-box h1 {
+            font-size: 1.25rem;
+            margin-bottom: 5px;
+        }
+
+        #bookCarousel .caption-box h4 {
+            font-size: 0.9rem;
+            margin-bottom: 8px !important;
+        }
+
+        #bookCarousel .caption-box p {
+            display: none;
+        }
+
+        #bookCarousel .caption-box .btn {
+            font-size: 0.8rem;
+            padding: 7px 14px;
+        }
+
+        #bookCarousel .carousel-control-prev,
+        #bookCarousel .carousel-control-next {
+            width: 12%;
+        }
+
+        #bookCarousel .carousel-control-prev-icon,
+        #bookCarousel .carousel-control-next-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        /* Section heading */
+        .home-background .display-3 {
+            font-size: 1.65rem !important;
+            padding: 14px 18px !important;
+            letter-spacing: 1px !important;
+            border-radius: 14px !important;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        /* 2 COLUMN GRID */
+        .home-background .row {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 12px !important;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .home-background .row > .col {
+            width: 100% !important;
+            min-width: 0;
+        }
+
+        /* Cards */
+        .home-background .card {
+            border-radius: 11px;
+            min-width: 0;
+        }
+
+        /* Covers */
+        .home-background .card-img-top {
+            width: 100% !important;
+            height: 230px !important;
+            object-fit: cover !important;
+            object-position: center;
+            display: block;
+        }
+
+        /* Card body */
+        .home-background .card-body {
+            padding: 11px !important;
+            min-width: 0;
+        }
+
+        .home-background .card-body h5 {
+            font-size: 0.9rem;
+            line-height: 1.25;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .home-background .card-body p[style*="aaaaaa"] {
+            font-size: 0.72rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .home-background .card-text {
+            font-size: 0.72rem;
+            line-height: 1.35;
+            -webkit-line-clamp: 2;
+            margin-bottom: 8px;
+        }
+
+        /* Rating */
+        .home-background .card > span {
+            padding-left: 11px !important;
+            padding-top: 8px !important;
+            font-size: 0.82rem !important;
+        }
+
+        /* Bottom */
+        .home-background .card-body .d-flex.justify-content-between {
+            gap: 6px;
+            align-items: center;
+            padding-top: 7px;
+        }
+
+        .home-background .btn-outline-light {
+            font-size: 0.7rem;
+            padding: 5px 9px;
+        }
+
+        .home-background .card-body small {
+            font-size: 0.65rem;
+            max-width: 90px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Pagination */
+        .pagination-container {
+            gap: 5px;
+            margin-top: 25px;
+        }
+
+        .pagination-container a,
+        .pagination-container span {
+            min-width: 36px;
+            height: 36px;
+            padding: 0 9px;
+            font-size: 0.78rem;
+        }
     }
 
+    /* =========================================================
+       RESPONSIVE - SMALL PHONES (STILL 2 COLUMNS)
+    ========================================================= */
+    @media (max-width: 480px) {
+        /* Carousel */
+        #bookCarousel .carousel-item {
+            height: 570px !important;
+        }
 
-    .home-background .card > span {
+        #bookCarousel .book-cover-wrapper {
+            width: 190px;
+            height: 275px;
+            top: 37%;
+        }
 
-        padding-left: 9px !important;
+        #bookCarousel .carousel-caption {
+            bottom: 22px;
+        }
 
-        font-size: 0.72rem !important;
+        #bookCarousel .caption-box {
+            padding: 11px 12px;
+            border-radius: 12px;
+        }
+
+        #bookCarousel .caption-box h1 {
+            font-size: 1.05rem;
+        }
+
+        #bookCarousel .caption-box h4 {
+            font-size: 0.78rem;
+        }
+
+        #bookCarousel .caption-box .btn {
+            font-size: 0.72rem;
+            padding: 6px 11px;
+        }
+
+        /* Heading */
+        .home-background .display-3 {
+            font-size: 1.3rem !important;
+            padding: 12px 14px !important;
+        }
+
+        /* 2 COLUMN GRID */
+        .home-background .row {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 9px !important;
+        }
+
+        /* Cover */
+        .home-background .card-img-top {
+            height: 190px !important;
+        }
+
+        /* Card */
+        .home-background .card {
+            border-radius: 9px;
+        }
+
+        .home-background .card-body {
+            padding: 9px !important;
+        }
+
+        .home-background .card-body h5 {
+            font-size: 0.78rem;
+            line-height: 1.2;
+        }
+
+        .home-background .card-body p[style*="aaaaaa"] {
+            font-size: 0.64rem;
+        }
+
+        .home-background .card-text {
+            font-size: 0.65rem;
+            -webkit-line-clamp: 2;
+        }
+
+        .home-background .card > span {
+            padding-left: 9px !important;
+            font-size: 0.72rem !important;
+        }
+
+        .home-background .btn-outline-light {
+            font-size: 0.62rem;
+            padding: 4px 7px;
+        }
+
+        .home-background .card-body small {
+            font-size: 0.58rem;
+            max-width: 65px;
+        }
     }
 
+    /* =========================================================
+       RESPONSIVE - EXTRA SMALL PHONES
+    ========================================================= */
+    @media (max-width: 360px) {
+        .home-background .row {
+            gap: 7px !important;
+        }
 
-    .home-background .btn-outline-light {
+        .home-background .card-img-top {
+            height: 170px !important;
+        }
 
-        font-size: 0.62rem;
+        .home-background .card-body {
+            padding: 8px !important;
+        }
 
-        padding: 4px 7px;
+        .home-background .card-body h5 {
+            font-size: 0.72rem;
+        }
+
+        .home-background .card-text {
+            display: none;
+        }
+
+        .home-background .card-body p[style*="aaaaaa"] {
+            margin-bottom: 4px;
+        }
     }
-
-
-    .home-background .card-body small {
-
-        font-size: 0.58rem;
-
-        max-width: 65px;
-    }
-}
-
-
-/* =========================================================
-   EXTRA SMALL PHONES
-========================================================= */
-
-@media (max-width: 360px) {
-
-    .home-background .row {
-
-        gap: 7px !important;
-    }
-
-
-    .home-background .card-img-top {
-
-        height: 170px !important;
-    }
-
-
-    .home-background .card-body {
-
-        padding: 8px !important;
-    }
-
-
-    .home-background .card-body h5 {
-
-        font-size: 0.72rem;
-    }
-
-
-    .home-background .card-text {
-
-        display: none;
-    }
-
-
-    .home-background .card-body
-    p[style*="aaaaaa"] {
-
-        margin-bottom: 4px;
-    }
-}
-
 </style>
+
+<!-- =========================================================
+     PAGE WRAPPER WITH BACKGROUND
+========================================================= -->
+<div class="home-page-wrapper">
+
+    <div class="container-fluid my-0 px-0">
+
+        <!-- ==================== CAROUSEL ==================== -->
+        <div id="bookCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+            <!-- Carousel Indicators -->
+            {% if latest_books|length > 1 %}
+            <div class="carousel-indicators">
+                {% for book in latest_books %}
+                <button type="button" data-bs-target="#bookCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}" {% if forloop.first %}aria-current="true" {% endif %}
+                    aria-label="Slide {{ forloop.counter }}">
+                </button>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Carousel Items -->
+            <div class="carousel-inner">
+                {% for book in latest_books %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative" style="height: 700px;">
+
+                    {% if book.cover_image %}
+                    <div class="slide-background" style="background-image: url('{{ book.cover_image.url }}');"></div>
+                    <div class="slide-overlay"></div>
+
+                    <div class="book-cover-wrapper">
+                        <img src="{{ book.cover_image.url }}" class="book-cover" alt="{{ book.title }}">
+                    </div>
+                    {% endif %}
+
+                    <div class="carousel-caption">
+                        <div class="caption-box">
+                            <h1 class="display-4 fw-bold">{{ book.title }}</h1>
+                            {% if book.author %}
+                            <h4 class="mb-3">By {{ book.author }}</h4>
+                            {% endif %}
+                            {% if book.quote %}
+                            <p class="lead">{{ book.quote }}</p>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'read_book' book.id %}" class="btn btn-light btn-lg mt-2">Read Now</a>
+                            {% else %}
+                            <a href="{% url 'signin' %}?next={% url 'read_book' book.id %}"
+                                class="btn btn-warning btn-lg mt-2">Login to Read</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+                {% empty %}
+                <div class="carousel-item active">
+                    <div class="d-flex align-items-center justify-content-center bg-dark" style="height: 650px;">
+                        <h2 class="text-white">No books added yet</h2>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Previous & Next Buttons -->
+            {% if latest_books|length > 1 %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            {% endif %}
+
+        </div>
+
+        <!-- ==================== BOOKS SECTION ==================== -->
+        <div class="album py-5 home-background">
+
+            <div class="text-center py-3">
+                <h1 class="display-3 fw-bold text-white p-4 rounded-4 d-inline-block">
+                    Read Your Favorite Books
+                </h1>
+            </div>
+
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                    {% for book in books %}
+                    <div class="col">
+                        <div class="card h-100 border-secondary" style="background-color: #1e1e1e;">
+
+                            <!-- Book Cover -->
+                            {% if book.cover_image %}
+                            <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}"
+                                style="height: 500px; object-fit: cover;">
+                            {% else %}
+                            <div class="card-img-top d-flex align-items-center justify-content-center"
+                                style="height: 500px; background: linear-gradient(135deg, #2c2c2c, #151515); color: #888;">
+                                <div class="text-center">
+                                    <div style="font-size: 70px;">📚</div>
+                                    <h5 class="mt-3">No Cover Available</h5>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- Rating -->
+                            <span class="fs-4 fw-bold text-success" style="padding-left: 30px; padding-top: 10px; color: #2ecc71 !important;">
+                                {{ book.rating }}⭐
+                            </span>
+
+                            <!-- Card Body -->
+                            <div class="card-body" style="display: flex; flex-direction: column; color: #ffffff;">
+
+                                <h5 style="color: #ffffff !important;">
+                                    <b>{{ book.title }}</b>
+                                </h5>
+
+                                {% if book.author %}
+                                <p style="color: #aaaaaa;">By {{ book.author }}</p>
+                                {% endif %}
+
+                                <p class="card-text" style="color: #d1d1d1;">{{ book.quote }}</p>
+
+                                <!-- Bottom Section -->
+                                <div class="d-flex justify-content-between align-items-center" style="margin-top: auto;">
+                                    <div class="btn-group">
+                                        {% if user.is_authenticated %}
+                                        <a href="{% url 'read_book' book.id %}" class="btn btn-sm btn-outline-light">Read</a>
+                                        {% else %}
+                                        <a href="{% url 'signin' %}?next={% url 'read_book' book.id %}"
+                                            class="btn btn-sm btn-outline-warning">Login to Read</a>
+                                        {% endif %}
+                                    </div>
+                                    <small style="color: #b0b0b0;">{{ book.get_category_display }}</small>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <p class="text-white text-center">No books available.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==================== PAGINATION ==================== -->
+    {% if page_obj.has_other_pages %}
+    <nav class="pagination-container">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <span class="active-page">{{ num }}</span>
+        {% else %}
+        <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+
+</div>
 
 {% endblock body %}
