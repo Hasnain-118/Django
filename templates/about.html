@@ -6,39 +6,55 @@
 
 <style>
     /* =========================
-       PAGE WRAPPER WITH BACKGROUND
+       PARALLAX WRAPPER
     ========================= */
-    .about-page-wrapper {
+    .about-parallax {
         min-height: 100vh;
-        background: url('/static/bg.jpg') no-repeat center center fixed;
-        background-size: cover;
         position: relative;
-        padding: 40px 0;
     }
 
-    .about-page-wrapper::before {
+    /* =========================
+       FIXED BACKGROUND IMAGE (me.jpg)
+    ========================= */
+    .parallax-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: url('/static/images/me.jpg') no-repeat center center;
+        background-size: cover;
+        z-index: 0;
+    }
+
+    /* Light overlay - Face visible */
+    .parallax-bg::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(17, 19, 21, 0.78);
-        z-index: 0;
-    }
-
-    .about-page-wrapper > * {
-        position: relative;
+        background: rgba(17, 19, 21, 0.30);
         z-index: 1;
     }
 
     /* =========================
-       ABOUT PAGE CONTENT
+       SCROLLABLE CONTENT
+    ========================= */
+    .scroll-content {
+        position: relative;
+        z-index: 2;
+        padding: 80px 20px 60px;
+        min-height: 100vh;
+    }
+
+    /* =========================
+       CONTAINER
     ========================= */
     .about-container {
         max-width: 1100px;
         margin: auto;
-        padding: 0 20px;
     }
 
     /* =========================
@@ -48,18 +64,17 @@
         text-align: center;
         padding: 50px 30px;
         margin-bottom: 40px;
-        background: rgba(25, 28, 31, 0.75);
+        background: rgba(25, 28, 31, 0.50);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(139, 92, 246, 0.20);
+        border: 1px solid rgba(139, 92, 246, 0.12);
         border-radius: 18px;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
         transition: 0.3s ease;
     }
 
     .about-hero:hover {
-        border-color: rgba(139, 92, 246, 0.40);
-        box-shadow: 0 8px 50px rgba(139, 92, 246, 0.10);
+        border-color: rgba(139, 92, 246, 0.30);
     }
 
     .about-hero h1 {
@@ -85,25 +100,37 @@
         line-height: 1.8;
     }
 
+    /* Profile image - Adjusted position */
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;  
+    border: 3px solid #8b5cf6;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+    margin-bottom: 15px;
+}
+
     /* =========================
-       ABOUT CARDS - Glassmorphism
+       CARDS - Glassmorphism
     ========================= */
     .about-card {
         height: 100%;
         padding: 30px 28px;
-        background: rgba(25, 28, 31, 0.70);
+        background: rgba(25, 28, 31, 0.45);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(139, 92, 246, 0.15);
+        border: 1px solid rgba(139, 92, 246, 0.10);
         border-radius: 14px;
         transition: 0.3s ease;
-        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.20);
     }
 
     .about-card:hover {
-        border-color: rgba(139, 92, 246, 0.45);
+        border-color: rgba(139, 92, 246, 0.35);
         transform: translateY(-5px);
-        box-shadow: 0 8px 35px rgba(139, 92, 246, 0.12);
+        background: rgba(25, 28, 31, 0.60);
     }
 
     .about-card h3 {
@@ -146,14 +173,14 @@
     }
 
     /* =========================
-       FEATURE ITEMS - Glassmorphism
+       FEATURES
     ========================= */
     .feature-item {
         padding: 22px 20px;
-        background: rgba(34, 39, 43, 0.70);
+        background: rgba(34, 39, 43, 0.45);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(61, 68, 74, 0.5);
+        border: 1px solid rgba(61, 68, 74, 0.3);
         border-radius: 12px;
         height: 100%;
         transition: 0.3s ease;
@@ -161,9 +188,9 @@
     }
 
     .feature-item:hover {
-        border-color: rgba(139, 92, 246, 0.40);
+        border-color: rgba(139, 92, 246, 0.30);
         transform: translateY(-3px);
-        box-shadow: 0 6px 25px rgba(139, 92, 246, 0.08);
+        background: rgba(34, 39, 43, 0.65);
     }
 
     .feature-item .icon-circle {
@@ -197,11 +224,11 @@
     ========================= */
     .tech-badge {
         display: inline-block;
-        background: rgba(34, 39, 43, 0.75);
+        background: rgba(34, 39, 43, 0.45);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         color: #d1d5d8;
-        border: 1px solid rgba(61, 68, 74, 0.5);
+        border: 1px solid rgba(61, 68, 74, 0.3);
         border-radius: 50px;
         padding: 10px 22px;
         margin: 5px 6px;
@@ -219,28 +246,28 @@
         border-color: #8b5cf6;
         color: #ffffff;
         transform: translateY(-2px);
-        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
         background: rgba(139, 92, 246, 0.10);
     }
 
     /* =========================
-       WORKFLOW - Glassmorphism
+       WORKFLOW
     ========================= */
     .workflow {
         text-align: center;
         color: #d1d5d8;
         font-size: 1.05rem;
         padding: 30px 25px;
-        background: rgba(25, 28, 31, 0.65);
+        background: rgba(25, 28, 31, 0.40);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(139, 92, 246, 0.12);
+        border: 1px solid rgba(139, 92, 246, 0.08);
         border-radius: 14px;
         transition: 0.3s ease;
     }
 
     .workflow:hover {
-        border-color: rgba(139, 92, 246, 0.30);
+        border-color: rgba(139, 92, 246, 0.20);
+        background: rgba(25, 28, 31, 0.55);
     }
 
     .workflow .step {
@@ -258,18 +285,23 @@
     }
 
     /* =========================
-       CLOSING SECTION
+       CLOSING
     ========================= */
     .closing-section {
         text-align: center;
         margin-top: 50px;
         padding: 40px 25px;
-        border-top: 1px solid rgba(139, 92, 246, 0.12);
-        background: rgba(25, 28, 31, 0.50);
+        background: rgba(25, 28, 31, 0.35);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border-radius: 14px;
-        border: 1px solid rgba(139, 92, 246, 0.08);
+        border: 1px solid rgba(139, 92, 246, 0.05);
+        transition: 0.3s ease;
+    }
+
+    .closing-section:hover {
+        border-color: rgba(139, 92, 246, 0.12);
+        background: rgba(25, 28, 31, 0.50);
     }
 
     .closing-section h3 {
@@ -293,8 +325,8 @@
        RESPONSIVE
     ========================= */
     @media (max-width: 768px) {
-        .about-page-wrapper {
-            padding: 20px 0;
+        .scroll-content {
+            padding: 50px 15px 40px;
         }
 
         .about-hero {
@@ -307,6 +339,11 @@
 
         .about-hero p {
             font-size: 0.95rem;
+        }
+
+        .profile-img {
+            width: 90px;
+            height: 90px;
         }
 
         .about-card {
@@ -336,10 +373,6 @@
             padding: 20px 15px;
         }
 
-        .workflow .step {
-            padding: 3px 8px;
-        }
-
         .closing-section {
             padding: 30px 20px;
         }
@@ -350,12 +383,21 @@
     }
 
     @media (max-width: 480px) {
+        .scroll-content {
+            padding: 40px 12px 30px;
+        }
+
         .about-hero h1 {
             font-size: 1.6rem;
         }
 
         .about-hero {
             padding: 25px 15px;
+        }
+
+        .profile-img {
+            width: 70px;
+            height: 70px;
         }
 
         .about-card {
@@ -381,178 +423,194 @@
         }
 
         .workflow {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             padding: 15px 10px;
         }
 
         .workflow .arrow {
-            margin: 0 3px;
+            margin: 0 2px;
+        }
+
+        .workflow .step {
+            padding: 2px 6px;
         }
     }
 </style>
 
 <!-- =========================
-     PAGE WRAPPER
+     PARALLAX WRAPPER
 ========================= -->
-<div class="about-page-wrapper">
+<div class="about-parallax">
 
-    <div class="about-container">
+    <!-- Fixed Background (me.jpg) -->
+    <div class="parallax-bg"></div>
 
-        <!-- ==================== HERO ==================== -->
-        <div class="about-hero">
-            <h1>
-                About <span>Hasnain's Digital Library</span>
-            </h1>
-            <p>
-                <i class="fas fa-book-open me-2" style="color: #8b5cf6;"></i>
-                A simple digital space to discover, explore, organize,
-                and read books online.
-            </p>
-        </div>
+    <!-- Scrollable Content -->
+    <div class="scroll-content">
 
-        <!-- ==================== ABOUT CARDS ==================== -->
-        <div class="row g-4 mb-5">
+        <div class="about-container">
 
-            <div class="col-md-6">
-                <div class="about-card">
-                    <h3>
-                        <i class="fas fa-question-circle"></i> What is this Library?
-                    </h3>
-                    <p>
-                        Hasnain's Digital Library is a web-based platform
-                        designed to organize books in one place. Users can
-                        browse the collection, explore different categories,
-                        view book information, and read available books online.
-                    </p>
-                </div>
+            <!-- ==================== HERO ==================== -->
+            <div class="about-hero">
+
+                <!-- Profile Image -->
+                <img src="/static/images/me.jpg" alt="Hasnain" class="profile-img">
+
+                <h1>
+                    About <span>Hasnain's Digital Library</span>
+                </h1>
+                <p>
+                    <i class="fas fa-book-open me-2" style="color: #8b5cf6;"></i>
+                    A simple digital space to discover, explore, organize,
+                    and read books online.
+                </p>
             </div>
 
-            <div class="col-md-6">
-                <div class="about-card">
-                    <h3>
-                        <i class="fas fa-rocket"></i> Why I Built It
-                    </h3>
-                    <p>
-                        This project is part of my journey of learning web
-                        development with Django. It gives me a practical way
-                        to apply concepts such as models, views, templates,
-                        authentication, database management, file handling,
-                        and dynamic filtering.
-                    </p>
-                </div>
-            </div>
+            <!-- ==================== ABOUT CARDS ==================== -->
+            <div class="row g-4 mb-5">
 
-        </div>
-
-        <!-- ==================== FEATURES ==================== -->
-        <h2 class="section-title">
-            <i class="fas fa-star me-2" style="color: #8b5cf6;"></i> What You Can Do
-        </h2>
-
-        <div class="row g-3 mb-5">
-
-            <div class="col-md-4 col-6">
-                <div class="feature-item">
-                    <div class="icon-circle">
-                        <i class="fas fa-book"></i>
+                <div class="col-md-6">
+                    <div class="about-card">
+                        <h3>
+                            <i class="fas fa-question-circle"></i> What is this Library?
+                        </h3>
+                        <p>
+                            Hasnain's Digital Library is a web-based platform
+                            designed to organize books in one place. Users can
+                            browse the collection, explore different categories,
+                            view book information, and read available books online.
+                        </p>
                     </div>
-                    <h5>Browse Books</h5>
-                    <p>Explore the available collection of books.</p>
                 </div>
-            </div>
 
-            <div class="col-md-4 col-6">
-                <div class="feature-item">
-                    <div class="icon-circle">
-                        <i class="fas fa-tags"></i>
+                <div class="col-md-6">
+                    <div class="about-card">
+                        <h3>
+                            <i class="fas fa-rocket"></i> Why I Built It
+                        </h3>
+                        <p>
+                            This project is part of my journey of learning web
+                            development with Django. It gives me a practical way
+                            to apply concepts such as models, views, templates,
+                            authentication, database management, file handling,
+                            and dynamic filtering.
+                        </p>
                     </div>
-                    <h5>Categories</h5>
-                    <p>Find books based on different categories.</p>
                 </div>
+
             </div>
 
-            <div class="col-md-4 col-6">
-                <div class="feature-item">
-                    <div class="icon-circle">
-                        <i class="fas fa-search"></i>
+            <!-- ==================== FEATURES ==================== -->
+            <h2 class="section-title">
+                <i class="fas fa-star me-2" style="color: #8b5cf6;"></i> What You Can Do
+            </h2>
+
+            <div class="row g-3 mb-5">
+
+                <div class="col-md-4 col-6">
+                    <div class="feature-item">
+                        <div class="icon-circle">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h5>Browse Books</h5>
+                        <p>Explore the available collection of books.</p>
                     </div>
-                    <h5>Search</h5>
-                    <p>Quickly find books from the library.</p>
                 </div>
-            </div>
 
-            <div class="col-md-4 col-6">
-                <div class="feature-item">
-                    <div class="icon-circle">
-                        <i class="fas fa-info-circle"></i>
+                <div class="col-md-4 col-6">
+                    <div class="feature-item">
+                        <div class="icon-circle">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h5>Categories</h5>
+                        <p>Find books based on different categories.</p>
                     </div>
-                    <h5>Book Details</h5>
-                    <p>View the author, rating, quote, and category.</p>
                 </div>
-            </div>
 
-            <div class="col-md-4 col-6">
-                <div class="feature-item">
-                    <div class="icon-circle">
-                        <i class="fas fa-eye"></i>
+                <div class="col-md-4 col-6">
+                    <div class="feature-item">
+                        <div class="icon-circle">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h5>Search</h5>
+                        <p>Quickly find books from the library.</p>
                     </div>
-                    <h5>Read Books</h5>
-                    <p>Open available books and read them online.</p>
                 </div>
-            </div>
 
-            <div class="col-md-4 col-6">
-                <div class="feature-item">
-                    <div class="icon-circle">
-                        <i class="fas fa-user-cog"></i>
+                <div class="col-md-4 col-6">
+                    <div class="feature-item">
+                        <div class="icon-circle">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <h5>Book Details</h5>
+                        <p>View the author, rating, quote, and category.</p>
                     </div>
-                    <h5>Admin Management</h5>
-                    <p>Authorized admins can add, edit, and delete books.</p>
                 </div>
+
+                <div class="col-md-4 col-6">
+                    <div class="feature-item">
+                        <div class="icon-circle">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h5>Read Books</h5>
+                        <p>Open available books and read them online.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6">
+                    <div class="feature-item">
+                        <div class="icon-circle">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h5>Admin Management</h5>
+                        <p>Authorized admins can add, edit, and delete books.</p>
+                    </div>
+                </div>
+
             </div>
 
-        </div>
+            <!-- ==================== TECHNOLOGIES ==================== -->
+            <h2 class="section-title">
+                <i class="fas fa-code me-2" style="color: #8b5cf6;"></i> Built With
+            </h2>
 
-        <!-- ==================== TECHNOLOGIES ==================== -->
-        <h2 class="section-title">
-            <i class="fas fa-code me-2" style="color: #8b5cf6;"></i> Built With
-        </h2>
+            <div class="text-center mb-5">
+                <span class="tech-badge"><i class="fab fa-python"></i> Python</span>
+                <span class="tech-badge"><i class="fas fa-leaf"></i> Django</span>
+                <span class="tech-badge"><i class="fab fa-html5"></i> HTML</span>
+                <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
+                <span class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                <span class="tech-badge"><i class="fas fa-database"></i> SQLite</span>
+            </div>
 
-        <div class="text-center mb-5">
-            <span class="tech-badge"><i class="fab fa-python"></i> Python</span>
-            <span class="tech-badge"><i class="fas fa-leaf"></i> Django</span>
-            <span class="tech-badge"><i class="fab fa-html5"></i> HTML</span>
-            <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</span>
-            <span class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap</span>
-            <span class="tech-badge"><i class="fas fa-database"></i> SQLite</span>
-        </div>
+            <!-- ==================== WORKFLOW ==================== -->
+            <h2 class="section-title">
+                <i class="fas fa-route me-2" style="color: #8b5cf6;"></i> How It Works
+            </h2>
 
-        <!-- ==================== WORKFLOW ==================== -->
-        <h2 class="section-title">
-            <i class="fas fa-route me-2" style="color: #8b5cf6;"></i> How It Works
-        </h2>
+            <div class="workflow">
+                <span class="step"><i class="fas fa-eye"></i> Browse</span>
+                <span class="arrow">→</span>
+                <span class="step"><i class="fas fa-filter"></i> Choose Category</span>
+                <span class="arrow">→</span>
+                <span class="step"><i class="fas fa-hand-pointer"></i> Select Book</span>
+                <span class="arrow">→</span>
+                <span class="step"><i class="fas fa-info-circle"></i> View Details</span>
+                <span class="arrow">→</span>
+                <span class="step"><i class="fas fa-book-open"></i> Read</span>
+            </div>
 
-        <div class="workflow">
-            <span class="step"><i class="fas fa-eye"></i> Browse</span>
-            <span class="arrow">→</span>
-            <span class="step"><i class="fas fa-filter"></i> Choose Category</span>
-            <span class="arrow">→</span>
-            <span class="step"><i class="fas fa-hand-pointer"></i> Select Book</span>
-            <span class="arrow">→</span>
-            <span class="step"><i class="fas fa-info-circle"></i> View Details</span>
-            <span class="arrow">→</span>
-            <span class="step"><i class="fas fa-book-open"></i> Read</span>
-        </div>
+            <!-- ==================== CLOSING ==================== -->
+            <div class="closing-section">
+                <h3>
+                    <i class="fas fa-heart" style="color: #8b5cf6;"></i> Built for a better digital reading experience.
+                </h3>
+                <p>
+                    This project continues to grow as I learn and apply
+                    new Django and web development concepts.
+                </p>
+            </div>
 
-        <!-- ==================== CLOSING ==================== -->
-        <div class="closing-section">
-            <h3>
-                <i class="fas fa-heart" style="color: #8b5cf6;"></i> Built for a better digital reading experience.
-            </h3>
-            <p>
-                This project continues to grow as I learn and apply
-                new Django and web development concepts.
-            </p>
         </div>
 
     </div>
