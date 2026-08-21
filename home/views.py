@@ -13,6 +13,9 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+
 # =========================================================
 # HOME
 # =========================================================
@@ -419,3 +422,7 @@ def category_books(request, category_slug):
     )
 
 
+@login_required
+def mark_notifications_read(request):
+    request.user.notifications.filter(is_read=False).update(is_read=True)
+    return redirect(request.GET.get('next', 'home'))

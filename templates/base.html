@@ -653,11 +653,39 @@
                     </form>
 
                     <!-- NOTIFICATION BELL -->
-                    <button class="notif-btn" type="button" title="Notifications">
-                        <i class="fas fa-bell"></i>
-                        <!-- Commented out - only show if notification system exists -->
-                        <!-- <span class="badge-dot"></span> -->
-                    </button>
+<div class="dropdown">
+    <button
+        class="notif-btn dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        title="Notifications"
+    >
+        <i class="fas fa-bell"></i>
+
+        {% if unread_count %}
+            <span class="badge-dot"></span>
+        {% endif %}
+    </button>
+
+    <ul
+        class="dropdown-menu user-menu"
+        style="max-height:300px; overflow-y:auto;"
+    >
+        {% for n in notifications %}
+            <li>
+                <a class="dropdown-item" href="{{ n.link }}">
+                    {{ n.message }}
+                </a>
+            </li>
+        {% empty %}
+            <li>
+                <span class="dropdown-item">
+                    No notifications
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 
                     <!-- USER -->
                     {% if user.is_authenticated %}

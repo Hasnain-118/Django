@@ -7,11 +7,11 @@ def category_choices(request):
     }
 def notifications(request):
     if request.user.is_authenticated:
-        qs = request.user.notifications.all()[:10]
+        notifications_qs = request.user.notifications.all()
 
         return {
-            'notifications': qs,
-            'unread_count': qs.filter(is_read=False).count()
+            'notifications': notifications_qs[:10],
+            'unread_count': notifications_qs.filter(is_read=False).count()
         }
 
     return {
