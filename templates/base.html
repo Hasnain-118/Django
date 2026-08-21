@@ -653,17 +653,19 @@
                     </form>
 
                     <!-- NOTIFICATION BELL -->
+<!-- NOTIFICATION BELL -->
 <div class="dropdown">
     <button
-        class="notif-btn dropdown-toggle"
+        class="notif-btn"
         type="button"
         data-bs-toggle="dropdown"
         title="Notifications"
+        onclick="markNotificationsRead()"
     >
         <i class="fas fa-bell"></i>
 
         {% if unread_count %}
-            <span class="badge-dot"></span>
+            <span class="badge-dot" id="notificationDot"></span>
         {% endif %}
     </button>
 
@@ -816,6 +818,22 @@
                 link.classList.add('active');
             }
         });
+
+        function markNotificationsRead() {
+    fetch("{% url 'mark_notifications_read' %}?next={{ request.path }}", {
+        method: "GET",
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    });
+
+    const dot = document.getElementById("notificationDot");
+
+    if (dot) {
+        dot.remove();
+    }
+}
+
     </script>
 
 </body>
