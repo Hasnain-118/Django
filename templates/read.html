@@ -5,62 +5,72 @@
 {% block body %}
 
 <style>
-
     /* =====================================================
-       PAGE
+       PARALLAX WRAPPER
     ===================================================== */
-
-    body {
-        background-color: #111315 !important;
-        color: #ffffff;
-    }
-
-    .book-page {
+    .read-parallax {
         min-height: 100vh;
-        padding: 70px 20px 80px;
-
-        background:
-            linear-gradient(
-                rgba(17, 19, 21, 0.88),
-                rgba(17, 19, 21, 0.94)
-            ),
-            url('/static/bg.jpg');
-
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        position: relative;
     }
 
+    /* =====================================================
+       FIXED BACKGROUND IMAGE
+    ===================================================== */
+    .parallax-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: url('/static/bg.jpg') no-repeat center center;
+        background-size: cover;
+        z-index: 0;
+    }
+
+    .parallax-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 19, 21, 0.45);
+        z-index: 1;
+    }
 
     /* =====================================================
-       MAIN BOOK CARD
+       SCROLLABLE CONTENT
     ===================================================== */
+    .scroll-content {
+        position: relative;
+        z-index: 2;
+        padding: 70px 20px 80px;
+        min-height: 100vh;
+    }
 
+    /* =====================================================
+       MAIN BOOK CARD - Glassmorphism
+    ===================================================== */
     .book-detail-card {
         max-width: 1050px;
         margin: auto;
-
-        background: rgba(25, 28, 31, 0.82);
-
-        border: 1px solid rgba(139, 92, 246, 0.35);
+        background: rgba(25, 28, 31, 0.50);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(139, 92, 246, 0.12);
         border-radius: 20px;
-
         padding: 45px;
-
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-
-        box-shadow:
-            0 25px 70px rgba(0, 0, 0, 0.5),
-            0 0 35px rgba(139, 92, 246, 0.07);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+        transition: 0.3s ease;
     }
 
+    .book-detail-card:hover {
+        border-color: rgba(139, 92, 246, 0.30);
+    }
 
     /* =====================================================
        COVER
     ===================================================== */
-
     .book-cover-wrapper {
         display: flex;
         justify-content: center;
@@ -70,49 +80,31 @@
     .book-cover {
         width: 270px;
         height: 390px;
-
         object-fit: cover;
-
-        border-radius: 10px;
-
-        border: 2px solid rgba(139, 92, 246, 0.65);
-
-        box-shadow:
-            0 20px 50px rgba(0, 0, 0, 0.65),
-            0 0 30px rgba(139, 92, 246, 0.15);
-
-        transition: transform 0.3s ease,
-                    box-shadow 0.3s ease;
+        border-radius: 12px;
+        border: 2px solid rgba(139, 92, 246, 0.50);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .book-cover:hover {
         transform: translateY(-5px);
-
-        box-shadow:
-            0 25px 55px rgba(0, 0, 0, 0.7),
-            0 0 35px rgba(139, 92, 246, 0.25);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(139, 92, 246, 0.10);
     }
-
 
     /* =====================================================
        NO COVER
     ===================================================== */
-
     .no-cover {
         width: 270px;
         height: 390px;
-
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
-        border-radius: 10px;
-
-        background: #22272b;
-
-        border: 2px solid rgba(139, 92, 246, 0.45);
-
+        border-radius: 12px;
+        background: rgba(34, 39, 43, 0.60);
+        border: 2px solid rgba(139, 92, 246, 0.30);
         color: #888f96;
     }
 
@@ -121,11 +113,9 @@
         margin-bottom: 15px;
     }
 
-
     /* =====================================================
        BOOK INFORMATION
     ===================================================== */
-
     .book-info {
         padding: 5px 15px;
     }
@@ -133,18 +123,21 @@
     .book-title {
         font-size: 2.7rem;
         font-weight: 700;
-
         color: #ffffff;
-
         line-height: 1.15;
-
         margin-bottom: 10px;
+    }
+
+    .book-title span {
+        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .book-author {
         color: #aeb4ba;
         font-size: 1.05rem;
-
         margin-bottom: 22px;
     }
 
@@ -152,147 +145,102 @@
         color: #c4b5fd;
     }
 
-
     /* =====================================================
        BADGES
     ===================================================== */
-
     .book-badge {
         display: inline-block;
-
         padding: 7px 14px;
-
         margin-right: 7px;
-
+        margin-bottom: 6px;
         border-radius: 20px;
-
-        background: rgba(34, 39, 43, 0.9);
-
-        border: 1px solid #3d444a;
-
+        background: rgba(34, 39, 43, 0.60);
+        border: 1px solid rgba(61, 68, 74, 0.3);
         color: #d1d5d8;
-
         font-size: 0.9rem;
     }
 
     .category-badge {
-        border-color: rgba(139, 92, 246, 0.35);
+        border-color: rgba(139, 92, 246, 0.30);
         color: #c4b5fd;
     }
 
     .rating-badge {
         color: #facc15;
-        border-color: rgba(250, 204, 21, 0.3);
+        border-color: rgba(250, 204, 21, 0.2);
     }
-
 
     /* =====================================================
        DESCRIPTION
     ===================================================== */
-
     .book-description {
         margin-top: 28px;
-
         padding: 20px 22px;
-
-        background: rgba(255, 255, 255, 0.035);
-
+        background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.06);
-
         border-left: 3px solid #8b5cf6;
-
         border-radius: 9px;
-
         color: #c9ced3;
-
         line-height: 1.75;
-
         font-size: 0.98rem;
     }
-
 
     /* =====================================================
        READ BUTTON
     ===================================================== */
-
     .read-btn {
         display: inline-block;
-
         margin-top: 28px;
-
-        padding: 12px 30px;
-
-        border-radius: 9px;
-
-        background: #8b5cf6;
-
-        border: 1px solid #8b5cf6;
-
+        padding: 14px 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        border: none;
         color: #ffffff !important;
-
         font-size: 1rem;
-
         font-weight: 600;
-
         text-decoration: none;
-
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.20);
     }
 
     .read-btn:hover {
-        background: #7c3aed;
-
-        border-color: #7c3aed;
-
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 8px 25px rgba(139, 92, 246, 0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.35);
+        color: #ffffff !important;
     }
 
+    .read-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+    }
 
     /* =====================================================
        EXTRA INFORMATION
     ===================================================== */
-
     .book-extra {
         max-width: 1050px;
-
         margin: 25px auto 0;
-
         display: grid;
-
         grid-template-columns: repeat(3, 1fr);
-
         gap: 16px;
     }
 
     .extra-box {
-
-        background: rgba(25, 28, 31, 0.82);
-
-        border: 1px solid #30343a;
-
-        border-radius: 13px;
-
+        background: rgba(25, 28, 31, 0.45);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(139, 92, 246, 0.08);
+        border-radius: 14px;
         padding: 22px;
-
         text-align: center;
-
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
     .extra-box:hover {
-
-        border-color: rgba(139, 92, 246, 0.5);
-
+        border-color: rgba(139, 92, 246, 0.30);
         transform: translateY(-3px);
-
-        box-shadow:
-            0 10px 25px rgba(0, 0, 0, 0.25);
+        background: rgba(25, 28, 31, 0.60);
     }
 
     .extra-icon {
@@ -302,69 +250,51 @@
 
     .extra-title {
         color: #ffffff;
-
         font-weight: 600;
-
         margin-bottom: 5px;
     }
 
     .extra-text {
-        color: #888f96;
-
+        color: #9ca3af;
         font-size: 0.9rem;
     }
-
 
     /* =====================================================
        BACK BUTTON
     ===================================================== */
-
     .back-btn {
-
         display: block;
-
         width: fit-content;
-
         margin: 30px auto 0;
-
-        padding: 9px 20px;
-
-        border-radius: 8px;
-
-        border: 1px solid #3d444a;
-
-        background: rgba(25, 28, 31, 0.75);
-
+        padding: 10px 22px;
+        border-radius: 10px;
+        border: 1px solid rgba(61, 68, 74, 0.3);
+        background: rgba(25, 28, 31, 0.40);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         color: #b8bec5;
-
         text-decoration: none;
-
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
     .back-btn:hover {
-
         border-color: #8b5cf6;
-
         color: #c4b5fd;
-
-        background: #191c1f;
+        background: rgba(25, 28, 31, 0.60);
+        transform: translateY(-2px);
     }
-
 
     /* =====================================================
        MOBILE
     ===================================================== */
-
     @media (max-width: 768px) {
-
-        .book-page {
+        .scroll-content {
             padding: 35px 15px 60px;
         }
 
         .book-detail-card {
             padding: 25px 18px;
-            border-radius: 14px;
+            border-radius: 16px;
         }
 
         .book-title {
@@ -396,13 +326,7 @@
         }
     }
 
-
-    /* =====================================================
-       SMALL MOBILE
-    ===================================================== */
-
     @media (max-width: 480px) {
-
         .book-title {
             font-size: 1.7rem;
         }
@@ -417,264 +341,135 @@
             height: 275px;
         }
 
-        .book-badge {
-            margin-bottom: 6px;
+        .book-detail-card {
+            padding: 20px 14px;
+        }
+
+        .book-description {
+            padding: 14px 16px;
+            font-size: 0.9rem;
         }
     }
-
 </style>
 
+<!-- =====================================================
+     PARALLAX WRAPPER
+===================================================== -->
+<div class="read-parallax">
 
-<div class="book-page">
+    <!-- Fixed Background -->
+    <div class="parallax-bg"></div>
 
+    <!-- Scrollable Content -->
+    <div class="scroll-content">
 
-    <!-- =================================================
-         MAIN BOOK CARD
-    ================================================= -->
+        <!-- MAIN BOOK CARD -->
+        <div class="book-detail-card">
 
-    <div class="book-detail-card">
+            <div class="row align-items-center g-4">
 
-        <div class="row align-items-center g-4">
-
-
-            <!-- ================= COVER ================= -->
-
-            <div class="col-md-5">
-
-                <div class="book-cover-wrapper">
-
-                    {% if book.cover_image %}
-
-                        <img
-                            src="{{ book.cover_image.url }}"
-                            alt="{{ book.title }}"
-                            class="book-cover"
-                        >
-
-                    {% else %}
-
+                <!-- COVER -->
+                <div class="col-md-5">
+                    <div class="book-cover-wrapper">
+                        {% if book.cover_image %}
+                        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="book-cover">
+                        {% else %}
                         <div class="no-cover">
+                            <div class="no-cover-icon">📚</div>
+                            <span>No Cover Available</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
 
-                            <div class="no-cover-icon">
-                                📚
-                            </div>
+                <!-- INFORMATION -->
+                <div class="col-md-7">
+                    <div class="book-info">
 
-                            <span>
-                                No Cover Available
+                        <h1 class="book-title"><span>{{ book.title }}</span></h1>
+
+                        {% if book.author %}
+                        <p class="book-author">
+                            By <strong>{{ book.author }}</strong>
+                        </p>
+                        {% endif %}
+
+                        <!-- BADGES -->
+                        <div>
+                            <span class="book-badge category-badge">
+                                📚 {{ book.get_category_display }}
                             </span>
-
+                            {% if book.rating %}
+                            <span class="book-badge rating-badge">
+                                ⭐ {{ book.rating }}/5
+                            </span>
+                            {% endif %}
                         </div>
 
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-
-            <!-- ================= INFORMATION ================= -->
-
-            <div class="col-md-7">
-
-                <div class="book-info">
-
-
-                    <h1 class="book-title">
-                        {{ book.title }}
-                    </h1>
-
-
-                    {% if book.author %}
-
-                    <p class="book-author">
-
-                        By
-                        <strong>
-                            {{ book.author }}
-                        </strong>
-
-                    </p>
-
-                    {% endif %}
-
-
-                    <!-- BADGES -->
-
-                    <div>
-
-                        <span class="book-badge category-badge">
-
-                            📚
-                            {{ book.get_category_display }}
-
-                        </span>
-
-
-                        {% if book.rating %}
-
-                        <span class="book-badge rating-badge">
-
-                            ⭐
-                            {{ book.rating }}/5
-
-                        </span>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <!-- DESCRIPTION -->
-
-                    <div class="book-description">
-
-                        {% if book.quote %}
-
+                        <!-- DESCRIPTION -->
+                        <div class="book-description">
+                            {% if book.quote %}
                             {{ book.quote }}
-
-                        {% else %}
-
+                            {% else %}
                             No description is available for this book.
+                            {% endif %}
+                        </div>
 
+                        <!-- READ -->
+                        {% if book.pdf_file %}
+                        <a href="{{ book.pdf_file.url }}" target="_blank" class="read-btn">
+                            <i class="fas fa-book-open me-2"></i>Read Book
+                        </a>
+                        {% elif book.external_link %}
+                        <a href="{{ book.external_link }}" target="_blank" class="read-btn">
+                            <i class="fas fa-book-open me-2"></i>Read Book
+                        </a>
+                        {% else %}
+                        <button class="read-btn" disabled>
+                            <i class="fas fa-times me-2"></i>Book Not Available
+                        </button>
                         {% endif %}
 
                     </div>
-
-
-                    <!-- READ -->
-
-                    {% if book.pdf_file %}
-
-                        <a
-                            href="{{ book.pdf_file.url }}"
-                            target="_blank"
-                            class="read-btn"
-                        >
-
-                            📖 Read Book
-
-                        </a>
-
-                    {% elif book.external_link %}
-
-                        <a
-                            href="{{ book.external_link }}"
-                            target="_blank"
-                            class="read-btn"
-                        >
-
-                            📖 Read Book
-
-                        </a>
-
-                    {% else %}
-
-                        <button
-                            class="read-btn"
-                            disabled
-                            style="opacity: 0.5; cursor: not-allowed;"
-                        >
-
-                            📖 Book Not Available
-
-                        </button>
-
-                    {% endif %}
-
                 </div>
 
             </div>
 
         </div>
 
-    </div>
-
-
-    <!-- =================================================
-         BOOK INFORMATION BOXES
-    ================================================= -->
-
-    <div class="book-extra">
-
-
-        <div class="extra-box">
-
-            <div class="extra-icon">
-                📚
+        <!-- EXTRA INFORMATION BOXES -->
+        <div class="book-extra">
+            <div class="extra-box">
+                <div class="extra-icon">📚</div>
+                <div class="extra-title">Category</div>
+                <div class="extra-text">{{ book.get_category_display }}</div>
             </div>
 
-            <div class="extra-title">
-                Category
-            </div>
-
-            <div class="extra-text">
-                {{ book.get_category_display }}
-            </div>
-
-        </div>
-
-
-        <div class="extra-box">
-
-            <div class="extra-icon">
-                ⭐
-            </div>
-
-            <div class="extra-title">
-                Rating
-            </div>
-
-            <div class="extra-text">
-
-                {% if book.rating %}
-
+            <div class="extra-box">
+                <div class="extra-icon">⭐</div>
+                <div class="extra-title">Rating</div>
+                <div class="extra-text">
+                    {% if book.rating %}
                     {{ book.rating }} / 5
-
-                {% else %}
-
+                    {% else %}
                     Not Rated
-
-                {% endif %}
-
+                    {% endif %}
+                </div>
             </div>
 
+            <div class="extra-box">
+                <div class="extra-icon">👤</div>
+                <div class="extra-title">Author</div>
+                <div class="extra-text">{{ book.author|default:"Unknown" }}</div>
+            </div>
         </div>
 
-
-        <div class="extra-box">
-
-            <div class="extra-icon">
-                👤
-            </div>
-
-            <div class="extra-title">
-                Author
-            </div>
-
-            <div class="extra-text">
-
-                {{ book.author }}
-
-            </div>
-
-        </div>
+        <!-- BACK -->
+        <a href="{% url 'home' %}" class="back-btn">
+            <i class="fas fa-arrow-left me-2"></i>Back to Library
+        </a>
 
     </div>
-
-
-    <!-- =================================================
-         BACK
-    ================================================= -->
-
-    <a
-        href="{% url 'home' %}"
-        class="back-btn"
-    >
-
-        ← Back to Library
-
-    </a>
-
 
 </div>
 

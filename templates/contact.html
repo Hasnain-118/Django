@@ -5,531 +5,426 @@
 {% block body %}
 
 <style>
-
     /* =========================
-       PAGE BACKGROUND
+       PARALLAX WRAPPER
     ========================= */
-
-    .contact-page {
-        min-height: calc(100vh - 70px);
+    .contact-parallax {
+        min-height: 100vh;
         position: relative;
-        overflow: hidden;
+    }
 
-        background:
-            linear-gradient(
-                rgba(17, 19, 21, 0.82),
-                rgba(17, 19, 21, 0.92)
-            ),
-            url('/static/bg.jpg');
-
+    /* =========================
+       FIXED BACKGROUND IMAGE (bg.jpg)
+    ========================= */
+    .parallax-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: url('/static/bg.jpg') no-repeat center center;
         background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-
-        color: #ffffff;
+        z-index: 0;
     }
 
+    /* Purple overlay - matches about page style */
+    .parallax-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 19, 21, 0.45);
+        z-index: 1;
+    }
 
     /* =========================
-       PURPLE BACKGROUND GLOW
+       SCROLLABLE CONTENT
     ========================= */
-
-    .contact-page::before {
-        content: "";
-        position: absolute;
-        width: 500px;
-        height: 500px;
-
-        top: -180px;
-        left: -180px;
-
-        background: rgba(139, 92, 246, 0.15);
-        filter: blur(100px);
-        border-radius: 50%;
-    }
-
-    .contact-page::after {
-        content: "";
-        position: absolute;
-        width: 450px;
-        height: 450px;
-
-        bottom: -180px;
-        right: -150px;
-
-        background: rgba(167, 139, 250, 0.10);
-        filter: blur(100px);
-        border-radius: 50%;
-    }
-
-
-    /* =========================
-       CONTENT
-    ========================= */
-
-    .contact-content {
+    .scroll-content {
         position: relative;
         z-index: 2;
-
-        min-height: calc(100vh - 70px);
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 60px 20px;
+        padding: 80px 20px 60px;
+        min-height: 100vh;
     }
-
 
     /* =========================
-       CONTACT CARD
+       CONTAINER
     ========================= */
-
-    .contact-card {
-
-        width: 100%;
-        max-width: 650px;
-
-        padding: 42px;
-
-        background: rgba(25, 28, 31, 0.68);
-
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-
-        border: 1px solid rgba(167, 139, 250, 0.25);
-
-        border-radius: 20px;
-
-        box-shadow:
-            0 25px 70px rgba(0, 0, 0, 0.55),
-            0 0 40px rgba(139, 92, 246, 0.06);
+    .contact-container {
+        max-width: 700px;
+        margin: auto;
     }
 
+    /* =========================
+       CONTACT CARD - Glassmorphism
+    ========================= */
+    .contact-card {
+        padding: 50px 40px;
+        background: rgba(25, 28, 31, 0.50);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(139, 92, 246, 0.12);
+        border-radius: 18px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        transition: 0.3s ease;
+    }
+
+    .contact-card:hover {
+        border-color: rgba(139, 92, 246, 0.30);
+    }
 
     /* =========================
        HEADING
     ========================= */
-
     .contact-title {
-
-        color: #ffffff;
-
-        font-size: 2.2rem;
+        font-size: 2.8rem;
         font-weight: 700;
-
-        margin-bottom: 8px;
+        color: #ffffff;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
     }
 
+    .contact-title span {
+        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
     .contact-subtitle {
-
-        color: #9ca3af;
-
-        font-size: 1rem;
-
-        margin-bottom: 32px;
+        color: #d1d5d8;
+        font-size: 1.05rem;
+        margin-bottom: 30px;
+        line-height: 1.6;
     }
-
 
     /* Purple line */
-
     .contact-line {
-
-        width: 55px;
+        width: 60px;
         height: 3px;
-
-        background: #8b5cf6;
-
-        border-radius: 10px;
-
-        margin: 0 auto 18px;
+        background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        border-radius: 4px;
+        margin: 0 auto 16px;
     }
-
 
     /* =========================
        LABELS
     ========================= */
-
     .contact-label {
-
         color: #e5e7eb;
-
         font-weight: 600;
-
         margin-bottom: 8px;
+        font-size: 0.95rem;
     }
 
+    .contact-label i {
+        color: #8b5cf6;
+        margin-right: 8px;
+    }
 
     /* =========================
        INPUTS
     ========================= */
-
     .contact-input {
-
         width: 100%;
-
-        background: rgba(34, 39, 43, 0.85);
-
-        border: 1px solid #3d444a;
-
+        background: rgba(34, 39, 43, 0.60);
+        border: 1px solid rgba(61, 68, 74, 0.4);
         color: #ffffff;
-
         border-radius: 10px;
-
-        padding: 12px 14px;
-
-        transition: all 0.2s ease;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
     }
 
-
     .contact-input::placeholder {
-
         color: #777f87;
     }
 
-
     .contact-input:hover {
-
-        border-color: #555b62;
+        border-color: rgba(139, 92, 246, 0.30);
+        background: rgba(34, 39, 43, 0.75);
     }
-
 
     .contact-input:focus {
-
-        background: rgba(34, 39, 43, 0.95);
-
+        background: rgba(34, 39, 43, 0.85);
         color: #ffffff;
-
         border-color: #8b5cf6;
-
         outline: none;
-
-        box-shadow:
-            0 0 0 3px rgba(139, 92, 246, 0.15),
-            0 0 15px rgba(139, 92, 246, 0.08);
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.10);
     }
-
 
     /* Textarea */
-
     textarea.contact-input {
-
         min-height: 130px;
-
         resize: vertical;
     }
-
 
     /* =========================
        HELP TEXT
     ========================= */
-
     .contact-help {
-
         color: #777f87;
-
         font-size: 0.82rem;
-
         margin-top: 6px;
     }
 
+    .contact-help i {
+        color: #8b5cf6;
+        margin-right: 4px;
+    }
 
     /* =========================
        SEND BUTTON
     ========================= */
-
     .contact-btn {
-
         width: 100%;
-
-        padding: 12px 20px;
-
-        background: #8b5cf6;
-
-        border: 1px solid #8b5cf6;
-
+        padding: 14px 20px;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        border: none;
         color: #ffffff;
-
         border-radius: 10px;
-
         font-weight: 600;
-
-        transition: all 0.2s ease;
-
-        box-shadow:
-            0 8px 20px rgba(139, 92, 246, 0.18);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.20);
     }
-
 
     .contact-btn:hover {
-
-        background: #7c3aed;
-
-        border-color: #7c3aed;
-
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.35);
+        background: linear-gradient(135deg, #7c3aed, #6d28d9);
         color: #ffffff;
-
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 12px 28px rgba(139, 92, 246, 0.28);
     }
 
-
     .contact-btn:active {
-
         transform: translateY(0);
     }
 
+    .contact-btn i {
+        margin-right: 8px;
+    }
 
     /* =========================
        CONTACT INFO
     ========================= */
-
     .contact-info {
-
         display: flex;
-
         justify-content: center;
-
-        gap: 30px;
-
-        margin-top: 25px;
-
-        padding-top: 20px;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        gap: 35px;
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-
     .contact-info-item {
-
         color: #9ca3af;
-
         font-size: 0.85rem;
-
         text-align: center;
     }
 
-
-    .contact-info-item strong {
-
+    .contact-info-item i {
+        color: #8b5cf6;
         display: block;
-
-        color: #d1d5db;
-
-        margin-bottom: 3px;
+        font-size: 1.2rem;
+        margin-bottom: 4px;
     }
 
+    .contact-info-item strong {
+        display: block;
+        color: #d1d5db;
+        margin-bottom: 2px;
+        font-weight: 600;
+    }
 
     /* =========================
        MOBILE
     ========================= */
-
-    @media (max-width: 576px) {
-
-        .contact-content {
-
-            padding: 35px 15px;
+    @media (max-width: 768px) {
+        .scroll-content {
+            padding: 50px 15px 40px;
         }
 
-
         .contact-card {
-
-            padding: 28px 20px;
-
+            padding: 35px 25px;
             border-radius: 16px;
         }
 
-
         .contact-title {
-
-            font-size: 1.8rem;
+            font-size: 2.2rem;
         }
 
-
         .contact-subtitle {
+            font-size: 0.95rem;
+        }
 
+        .contact-input {
+            padding: 10px 14px;
             font-size: 0.9rem;
         }
 
-
-        .contact-info {
-
-            flex-direction: column;
-
-            gap: 12px;
+        .contact-btn {
+            padding: 12px 18px;
+            font-size: 0.95rem;
         }
 
+        .contact-info {
+            flex-direction: column;
+            gap: 12px;
+        }
     }
 
+    @media (max-width: 480px) {
+        .scroll-content {
+            padding: 40px 12px 30px;
+        }
+
+        .contact-card {
+            padding: 25px 18px;
+            border-radius: 14px;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+        }
+
+        .contact-subtitle {
+            font-size: 0.88rem;
+        }
+
+        .contact-label {
+            font-size: 0.85rem;
+        }
+
+        .contact-input {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+
+        .contact-btn {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+
+        .contact-info-item {
+            font-size: 0.8rem;
+        }
+    }
 </style>
 
+<!-- =========================
+     PARALLAX WRAPPER
+========================= -->
+<div class="contact-parallax">
 
-<div class="contact-page">
+    <!-- Fixed Background (bg.jpg) -->
+    <div class="parallax-bg"></div>
 
-    <div class="contact-content">
+    <!-- Scrollable Content -->
+    <div class="scroll-content">
 
-        <div class="contact-card">
+        <div class="contact-container">
 
-            <!-- Heading -->
+            <!-- ==================== CONTACT CARD ==================== -->
+            <div class="contact-card">
 
-            <div class="text-center">
-
-                <div class="contact-line"></div>
-
-                <h1 class="contact-title">
-                    Contact Us
-                </h1>
-
-                <p class="contact-subtitle">
-                    Have a question or suggestion?
-                    We'd love to hear from you.
-                </p>
-
-            </div>
-
-
-            <!-- Form -->
-
-            <form method="POST" action="/contact/">
-
-                {% csrf_token %}
-
-
-                <!-- Name -->
-
-                <div class="mb-4">
-
-                    <label
-                        for="name"
-                        class="form-label contact-label">
-
-                        Full Name
-
-                    </label>
-
-                    <input
-                        type="text"
-                        class="form-control contact-input"
-                        id="name"
-                        name="name"
-                        placeholder="Enter your name">
-
+                <!-- Heading -->
+                <div class="text-center">
+                    <div class="contact-line"></div>
+                    <h1 class="contact-title">
+                        <span>Contact</span> Us
+                    </h1>
+                    <p class="contact-subtitle">
+                        <i class="fas fa-envelope me-2" style="color: #8b5cf6;"></i>
+                        Have a question or suggestion? We'd love to hear from you.
+                    </p>
                 </div>
 
+                <!-- Form -->
+                <form method="POST" action="/contact/">
+                    {% csrf_token %}
 
-                <!-- Email -->
-
-                <div class="mb-4">
-
-                    <label
-                        for="email"
-                        class="form-label contact-label">
-
-                        Email Address
-
-                    </label>
-
-                    <input
-                        type="email"
-                        class="form-control contact-input"
-                        id="email"
-                        name="email"
-                        placeholder="name@example.com"
-                        required>
-
-                    <div class="contact-help">
-
-                        We'll never share your email.
-
+                    <!-- Name -->
+                    <div class="mb-4">
+                        <label for="name" class="form-label contact-label">
+                            <i class="fas fa-user"></i> Full Name
+                        </label>
+                        <input
+                            type="text"
+                            class="form-control contact-input"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name">
                     </div>
 
-                </div>
+                    <!-- Email -->
+                    <div class="mb-4">
+                        <label for="email" class="form-label contact-label">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <input
+                            type="email"
+                            class="form-control contact-input"
+                            id="email"
+                            name="email"
+                            placeholder="name@example.com"
+                            required>
+                        <div class="contact-help">
+                            <i class="fas fa-shield-alt"></i>
+                            We'll never share your email.
+                        </div>
+                    </div>
 
+                    <!-- Phone -->
+                    <div class="mb-4">
+                        <label for="phone" class="form-label contact-label">
+                            <i class="fas fa-phone"></i> Phone Number
+                            <span style="color:#777f87; font-weight:400;">
+                                (Optional)
+                            </span>
+                        </label>
+                        <input
+                            type="tel"
+                            class="form-control contact-input"
+                            id="phone"
+                            name="phone"
+                            placeholder="+92 300 1234567">
+                    </div>
 
-                <!-- Phone -->
+                    <!-- Message -->
+                    <div class="mb-4">
+                        <label for="message" class="form-label contact-label">
+                            <i class="fas fa-comment"></i> Your Message
+                        </label>
+                        <textarea
+                            class="form-control contact-input"
+                            id="message"
+                            name="message"
+                            rows="5"
+                            placeholder="Write your message here..."
+                            required></textarea>
+                    </div>
 
-                <div class="mb-4">
+                    <!-- Submit -->
+                    <button type="submit" class="btn contact-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
 
-                    <label
-                        for="phone"
-                        class="form-label contact-label">
+                <!-- Small Info -->
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <i class="fas fa-book"></i>
+                        <strong>Digital Library</strong>
+                        Read. Discover. Learn.
+                    </div>
 
-                        Phone Number
-                        <span style="color:#777f87;">
-                            (Optional)
-                        </span>
-
-                    </label>
-
-                    <input
-                        type="tel"
-                        class="form-control contact-input"
-                        id="phone"
-                        name="phone"
-                        placeholder="+92 300 1234567">
-
-                </div>
-
-
-                <!-- Message -->
-
-                <div class="mb-4">
-
-                    <label
-                        for="message"
-                        class="form-label contact-label">
-
-                        Your Message
-
-                    </label>
-
-                    <textarea
-                        class="form-control contact-input"
-                        id="message"
-                        name="desc"
-                        rows="5"
-                        placeholder="Write your message here..."
-                        required></textarea>
-
-                </div>
-
-
-                <!-- Submit -->
-
-                <button
-                    type="submit"
-                    class="btn contact-btn">
-
-                    Send Message
-
-                </button>
-
-            </form>
-
-
-            <!-- Small Info -->
-
-            <div class="contact-info">
-
-                <div class="contact-info-item">
-
-                    <strong>Digital Library</strong>
-
-                    Read. Discover. Learn.
-
-                </div>
-
-
-                <div class="contact-info-item">
-
-                    <strong>Quick Response</strong>
-
-                    We'll get back to you soon.
-
+                    <div class="contact-info-item">
+                        <i class="fas fa-clock"></i>
+                        <strong>Quick Response</strong>
+                        We'll get back to you soon.
+                    </div>
                 </div>
 
             </div>
@@ -539,6 +434,5 @@
     </div>
 
 </div>
-
 
 {% endblock body %}

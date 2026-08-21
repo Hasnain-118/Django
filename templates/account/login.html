@@ -8,84 +8,134 @@
 {% block body %}
 
 <style>
-    .signin-page {
+    /* =====================================================
+       PARALLAX WRAPPER
+    ===================================================== */
+    .login-parallax {
         min-height: 100vh;
-        padding: 50px 15px;
-        background-image: url("{% static 'bg.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
         position: relative;
-        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .signin-page::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        pointer-events: none;
+    /* =====================================================
+       FIXED BACKGROUND
+    ===================================================== */
+    .parallax-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: url("{% static 'bg.jpg' %}") no-repeat center center;
+        background-size: cover;
+        z-index: 0;
     }
 
-    .signin-container {
-        position: relative;
-        width: 90%;
-        max-width: 480px;
-        margin: auto;
+    .parallax-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 19, 21, 0.55);
         z-index: 1;
     }
 
-    .signin-card {
-        background: rgba(18, 20, 23, 0.55) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        border-radius: 20px;
+    /* =====================================================
+       SCROLLABLE CONTENT
+    ===================================================== */
+    .scroll-content {
+        position: relative;
+        z-index: 2;
+        width: 90%;
+        max-width: 500px;
+        padding: 30px 0;
+    }
+
+    /* =====================================================
+       GLASS CARD - Like About Page
+    ===================================================== */
+    .glass-card {
+        background: rgba(25, 28, 31, 0.50) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(139, 92, 246, 0.12) !important;
+        border-radius: 18px;
         padding: 40px 45px;
-        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6) !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+        transition: 0.3s ease;
     }
 
-    .signin-card,
-    .signin-card * {
+    .glass-card:hover {
+        border-color: rgba(139, 92, 246, 0.30) !important;
+    }
+
+    .glass-card,
+    .glass-card * {
         color: #ffffff !important;
     }
 
-    .signin-title {
-        color: #ffffff !important;
-        font-size: 2rem;
+    .glass-card .text-muted,
+    .glass-card .text-white-50 {
+        color: #b0b8c0 !important;
+    }
+
+    /* =====================================================
+       HEADING
+    ===================================================== */
+    .login-title {
+        font-size: 2.2rem;
         font-weight: 700;
         text-align: center;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
-    .signin-subtitle {
-        color: #c8ced6 !important;
+    .login-title span {
+        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .login-subtitle {
+        color: #b0b8c0 !important;
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 28px;
         font-size: 0.95rem;
     }
 
-    .signin-form p {
+    .login-line {
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        border-radius: 4px;
+        margin: 12px auto 16px;
+    }
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+    .login-form p {
         margin-bottom: 20px;
     }
 
-    .signin-form label {
+    .login-form label {
         display: block;
-        color: #e5e7eb !important;
+        color: #d1d5db !important;
         font-weight: 600;
         margin-bottom: 7px;
         font-size: 0.9rem;
     }
 
-    .signin-form input {
+    .login-form input {
         width: 100%;
         padding: 12px 14px;
-        background: rgba(34, 39, 43, 0.7) !important;
+        background: rgba(34, 39, 43, 0.60) !important;
         color: #ffffff !important;
-        border: 1px solid rgba(61, 68, 74, 0.6) !important;
+        border: 1px solid rgba(61, 68, 74, 0.4) !important;
         border-radius: 10px;
         outline: none;
         transition: 0.3s ease;
@@ -93,18 +143,18 @@
         font-size: 0.95rem;
     }
 
-    .signin-form input::placeholder {
-        color: #8d959c !important;
+    .login-form input::placeholder {
+        color: #777f87 !important;
     }
 
-    .signin-form input:focus {
-        background: rgba(37, 42, 47, 0.8) !important;
+    .login-form input:focus {
+        background: rgba(34, 39, 43, 0.80) !important;
         color: #ffffff !important;
         border-color: #8b5cf6 !important;
-        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15) !important;
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.10) !important;
     }
 
-    .signin-form .errorlist {
+    .login-form .errorlist {
         color: #ff8585 !important;
         font-size: 0.82rem;
         margin: 6px 0;
@@ -112,128 +162,31 @@
         list-style: none;
     }
 
-    .signin-form .errorlist li {
+    .login-form .errorlist li {
         color: #ff8585 !important;
         padding: 6px 12px;
-        background: rgba(239, 68, 68, 0.10);
+        background: rgba(239, 68, 68, 0.08);
         border-left: 3px solid #ef4444;
         border-radius: 4px;
         margin-bottom: 4px;
     }
 
-    .signin-form .errorlist li::before {
+    .login-form .errorlist li::before {
         content: "✕ ";
         color: #ef4444;
         font-weight: 700;
         margin-right: 6px;
     }
 
-    .signin-form .helptext {
-        color: #8d959c !important;
+    .login-form .helptext {
+        color: #777f87 !important;
         font-size: 0.82rem;
         margin-top: 7px;
     }
 
-    .signin-button {
-        width: 100%;
-        border: none;
-        border-radius: 12px;
-        padding: 14px;
-        margin-top: 5px;
-        background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
-        color: #ffffff !important;
-        font-size: 1rem;
-        font-weight: 700;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
-    }
-
-    .signin-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.4);
-    }
-
-    .divider {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        color: #8d959c;
-        margin: 25px 0 20px;
-    }
-
-    .divider::before,
-    .divider::after {
-        content: '';
-        flex: 1;
-        border-bottom: 1px solid rgba(61, 68, 74, 0.5);
-    }
-
-    .divider::before {
-        margin-right: 15px;
-    }
-
-    .divider::after {
-        margin-left: 15px;
-    }
-
-    .divider span {
-        padding: 0 10px;
-        font-size: 0.85rem;
-        color: #9ca3af !important;
-    }
-
-    .btn-google {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 12px !important;
-        width: 100%;
-        padding: 13px 18px !important;
-        margin-top: 5px !important;
-        background: #ffffff !important;
-        color: #3c4043 !important;
-        border: 1px solid #dadce0 !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        font-size: 0.95rem !important;
-        transition: all 0.3s ease !important;
-        text-decoration: none !important;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .btn-google:hover {
-        background: #f8f9fa !important;
-        border-color: #c5c7c9 !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-        text-decoration: none !important;
-        color: #202124 !important;
-        transform: translateY(-1px);
-    }
-
-    .btn-google svg {
-        width: 22px;
-        height: 22px;
-        flex-shrink: 0;
-    }
-
-    .forgot-password {
-        text-align: right;
-        margin-top: -8px;
-        margin-bottom: 18px;
-    }
-
-    .forgot-password a {
-        color: #9ca3af !important;
-        font-size: 0.85rem;
-        text-decoration: none;
-        transition: 0.2s;
-    }
-
-    .forgot-password a:hover {
-        color: #a78bfa !important;
-    }
-
+    /* =====================================================
+       REMEMBER ME & FORGOT PASSWORD
+    ===================================================== */
     .remember-me {
         display: flex;
         align-items: center;
@@ -255,8 +208,120 @@
         color: #c8ced6 !important;
     }
 
+    .forgot-password {
+        text-align: right;
+        margin-top: -8px;
+        margin-bottom: 18px;
+    }
+
+    .forgot-password a {
+        color: #9ca3af !important;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .forgot-password a:hover {
+        color: #a78bfa !important;
+    }
+
+    /* =====================================================
+       LOGIN BUTTON
+    ===================================================== */
+    .login-button {
+        width: 100%;
+        border: none;
+        border-radius: 10px;
+        padding: 14px;
+        margin-top: 5px;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+        color: #ffffff !important;
+        font-size: 1rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.20);
+    }
+
+    .login-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.35);
+    }
+
+    /* =====================================================
+       DIVIDER
+    ===================================================== */
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #8d959c;
+        margin: 25px 0 20px;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid rgba(61, 68, 74, 0.4);
+    }
+
+    .divider::before {
+        margin-right: 15px;
+    }
+
+    .divider::after {
+        margin-left: 15px;
+    }
+
+    .divider span {
+        padding: 0 10px;
+        font-size: 0.85rem;
+        color: #9ca3af !important;
+    }
+
+    /* =====================================================
+       GOOGLE BUTTON
+    ===================================================== */
+    .btn-google {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        width: 100%;
+        padding: 13px 18px !important;
+        margin-top: 5px !important;
+        background: #ffffff !important;
+        color: #3c4043 !important;
+        border: 1px solid #dadce0 !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn-google:hover {
+        background: #f8f9fa !important;
+        border-color: #c5c7c9 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.10) !important;
+        text-decoration: none !important;
+        color: #202124 !important;
+        transform: translateY(-2px);
+    }
+
+    .btn-google svg {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+    }
+
+    /* =====================================================
+       SIGN UP LINK
+    ===================================================== */
     .signup-link {
-        color: #c8ced6 !important;
+        color: #b0b8c0 !important;
         text-align: center;
         margin-top: 25px;
         margin-bottom: 0;
@@ -274,10 +339,12 @@
         color: #c4b5fd !important;
     }
 
-    /* Alert Messages */
-    .signin-card .alert {
-        background: rgba(139, 92, 246, 0.15) !important;
-        border: 1px solid rgba(139, 92, 246, 0.25) !important;
+    /* =====================================================
+       ALERT MESSAGES
+    ===================================================== */
+    .glass-card .alert {
+        background: rgba(139, 92, 246, 0.10) !important;
+        border: 1px solid rgba(139, 92, 246, 0.15) !important;
         color: #e5e7eb !important;
         border-radius: 10px;
         padding: 12px 16px;
@@ -287,58 +354,64 @@
         justify-content: space-between;
     }
 
-    .signin-card .alert-success {
-        background: rgba(52, 211, 153, 0.15) !important;
-        border-color: rgba(52, 211, 153, 0.25) !important;
+    .glass-card .alert-success {
+        background: rgba(52, 211, 153, 0.10) !important;
+        border-color: rgba(52, 211, 153, 0.15) !important;
         color: #a7f3d0 !important;
     }
 
-    .signin-card .alert-error,
-    .signin-card .alert-danger {
-        background: rgba(239, 68, 68, 0.15) !important;
-        border-color: rgba(239, 68, 68, 0.25) !important;
+    .glass-card .alert-error,
+    .glass-card .alert-danger {
+        background: rgba(239, 68, 68, 0.10) !important;
+        border-color: rgba(239, 68, 68, 0.15) !important;
         color: #fca5a5 !important;
     }
 
-    .signin-card .btn-close {
+    .glass-card .btn-close {
         color: #ffffff !important;
         background: transparent !important;
         border: none !important;
         font-size: 1.2rem !important;
         opacity: 0.5;
         transition: opacity 0.2s ease;
+        padding: 4px 8px;
     }
 
-    .signin-card .btn-close:hover {
+    .glass-card .btn-close:hover {
         opacity: 1;
     }
 
-    .signin-card .btn-close::before {
+    .glass-card .btn-close::before {
         content: "✕";
         font-size: 1.1rem;
         color: #ffffff;
     }
 
+    /* =====================================================
+       MOBILE
+    ===================================================== */
     @media (max-width: 576px) {
-        .signin-page {
-            padding: 30px 10px;
+        .scroll-content {
+            width: 100%;
+            padding: 20px 12px;
         }
 
-        .signin-card {
+        .glass-card {
             padding: 30px 22px;
+            border-radius: 14px;
         }
 
-        .signin-title {
+        .login-title {
             font-size: 1.7rem;
         }
     }
 
     @media (max-width: 380px) {
-        .signin-card {
+        .glass-card {
             padding: 24px 16px;
         }
 
-        .signin-title {
+        .login-title {
             font-size: 1.4rem;
         }
 
@@ -349,19 +422,27 @@
     }
 </style>
 
-<div class="signin-page">
+<!-- =====================================================
+     PARALLAX WRAPPER
+===================================================== -->
+<div class="login-parallax">
 
-    <div class="signin-container">
+    <!-- Fixed Background -->
+    <div class="parallax-bg"></div>
 
-        <div class="signin-card">
+    <!-- Scrollable Content -->
+    <div class="scroll-content">
 
-            <h2 class="signin-title">✨ Sign In</h2>
+        <div class="glass-card">
 
-            <p class="signin-subtitle">
+            <!-- HEADING -->
+            <h2 class="login-title"><span>Sign In</span></h2>
+            <div class="login-line"></div>
+            <p class="login-subtitle">
                 Welcome back to Hasnain's Digital Library
             </p>
 
-            <!-- Messages -->
+            <!-- MESSAGES -->
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -371,29 +452,30 @@
                 {% endfor %}
             {% endif %}
 
-            <!-- Sign In Form -->
-            <form method="POST" action="{% url 'account_login' %}" class="signin-form">
+            <!-- LOGIN FORM -->
+            <form method="POST" action="{% url 'account_login' %}" class="login-form">
 
                 {% csrf_token %}
 
                 {{ form.as_p }}
 
+                <!-- Remember Me & Forgot Password -->
                 <div class="forgot-password">
                     <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
                 </div>
 
-                <button type="submit" class="signin-button">
-                    Sign In
+                <button type="submit" class="login-button">
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
                 </button>
 
             </form>
 
-            <!-- Divider -->
+            <!-- DIVIDER -->
             <div class="divider">
                 <span>or continue with</span>
             </div>
 
-            <!-- Google Sign In Button -->
+            <!-- GOOGLE -->
             <a href="{% provider_login_url 'google' %}" class="btn-google">
 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
@@ -407,6 +489,7 @@
 
             </a>
 
+            <!-- SIGN UP LINK -->
             <p class="signup-link">
                 Don't have an account?
                 <a href="{% url 'account_signup' %}">Sign Up</a>

@@ -5,84 +5,110 @@
 {% block body %}
 
 <style>
-
-    /* =========================
-       PAGE
-    ========================= */
-
-    body {
-        background-color: #111315 !important;
-        color: #ffffff;
+    /* =====================================================
+       PARALLAX WRAPPER
+    ===================================================== */
+    .edit-parallax {
+        min-height: 100vh;
+        position: relative;
     }
 
+    /* =====================================================
+       FIXED BACKGROUND IMAGE
+    ===================================================== */
+    .parallax-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: url('/static/bg.jpg') no-repeat center center;
+        background-size: cover;
+        z-index: 0;
+    }
 
-    /* =========================
+    .parallax-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 19, 21, 0.45);
+        z-index: 1;
+    }
+
+    /* =====================================================
+       SCROLLABLE CONTENT
+    ===================================================== */
+    .scroll-content {
+        position: relative;
+        z-index: 2;
+        padding: 50px 15px 60px;
+        min-height: 100vh;
+    }
+
+    /* =====================================================
        MAIN CONTAINER
-    ========================= */
-
+    ===================================================== */
     .edit-book-container {
         max-width: 850px;
-        padding-bottom: 60px;
+        margin: auto;
     }
 
-
-    /* =========================
-       FORM CARD
-    ========================= */
-
+    /* =====================================================
+       FORM CARD - Glassmorphism
+    ===================================================== */
     .edit-book-card {
-        background: rgba(25, 28, 31, 0.82);
-        border: 1px solid rgba(139, 92, 246, 0.25);
-        border-radius: 16px;
-        padding: 35px;
-
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-
-        box-shadow:
-            0 20px 50px rgba(0, 0, 0, 0.45),
-            0 0 30px rgba(139, 92, 246, 0.06);
+        background: rgba(25, 28, 31, 0.50);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(139, 92, 246, 0.12);
+        border-radius: 18px;
+        padding: 40px;
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+        transition: 0.3s ease;
     }
 
+    .edit-book-card:hover {
+        border-color: rgba(139, 92, 246, 0.30);
+    }
 
-    /* =========================
+    /* =====================================================
        HEADING
-    ========================= */
-
+    ===================================================== */
     .edit-book-heading {
         color: #ffffff;
         font-weight: 700;
-        margin-bottom: 8px;
+        font-size: 2rem;
+        margin-bottom: 6px;
+    }
+
+    .edit-book-heading span {
+        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .edit-book-subtitle {
-        color: #888f96;
+        color: #9ca3af;
         margin-bottom: 30px;
         font-size: 0.95rem;
     }
 
-
-    /* Purple line */
-
     .edit-book-header {
-        border-bottom: 1px solid #30343a;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         padding-bottom: 18px;
         margin-bottom: 28px;
     }
 
-
-    /* =========================
+    /* =====================================================
        FORM
-    ========================= */
-
+    ===================================================== */
     .edit-book-card form p {
         margin-bottom: 20px;
     }
-
-
-    /* =========================
-       LABELS
-    ========================= */
 
     .edit-book-card form label {
         display: block;
@@ -91,11 +117,6 @@
         margin-bottom: 8px;
     }
 
-
-    /* =========================
-       INPUTS
-    ========================= */
-
     .edit-book-card form input[type="text"],
     .edit-book-card form input[type="number"],
     .edit-book-card form input[type="email"],
@@ -103,142 +124,79 @@
     .edit-book-card form input[type="file"],
     .edit-book-card form textarea,
     .edit-book-card form select {
-
         width: 100%;
-
-        background-color: #22272b;
-
-        border: 1px solid #3d444a;
-
+        background: rgba(34, 39, 43, 0.60);
+        border: 1px solid rgba(61, 68, 74, 0.4);
         color: #ffffff;
-
-        border-radius: 8px;
-
-        padding: 11px 13px;
-
-        transition: all 0.2s ease;
+        border-radius: 10px;
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
     }
-
-
-    /* =========================
-       PLACEHOLDER
-    ========================= */
 
     .edit-book-card form input::placeholder,
     .edit-book-card form textarea::placeholder {
         color: #777f87;
     }
 
-
-    /* =========================
-       TEXTAREA
-    ========================= */
-
     .edit-book-card form textarea {
         min-height: 130px;
         resize: vertical;
     }
 
-
-    /* =========================
-       FILE INPUT
-    ========================= */
-
     .edit-book-card form input[type="file"] {
-        padding: 8px;
+        padding: 8px 12px;
         cursor: pointer;
     }
 
     .edit-book-card form input[type="file"]::file-selector-button {
-
-        background-color: #8b5cf6;
+        background: #8b5cf6;
         border: none;
-
         color: #ffffff;
-
         border-radius: 6px;
-
-        padding: 7px 12px;
-
-        margin-right: 10px;
-
+        padding: 7px 16px;
+        margin-right: 12px;
         cursor: pointer;
+        transition: 0.2s ease;
     }
 
     .edit-book-card form input[type="file"]::file-selector-button:hover {
-        background-color: #7c3aed;
+        background: #7c3aed;
     }
-
-
-    /* =========================
-       SELECT
-    ========================= */
 
     .edit-book-card form select {
         cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
     }
-
-
-    /* =========================
-       FOCUS
-    ========================= */
 
     .edit-book-card form input:focus,
     .edit-book-card form textarea:focus,
     .edit-book-card form select:focus {
-
-        background-color: #22272b;
-
+        background: rgba(34, 39, 43, 0.80);
         color: #ffffff;
-
         border-color: #8b5cf6;
-
         outline: none;
-
-        box-shadow:
-            0 0 0 3px rgba(139, 92, 246, 0.15),
-            0 0 15px rgba(139, 92, 246, 0.08);
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.10);
     }
 
-
-    /* =========================
-       HELP TEXT
-    ========================= */
-
     .edit-book-card form .helptext {
-
         display: block;
-
-        color: #888f96;
-
-        font-size: 0.85rem;
-
+        color: #777f87;
+        font-size: 0.82rem;
         margin-top: 6px;
     }
 
-
-    /* =========================
-       ERROR
-    ========================= */
-
     .edit-book-card form .errorlist {
-
         color: #ff6b6b;
-
         margin: 5px 0;
-
         padding-left: 20px;
     }
 
-
-    /* =========================
-       CURRENT FILE / IMAGE
-    ========================= */
-
     .edit-book-card form a {
-
         color: #a78bfa;
-
         text-decoration: none;
     }
 
@@ -247,216 +205,126 @@
         text-decoration: underline;
     }
 
-
-    /* =========================
+    /* =====================================================
        BUTTON AREA
-    ========================= */
-
+    ===================================================== */
     .edit-book-actions {
-
         display: flex;
-
-        gap: 10px;
-
+        gap: 12px;
         margin-top: 28px;
-
         padding-top: 20px;
-
-        border-top: 1px solid #30343a;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
-
-
-    /* =========================
-       UPDATE BUTTON
-    ========================= */
 
     .update-book-btn {
-
-        background-color: #8b5cf6 !important;
-
-        border: 1px solid #8b5cf6 !important;
-
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+        border: none !important;
         color: #ffffff !important;
-
-        border-radius: 9px;
-
-        padding: 10px 22px;
-
+        border-radius: 10px;
+        padding: 12px 28px;
         font-weight: 600;
-
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.20);
     }
-
 
     .update-book-btn:hover {
-
-        background-color: #7c3aed !important;
-
-        border-color: #7c3aed !important;
-
-        transform: translateY(-1px);
-
-        box-shadow:
-            0 6px 20px rgba(124, 58, 237, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(139, 92, 246, 0.35);
+        background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
     }
-
-
-    /* =========================
-       CANCEL BUTTON
-    ========================= */
 
     .cancel-btn {
-
-        background-color: #22272b !important;
-
-        border: 1px solid #3d444a !important;
-
+        background: rgba(34, 39, 43, 0.50) !important;
+        border: 1px solid rgba(61, 68, 74, 0.3) !important;
         color: #d1d5d8 !important;
-
-        border-radius: 9px;
-
-        padding: 10px 22px;
-
+        border-radius: 10px;
+        padding: 12px 28px;
         font-weight: 500;
-
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
-
     .cancel-btn:hover {
-
-        background-color: #30343a !important;
-
-        border-color: #555b62 !important;
-
+        background: rgba(34, 39, 43, 0.80) !important;
+        border-color: rgba(139, 92, 246, 0.30) !important;
         color: #ffffff !important;
     }
 
-
-    /* =========================
-       BACKGROUND
-    ========================= */
-
-    body {
-
-        background-image:
-            linear-gradient(
-                rgba(17, 19, 21, 0.88),
-                rgba(17, 19, 21, 0.94)
-            ),
-            url('/static/bg.jpg');
-
-        background-size: cover;
-
-        background-position: center;
-
-        background-repeat: no-repeat;
-
-        background-attachment: fixed;
-    }
-
-
-    /* =========================
+    /* =====================================================
        MOBILE
-    ========================= */
-
+    ===================================================== */
     @media (max-width: 576px) {
-
-        .edit-book-container {
-
-            margin-top: 30px !important;
-
-            padding-left: 15px;
-
-            padding-right: 15px;
+        .scroll-content {
+            padding: 30px 10px 40px;
         }
-
 
         .edit-book-card {
-
-            padding: 25px 20px;
-
-            border-radius: 12px;
+            padding: 25px 18px;
+            border-radius: 14px;
         }
 
+        .edit-book-heading {
+            font-size: 1.6rem;
+        }
 
         .edit-book-actions {
-
             flex-direction: column;
         }
 
-
         .update-book-btn,
         .cancel-btn {
-
             width: 100%;
+            text-align: center;
         }
     }
-
 </style>
 
+<!-- =====================================================
+     PARALLAX WRAPPER
+===================================================== -->
+<div class="edit-parallax">
 
-<div class="container mt-5 edit-book-container">
+    <!-- Fixed Background -->
+    <div class="parallax-bg"></div>
 
-    <div class="edit-book-card">
+    <!-- Scrollable Content -->
+    <div class="scroll-content">
 
+        <div class="edit-book-container">
 
-        <!-- =========================
-             HEADER
-        ========================= -->
+            <div class="edit-book-card">
 
-        <div class="edit-book-header">
+                <!-- HEADER -->
+                <div class="edit-book-header">
+                    <h2 class="edit-book-heading">
+                        <span>Edit</span> Book
+                    </h2>
+                    <p class="edit-book-subtitle mb-0">
+                        Update the information, cover, rating or reading details of this book.
+                    </p>
+                </div>
 
-            <h2 class="edit-book-heading">
-                Edit Book
-            </h2>
+                <!-- FORM -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
 
-            <p class="edit-book-subtitle mb-0">
-                Update the information, cover, rating or reading details of this book.
-            </p>
-
-        </div>
-
-
-        <!-- =========================
-             FORM
-        ========================= -->
-
-        <form method="POST" enctype="multipart/form-data">
-
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-
-            <!-- =========================
-                 BUTTONS
-            ========================= -->
-
-            <div class="edit-book-actions">
-
-                <button type="submit"
-                        class="btn update-book-btn">
-
-                    Update Book
-
-                </button>
-
-
-                <a href="{% url 'manage_books' %}"
-                   class="btn cancel-btn">
-
-                    Cancel
-
-                </a>
+                    <!-- BUTTONS -->
+                    <div class="edit-book-actions">
+                        <button type="submit" class="btn update-book-btn">
+                            <i class="fas fa-save me-2"></i>Update Book
+                        </button>
+                        <a href="{% url 'manage_books' %}" class="btn cancel-btn">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
 
             </div>
 
-        </form>
+        </div>
 
     </div>
 
 </div>
-
 
 {% endblock body %}
