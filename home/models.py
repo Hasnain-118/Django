@@ -3,6 +3,7 @@ import requests
 
 from django.core.files.base import ContentFile
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # =========================================================
@@ -19,6 +20,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# =========================================================
+# BOOK MODEL
+# =========================================================
 
 class Book(models.Model):
 
@@ -296,16 +302,67 @@ class Book(models.Model):
 
 
     # =====================================================
-    # AUTOMATIC COVER FETCH
+    # SAVE BOOK + CREATE NOTIFICATIONS
     # =====================================================
 
     def save(self, *args, **kwargs):
 
+        # Check whether this is a new book
+        is_new = self.pk is None
+
         # If the user did not upload a cover,
         # automatically try Open Library.
-
         if not self.cover_image:
-
             self.fetch_cover_from_open_library()
 
+        # Save the book first so self.id exists
         super().save(*args, **kwargs)
+
+        # Create notification only for newly created books
+        if is_new:
+
+            for user in User.objects.all():
+
+                Notification.objects.create(
+                    user=user,
+                    message=f"New book added: {self.title}",
+                    link=f"/read/{self.pk}/"
+                )
+
+
+# =========================================================
+# NOTIFICATION MODEL
+# =========================================================
+
+class Notification(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='notifications'
+    )
+
+    message = models.CharField(
+        max_length=200
+    )
+
+    # CharField is used because /read/123/
+    # is a relative URL, not a full URL.
+    link = models.CharField(
+        max_length=300,
+        blank=True
+    )
+
+    is_read = models.BooleanField(
+        default=False
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username}: {self.message}"
