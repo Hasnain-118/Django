@@ -1,4 +1,0 @@
-<div class="container-fluid my-3" >
-
-my-3 for margin from header 
--fluid for filling sides with image
