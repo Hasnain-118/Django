@@ -6,12 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# =========================================================
-# CONTACT MODEL
-# =========================================================
-
 class Contact(models.Model):
-
     name = models.CharField(max_length=30)
     email = models.CharField(max_length=35)
     phone = models.CharField(max_length=12)
@@ -22,12 +17,7 @@ class Contact(models.Model):
         return self.name
 
 
-# =========================================================
-# BOOK MODEL
-# =========================================================
-
 class Book(models.Model):
-
     CATEGORY_CHOICES = [
         ('fiction', 'Fiction'),
         ('manga', 'Manga'),
@@ -40,289 +30,257 @@ class Book(models.Model):
     ]
 
     title = models.CharField(max_length=100)
-
-    author = models.CharField(
-        max_length=100,
-        blank=True
-    )
-
-    cover_image = models.ImageField(
-        upload_to='book_covers/',
-        blank=True,
-        null=True
-    )
-
-    quote = models.TextField(
-        blank=True
-    )
-
-    rating = models.DecimalField(
-        max_digits=2,
-        decimal_places=1,
-        default=Decimal('0.0')
-    )
-
-    category = models.CharField(
-        max_length=20,
-        choices=CATEGORY_CHOICES,
-        default='fiction'
-    )
-
-    pdf_file = models.FileField(
-        upload_to='book_pdfs/',
-        blank=True,
-        null=True
-    )
-
-    external_link = models.URLField(
-        blank=True,
-        null=True
-    )
+    author = models.CharField(max_length=100, blank=True)
+    cover_image = models.ImageField(upload_to='book_covers/', blank=True, null=True)
+    quote = models.TextField(blank=True)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, default=Decimal('0.0'))
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='fiction')
+    pdf_file = models.FileField(upload_to='book_pdfs/', blank=True, null=True)
+    external_link = models.URLField(blank=True, null=True)
+    
+    description = models.TextField(blank=True, null=True)
+    publisher = models.CharField(max_length=200, blank=True, null=True)
+    published_date = models.CharField(max_length=50, blank=True, null=True)
+    page_count = models.IntegerField(blank=True, null=True, default=0)
+    isbn = models.CharField(max_length=20, blank=True, null=True)
+    ratings_count = models.IntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return self.title
 
-
-    # =====================================================
-    # FETCH COVER FROM OPEN LIBRARY
-    # =====================================================
-
-    def fetch_cover_from_open_library(self):
-
-        query = self.title.strip()
-
+    def fetch_book_data_from_open_library(self):
+        """Fetch book data from Open Library - Working version"""
+        
+        title_query = self.title.strip()
         if self.author:
-            query += f" {self.author.strip()}"
+            title_query += f" {self.author.strip()}"
 
-        print(f"\nSearching Open Library for: {query}")
-
+        print(f"\n{'='*50}")
+        print(f"FETCHING FROM OPEN LIBRARY: {title_query}")
+        print(f"{'='*50}")
+        
         try:
-
+            # Search Open Library
             response = requests.get(
-                "https://openlibrary.org/search.json",
-                params={
-                    "q": query,
-                    "limit": 10,
-                },
-                headers={
-                    "User-Agent": "HasnainsDigitalLibrary/1.0"
-                },
-                timeout=10
+                "http://openlibrary.org/search.json",
+                params={"q": title_query, "limit": 10},
+                headers={"User-Agent": "HasnainsDigitalLibrary/1.0"},
+                timeout=15
             )
 
             response.raise_for_status()
-
             data = response.json()
-
             books = data.get("docs", [])
 
-            print(
-                f"Open Library results: {len(books)}"
-            )
+            print(f"Open Library results: {len(books)}")
 
             if not books:
-                print(
-                    f"No result found for: {self.title}"
-                )
+                print(f"No results found")
                 return
 
-
-            # =================================================
-            # FIRST: TRY COVER ID
-            # =================================================
-
+            # Find best match
+            best_match = None
             for result in books:
+                result_title = result.get('title', '').lower()
+                if self.title.lower() == result_title:
+                    if 'sparknotes' not in result_title and 'study guide' not in result_title:
+                        best_match = result
+                        break
+            
+            if not best_match:
+                for result in books:
+                    result_title = result.get('title', '').lower()
+                    if self.title.lower() in result_title:
+                        if 'sparknotes' not in result_title and 'study guide' not in result_title:
+                            best_match = result
+                            break
+            
+            if not best_match:
+                best_match = books[0]
 
-                cover_id = result.get("cover_i")
+            print(f"Best match: {best_match.get('title')}")
 
-                if not cover_id:
-                    continue
+            # Get OLID
+            olid = None
+            if best_match.get('key'):
+                olid = best_match['key'].replace('/works/', '')
+                print(f"OLID: {olid}")
 
-                image_url = (
-                    "https://covers.openlibrary.org/"
-                    f"b/id/{cover_id}-L.jpg"
-                )
+            # =============================================
+            # FETCH DESCRIPTION FROM DETAILS API
+            # =============================================
+            if olid:
+                detail_url = f"http://openlibrary.org/works/{olid}.json"
+                print(f"Fetching description from details API...")
 
-                print(
-                    f"Trying cover ID: {cover_id}"
-                )
-
-                image_response = requests.get(
-                    image_url,
-                    headers={
-                        "User-Agent":
-                            "HasnainsDigitalLibrary/1.0"
-                    },
-                    timeout=10
-                )
-
-                if image_response.status_code != 200:
-                    continue
-
-                content_type = image_response.headers.get(
-                    "Content-Type",
-                    ""
-                )
-
-                if not content_type.startswith("image/"):
-                    continue
-
-                # Avoid Open Library placeholder image
-                if len(image_response.content) < 5000:
-                    continue
-
-                file_name = (
-                    self.title
-                    .strip()
-                    .replace(" ", "_")
-                    .replace("/", "_")
-                    .replace("\\", "_")
-                    .replace(":", "_")
-                    + ".jpg"
-                )
-
-                self.cover_image.save(
-                    file_name,
-                    ContentFile(
-                        image_response.content
-                    ),
-                    save=False
-                )
-
-                print(
-                    f"SUCCESS: Cover downloaded for "
-                    f"{self.title}"
-                )
-
-                return
-
-
-            # =================================================
-            # SECOND: TRY ISBN
-            # =================================================
-
-            print(
-                "No usable cover ID found. "
-                "Trying ISBN..."
-            )
-
-            for result in books:
-
-                isbn_list = result.get(
-                    "isbn",
-                    []
-                )
-
-                if not isbn_list:
-                    continue
-
-                for isbn in isbn_list[:5]:
-
-                    image_url = (
-                        "https://covers.openlibrary.org/"
-                        f"b/isbn/{isbn}-L.jpg"
+                try:
+                    detail_response = requests.get(
+                        detail_url,
+                        headers={"User-Agent": "HasnainsDigitalLibrary/1.0"},
+                        timeout=15
                     )
 
-                    image_response = requests.get(
-                        image_url,
-                        headers={
-                            "User-Agent":
-                                "HasnainsDigitalLibrary/1.0"
-                        },
-                        timeout=10
-                    )
+                    if detail_response.status_code == 200:
+                        detail_data = detail_response.json()
 
-                    if image_response.status_code != 200:
-                        continue
+                        if detail_data.get('description'):
+                            if isinstance(detail_data['description'], dict):
+                                description = detail_data['description'].get('value', '')
+                            else:
+                                description = detail_data['description']
+                            
+                            if description:
+                                self.description = description
+                                print(f"Description: {description[:100]}...")
+                            else:
+                                print(f"Description field is empty")
+                        else:
+                            print(f"No description field in details response")
 
-                    content_type = (
-                        image_response.headers.get(
-                            "Content-Type",
-                            ""
+                except Exception as e:
+                    print(f"Error fetching description: {e}")
+            else:
+                print(f"No OLID found, cannot fetch description")
+
+            # =============================================
+            # PUBLISHER
+            # =============================================
+            publishers = best_match.get('publisher', [])
+            if publishers:
+                self.publisher = ', '.join(publishers[:3])
+                print(f"Publisher: {self.publisher}")
+            else:
+                print(f"Publisher: Not available")
+
+            # =============================================
+            # PUBLISHED DATE
+            # =============================================
+            publish_dates = best_match.get('publish_date', [])
+            if publish_dates:
+                self.published_date = publish_dates[0]
+                print(f"Published: {self.published_date}")
+            else:
+                print(f"Published: Not available")
+
+            # =============================================
+            # PAGE COUNT
+            # =============================================
+            if best_match.get('number_of_pages'):
+                self.page_count = best_match['number_of_pages']
+                print(f"Pages: {self.page_count}")
+            else:
+                print(f"Pages: Not available")
+
+            # =============================================
+            # ISBN
+            # =============================================
+            isbn_list = best_match.get('isbn', [])
+            if isbn_list:
+                self.isbn = isbn_list[0]
+                print(f"ISBN: {self.isbn}")
+            else:
+                print(f"ISBN: Not available")
+
+            # =============================================
+            # COVER IMAGE
+            # =============================================
+            cover_id = best_match.get("cover_i")
+            if cover_id and not self.cover_image:
+                for size in ['-L.jpg', '-M.jpg']:
+                    image_url = f"http://covers.openlibrary.org/b/id/{cover_id}{size}"
+                    print(f"Trying cover: {image_url}")
+
+                    try:
+                        image_response = requests.get(
+                            image_url,
+                            headers={"User-Agent": "HasnainsDigitalLibrary/1.0"},
+                            timeout=10
                         )
-                    )
 
-                    if not content_type.startswith(
-                        "image/"
-                    ):
+                        if image_response.status_code == 200:
+                            content_type = image_response.headers.get("Content-Type", "")
+                            if content_type.startswith("image/") and len(image_response.content) >= 5000:
+                                file_name = (
+                                    self.title
+                                    .strip()
+                                    .replace(" ", "_")
+                                    .replace("/", "_")
+                                    .replace("\\", "_")
+                                    .replace(":", "_")
+                                    + ".jpg"
+                                )
+
+                                self.cover_image.save(
+                                    file_name,
+                                    ContentFile(image_response.content),
+                                    save=False
+                                )
+                                print(f"Cover downloaded!")
+                                break
+                    except Exception as e:
+                        print(f"Error: {e}")
                         continue
 
-                    # Avoid placeholder images
-                    if len(image_response.content) < 5000:
-                        continue
+            if isbn_list and not self.cover_image:
+                print("Trying ISBN for cover...")
+                for isbn in isbn_list[:3]:
+                    for size in ['-L.jpg', '-M.jpg']:
+                        try:
+                            image_url = f"http://covers.openlibrary.org/b/isbn/{isbn}{size}"
+                            image_response = requests.get(
+                                image_url,
+                                headers={"User-Agent": "HasnainsDigitalLibrary/1.0"},
+                                timeout=10
+                            )
 
-                    file_name = (
-                        self.title
-                        .strip()
-                        .replace(" ", "_")
-                        .replace("/", "_")
-                        .replace("\\", "_")
-                        .replace(":", "_")
-                        + ".jpg"
-                    )
+                            if image_response.status_code == 200:
+                                content_type = image_response.headers.get("Content-Type", "")
+                                if content_type.startswith("image/") and len(image_response.content) >= 5000:
+                                    file_name = (
+                                        self.title
+                                        .strip()
+                                        .replace(" ", "_")
+                                        .replace("/", "_")
+                                        .replace("\\", "_")
+                                        .replace(":", "_")
+                                        + ".jpg"
+                                    )
 
-                    self.cover_image.save(
-                        file_name,
-                        ContentFile(
-                            image_response.content
-                        ),
-                        save=False
-                    )
+                                    self.cover_image.save(
+                                        file_name,
+                                        ContentFile(image_response.content),
+                                        save=False
+                                    )
+                                    print(f"Cover downloaded using ISBN!")
+                                    break
+                        except Exception as e:
+                            print(f"Error: {e}")
+                            continue
+                    if self.cover_image:
+                        break
 
-                    print(
-                        f"SUCCESS: Cover downloaded "
-                        f"using ISBN for {self.title}"
-                    )
-
-                    return
-
-
-            # =================================================
-            # NO COVER FOUND
-            # =================================================
-
-            print(
-                f"NO COVER AVAILABLE: "
-                f"{self.title}"
-            )
+            if not self.cover_image:
+                print(f"No cover available")
 
         except requests.RequestException as e:
-
-            print(
-                f"Open Library request error "
-                f"for {self.title}: {e}"
-            )
-
+            print(f"Open Library request error: {e}")
         except Exception as e:
+            print(f"Unexpected error: {e}")
 
-            print(
-                f"Unexpected error fetching cover "
-                f"for {self.title}: {e}"
-            )
-
-
-    # =====================================================
-    # SAVE BOOK + CREATE NOTIFICATIONS
-    # =====================================================
+        print(f"\n{'='*50}")
+        print(f"FETCH COMPLETE")
+        print(f"{'='*50}")
 
     def save(self, *args, **kwargs):
-
-        # Check whether this is a new book
         is_new = self.pk is None
 
-        # If the user did not upload a cover,
-        # automatically try Open Library.
-        if not self.cover_image:
-            self.fetch_cover_from_open_library()
+        if not self.cover_image or not self.description:
+            self.fetch_book_data_from_open_library()
 
-        # Save the book first so self.id exists
         super().save(*args, **kwargs)
 
-        # Create notification only for newly created books
         if is_new:
-
             for user in User.objects.all():
-
                 Notification.objects.create(
                     user=user,
                     message=f"New book added: {self.title}",
@@ -330,36 +288,16 @@ class Book(models.Model):
                 )
 
 
-# =========================================================
-# NOTIFICATION MODEL
-# =========================================================
-
 class Notification(models.Model):
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='notifications'
     )
-
-    message = models.CharField(
-        max_length=200
-    )
-
-    # CharField is used because /read/123/
-    # is a relative URL, not a full URL.
-    link = models.CharField(
-        max_length=300,
-        blank=True
-    )
-
-    is_read = models.BooleanField(
-        default=False
-    )
-
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
+    message = models.CharField(max_length=200)
+    link = models.CharField(max_length=300, blank=True)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-created_at']
