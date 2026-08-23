@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
 from home import views
 
 urlpatterns = [
@@ -21,6 +20,4 @@ urlpatterns = [
         views.mark_notifications_read,
         name="mark_notifications_read"
     ),
-
-    path("accounts/", include("allauth.urls")),
 ]
