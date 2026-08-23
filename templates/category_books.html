@@ -624,8 +624,8 @@
                 {% for book in books %}
                 <div class="book-card">
 
-                    {% if book.cover_image %}
-                    <img src="{{ book.cover_image.url }}" class="book-cover-img" alt="{{ book.title }}">
+                    {% if book.cover_url %}
+                    <img src="{{ book.cover_url }}" class="book-cover-img" alt="{{ book.title }}">
                     {% else %}
                     <div class="no-cover">
                         <div class="icon">📚</div>

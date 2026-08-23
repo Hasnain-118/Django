@@ -48,6 +48,15 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def cover_url(self):
+        try:
+            if self.cover_image:
+                return self.cover_image.url
+        except Exception:
+            return ''
+        return ''
+
     def fetch_book_data_from_open_library(self):
         """Fetch book data from Open Library - Working version"""
         

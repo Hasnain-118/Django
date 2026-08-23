@@ -843,11 +843,11 @@
                 {% for book in latest_books %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %} position-relative" style="height: 700px;">
 
-                    {% if book.cover_image %}
+                    {% if book.cover_url %}
                     <div class="slide-overlay"></div>
 
                     <div class="book-cover-wrapper">
-                        <img src="{{ book.cover_image.url }}" class="book-cover" alt="{{ book.title }}">
+                        <img src="{{ book.cover_url }}" class="book-cover" alt="{{ book.title }}">
                     </div>
                     {% endif %}
 
@@ -905,8 +905,8 @@
                 {% for book in books %}
                 <div class="book-card">
 
-                    {% if book.cover_image %}
-                    <img src="{{ book.cover_image.url }}" class="book-cover-img" alt="{{ book.title }}">
+                    {% if book.cover_url %}
+                    <img src="{{ book.cover_url }}" class="book-cover-img" alt="{{ book.title }}">
                     {% else %}
                     <div class="no-cover">
                         <div class="text-center">

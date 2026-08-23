@@ -371,8 +371,8 @@
                 <!-- COVER -->
                 <div class="col-md-5">
                     <div class="book-cover-wrapper">
-                        {% if book.cover_image %}
-                        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="book-cover">
+                        {% if book.cover_url %}
+                        <img src="{{ book.cover_url }}" alt="{{ book.title }}" class="book-cover">
                         {% else %}
                         <div class="no-cover">
                             <div class="no-cover-icon">📚</div>

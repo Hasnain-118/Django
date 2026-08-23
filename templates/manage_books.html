@@ -636,8 +636,8 @@
                         {% for book in books %}
                         <tr>
                             <td>
-                                {% if book.cover_image %}
-                                <img src="{{ book.cover_image.url }}" class="book-cover" alt="{{ book.title }}">
+                                {% if book.cover_url %}
+                                <img src="{{ book.cover_url }}" class="book-cover" alt="{{ book.title }}">
                                 {% else %}
                                 <div class="no-cover-box">No Cover</div>
                                 {% endif %}
