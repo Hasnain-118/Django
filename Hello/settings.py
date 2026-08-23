@@ -266,15 +266,32 @@ if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
         api_secret=CLOUDINARY_API_SECRET,
     )
 
-CSRF_TRUSTED_ORIGINS = config(
-    'CSRF_TRUSTED_ORIGINS',
-    default='',
-    cast=lambda value: [origin.strip() for origin in str(value).split(',') if origin.strip()],
-)
-if RENDER_HOSTNAME:
+# ====================
+# CSRF TRUSTED ORIGINS - FIXED
+# ====================
+
+# Initialize as empty list (safe default)
+CSRF_TRUSTED_ORIGINS = []
+
+# Load from environment variable if set
+csrf_env = config('CSRF_TRUSTED_ORIGINS', default='')
+if csrf_env and isinstance(csrf_env, str):
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in str(csrf_env).split(',') if origin.strip()]
+
+# Automatically add Render hostname
+RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_HOSTNAME and isinstance(RENDER_HOSTNAME, str):
     render_origin = f'https://{RENDER_HOSTNAME}'
     if render_origin not in CSRF_TRUSTED_ORIGINS:
         CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+# Final safety check: ensure it's always a list
+if not isinstance(CSRF_TRUSTED_ORIGINS, list):
+    CSRF_TRUSTED_ORIGINS = [CSRF_TRUSTED_ORIGINS] if CSRF_TRUSTED_ORIGINS else []
+
+# ====================
+# SECURITY SETTINGS (Render Production)
+# ====================
 
 if ON_RENDER:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
