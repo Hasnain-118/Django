@@ -62,7 +62,7 @@ class Book(models.Model):
         try:
             # Search Open Library
             response = requests.get(
-                "http://openlibrary.org/search.json",
+                "https://openlibrary.org/search.json",
                 params={"q": title_query, "limit": 10},
                 headers={"User-Agent": "HasnainsDigitalLibrary/1.0"},
                 timeout=15
@@ -110,7 +110,7 @@ class Book(models.Model):
             # FETCH DESCRIPTION FROM DETAILS API
             # =============================================
             if olid:
-                detail_url = f"http://openlibrary.org/works/{olid}.json"
+                detail_url = f"https://openlibrary.org/works/{olid}.json"
                 print(f"Fetching description from details API...")
 
                 try:
@@ -187,7 +187,7 @@ class Book(models.Model):
             cover_id = best_match.get("cover_i")
             if cover_id and not self.cover_image:
                 for size in ['-L.jpg', '-M.jpg']:
-                    image_url = f"http://covers.openlibrary.org/b/id/{cover_id}{size}"
+                    image_url = f"https://covers.openlibrary.org/b/id/{cover_id}{size}"
                     print(f"Trying cover: {image_url}")
 
                     try:
@@ -226,7 +226,7 @@ class Book(models.Model):
                 for isbn in isbn_list[:3]:
                     for size in ['-L.jpg', '-M.jpg']:
                         try:
-                            image_url = f"http://covers.openlibrary.org/b/isbn/{isbn}{size}"
+                            image_url = f"https://covers.openlibrary.org/b/isbn/{isbn}{size}"
                             image_response = requests.get(
                                 image_url,
                                 headers={"User-Agent": "HasnainsDigitalLibrary/1.0"},

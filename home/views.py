@@ -76,7 +76,7 @@ def about(request):
 
 
 def services(request):
-    return render(request, 'services.html')
+    return redirect('about')
 
 
 def contact(request):
