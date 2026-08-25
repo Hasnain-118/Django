@@ -86,15 +86,25 @@ def contact(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        desc = request.POST.get('desc')
+        description = request.POST.get('description')
 
         contact = Contact(
             name=name,
             email=email,
             phone=phone,
-            desc=desc,
+            description=description,
             date=datetime.today()
         )
+
+        contact.save()
+
+        messages.success(
+            request,
+            'Your form submitted successfully!'
+        )
+        description=description,
+        date=datetime.today()
+        
 
         contact.save()
 
