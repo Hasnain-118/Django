@@ -699,13 +699,14 @@
          MESSAGES - FIXED
     ========================= -->
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show alert-fixed" role="alert">
-                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% elif message.tags == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
-                <strong>{{ message }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        {% endfor %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show alert-fixed" role="alert">
+        <i
+            class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% elif message.tags == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
     {% endif %}
 
     <!-- =========================
@@ -724,7 +725,8 @@
             </a>
 
             <!-- MOBILE TOGGLER -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -753,17 +755,18 @@
                         </a>
                         <ul class="dropdown-menu category-menu">
                             {% for slug, name in category_choices %}
-                                <li>
-                                    <a class="dropdown-item" href="{% url 'category_books' slug %}">
-                                        <i class="fas fa-folder"></i> {{ name }}
-                                    </a>
-                                </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'category_books' slug %}">
+                                    <i class="fas fa-folder"></i> {{ name }}
+                                </a>
+                            </li>
                             {% endfor %}
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {% if 'contact' in request.path %}active{% endif %}" href="{% url 'contact' %}">
+                        <a class="nav-link {% if 'contact' in request.path %}active{% endif %}"
+                            href="{% url 'contact' %}">
                             <i class="fas fa-envelope"></i> Contact
                         </a>
                     </li>
@@ -775,7 +778,8 @@
 
                     <!-- SEARCH -->
                     <form class="d-flex navbar-search" role="search" method="GET" action="{% url 'search_books' %}">
-                        <input class="form-control" type="search" name="q" placeholder="Search books..." aria-label="Search" value="{{ request.GET.q|default:'' }}">
+                        <input class="form-control" type="search" name="q" placeholder="Search books..."
+                            aria-label="Search" value="{{ request.GET.q|default:'' }}">
                         <button class="btn search-btn" type="submit">
                             <i class="fas fa-search"></i> Search
                         </button>
@@ -784,16 +788,11 @@
                     <!-- NOTIFICATION BELL -->
                     {% if user.is_authenticated %}
                     <div class="dropdown">
-                        <button
-                            class="notif-btn"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            title="Notifications"
-                        >
+                        <button class="notif-btn" type="button" data-bs-toggle="dropdown" title="Notifications">
                             <i class="fas fa-bell"></i>
 
                             {% if unread_count %}
-                                <span class="badge-dot-count">{{ unread_count }}</span>
+                            <span class="badge-dot-count">{{ unread_count }}</span>
                             {% endif %}
                         </button>
 
@@ -808,43 +807,44 @@
                             </li>
 
                             {% for n in notifications %}
-                                <li class="notification-item position-relative">
-                                    <a class="dropdown-item {% if not n.is_read %}fw-bold unread-notification{% endif %}" 
-                                       href="{% url 'mark_one_read' n.id %}">
-                                        <div class="d-flex">
-                                            <div class="notification-icon-wrapper">
-                                                <i class="fas {{ n.icon|default:'fa-info-circle' }}"></i>
-                                            </div>
-                                            <div class="flex-grow-1 ms-2">
-                                                <div class="notification-message">{{ n.message }}</div>
-                                                <small class="notification-time">
-                                                    <i class="far fa-clock me-1"></i>{{ n.created_at|timesince }} ago
-                                                </small>
-                                            </div>
+                            <li class="notification-item position-relative">
+                                <a class="dropdown-item {% if not n.is_read %}fw-bold unread-notification{% endif %}"
+                                    href="{% url 'mark_one_read' n.id %}">
+                                    <div class="d-flex">
+                                        <div class="notification-icon-wrapper">
+                                            <!-- FIXED: fa- prefix add kiya -->
+                                            <i class="fas fa-{{ n.icon|default:'info' }}"></i>
                                         </div>
-                                    </a>
-                                    <a href="{% url 'clear_notification' n.id %}" 
-                                       class="delete-notification" 
-                                       onclick="return confirm('Delete this notification?')"
-                                       title="Delete notification">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                </li>
+                                        <div class="flex-grow-1 ms-2">
+                                            <div class="notification-message">{{ n.message }}</div>
+                                            <small class="notification-time">
+                                                <i class="far fa-clock me-1"></i>{{ n.created_at|timesince }} ago
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="{% url 'clear_notification' n.id %}" class="delete-notification"
+                                    onclick="return confirm('Delete this notification?')" title="Delete notification">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </li>
                             {% empty %}
-                                <li>
-                                    <span class="dropdown-item text-center py-4">
-                                        <i class="far fa-bell-slash fa-2x d-block mb-2 text-muted"></i>
-                                        <span class="text-muted">No notifications yet</span>
-                                    </span>
-                                </li>
+                            <li>
+                                <span class="dropdown-item text-center py-4">
+                                    <i class="far fa-bell-slash fa-2x d-block mb-2 text-muted"></i>
+                                    <span class="text-muted">No notifications yet</span>
+                                </span>
+                            </li>
                             {% endfor %}
 
                             {% if notifications %}
-                            <li><hr class="dropdown-divider"></li>
-                            
                             <li>
-                                <a class="dropdown-item text-center mark-all-read" 
-                                   href="{% url 'mark_notifications_read' %}?next={{ request.path }}">
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-center mark-all-read"
+                                    href="{% url 'mark_notifications_read' %}?next={{ request.path }}">
                                     {% if unread_count %}
                                     <i class="fas fa-check-double me-2"></i>Mark all as read
                                     {% else %}
@@ -862,68 +862,72 @@
                     <!-- USER -->
                     {% if user.is_authenticated %}
 
-                        {% if user.is_staff %}
+                    {% if user.is_staff %}
 
-                            <!-- ADMIN DROPDOWN -->
-                            <div class="dropdown">
-                                <button class="btn user-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <span class="user-avatar">{{ user.username|first|upper }}</span>
-                                    {{ user.username }}
-                                </button>
+                    <!-- ADMIN DROPDOWN -->
+                    <div class="dropdown">
+                        <button class="btn user-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <span class="user-avatar">{{ user.username|first|upper }}</span>
+                            {{ user.username }}
+                        </button>
 
-                                <ul class="dropdown-menu user-menu">
-                                    <li>
-                                        <h6 class="dropdown-header">
-                                            <i class="fas fa-user-circle me-1"></i> Signed in as
-                                            <strong>{{ user.username }}</strong>
-                                        </h6>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'admin:index' %}">
-                                            <i class="fas fa-cog"></i> Admin Panel
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'add_book' %}">
-                                            <i class="fas fa-plus-circle"></i> Add Book
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{% url 'manage_books' %}">
-                                            <i class="fas fa-book"></i> Manage Books
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <a class="dropdown-item logout" href="{% url 'account_logout' %}">
-                                            <i class="fas fa-sign-out-alt"></i> Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        {% else %}
-
-                            <!-- NORMAL USER -->
-                            <span class="text-white-50 small me-1">
-                                <i class="fas fa-user me-1"></i>{{ user.username }}
-                            </span>
-                            <a href="{% url 'account_logout' %}" class="btn auth-btn signin-btn">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-
-                        {% endif %}
+                        <ul class="dropdown-menu user-menu">
+                            <li>
+                                <h6 class="dropdown-header">
+                                    <i class="fas fa-user-circle me-1"></i> Signed in as
+                                    <strong>{{ user.username }}</strong>
+                                </h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                    <i class="fas fa-cog"></i> Admin Panel
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'add_book' %}">
+                                    <i class="fas fa-plus-circle"></i> Add Book
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'manage_books' %}">
+                                    <i class="fas fa-book"></i> Manage Books
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item logout" href="{% url 'account_logout' %}">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
                     {% else %}
 
-                        <!-- GUEST -->
-                        <a href="{% url 'account_login' %}" class="btn auth-btn signin-btn">
-                            <i class="fas fa-sign-in-alt"></i> Sign In
-                        </a>
-                        <a href="{% url 'account_signup' %}" class="btn auth-btn signup-btn">
-                            <i class="fas fa-user-plus"></i> Sign Up
-                        </a>
+                    <!-- NORMAL USER -->
+                    <span class="text-white-50 small me-1">
+                        <i class="fas fa-user me-1"></i>{{ user.username }}
+                    </span>
+                    <a href="{% url 'account_logout' %}" class="btn auth-btn signin-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+
+                    {% endif %}
+
+                    {% else %}
+
+                    <!-- GUEST -->
+                    <a href="{% url 'account_login' %}" class="btn auth-btn signin-btn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                    <a href="{% url 'account_signup' %}" class="btn auth-btn signup-btn">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </a>
 
                     {% endif %}
 
@@ -950,7 +954,7 @@
         // SCROLL EFFECT - BLUR
         // =========================
         const navbar = document.getElementById('mainNavbar');
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY > 20) {
                 navbar.classList.add('scrolled');
             } else {
@@ -961,8 +965,8 @@
         // =========================
         // AUTO CLOSE ALERTS
         // =========================
-        document.querySelectorAll('.alert').forEach(function(alert) {
-            setTimeout(function() {
+        document.querySelectorAll('.alert').forEach(function (alert) {
+            setTimeout(function () {
                 const bsAlert = bootstrap.Alert.getInstance(alert);
                 if (bsAlert) bsAlert.close();
             }, 5000);
@@ -971,8 +975,8 @@
         // =========================
         // CLOSE BUTTON FALLBACK
         // =========================
-        document.querySelectorAll('.btn-close').forEach(function(button) {
-            button.addEventListener('click', function() {
+        document.querySelectorAll('.btn-close').forEach(function (button) {
+            button.addEventListener('click', function () {
                 const alert = button.closest('.alert');
                 if (alert) {
                     alert.remove();
@@ -983,7 +987,7 @@
         // =========================
         // ACTIVE LINK - AUTO
         // =========================
-        document.querySelectorAll('.navbar-nav .nav-link').forEach(function(link) {
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(function (link) {
             if (link.href === window.location.href) {
                 link.classList.add('active');
             }

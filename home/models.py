@@ -115,9 +115,7 @@ class Book(models.Model):
                 olid = best_match['key'].replace('/works/', '')
                 print(f"OLID: {olid}")
 
-            # =============================================
-            # FETCH DESCRIPTION FROM DETAILS API
-            # =============================================
+            # FETCH DESCRIPTION
             if olid:
                 detail_url = f"https://openlibrary.org/works/{olid}.json"
                 print(f"Fetching description from details API...")
@@ -141,58 +139,34 @@ class Book(models.Model):
                             if description:
                                 self.description = description
                                 print(f"Description: {description[:100]}...")
-                            else:
-                                print(f"Description field is empty")
-                        else:
-                            print(f"No description field in details response")
 
                 except Exception as e:
                     print(f"Error fetching description: {e}")
-            else:
-                print(f"No OLID found, cannot fetch description")
 
-            # =============================================
             # PUBLISHER
-            # =============================================
             publishers = best_match.get('publisher', [])
             if publishers:
                 self.publisher = ', '.join(publishers[:3])
                 print(f"Publisher: {self.publisher}")
-            else:
-                print(f"Publisher: Not available")
 
-            # =============================================
             # PUBLISHED DATE
-            # =============================================
             publish_dates = best_match.get('publish_date', [])
             if publish_dates:
                 self.published_date = publish_dates[0]
                 print(f"Published: {self.published_date}")
-            else:
-                print(f"Published: Not available")
 
-            # =============================================
             # PAGE COUNT
-            # =============================================
             if best_match.get('number_of_pages'):
                 self.page_count = best_match['number_of_pages']
                 print(f"Pages: {self.page_count}")
-            else:
-                print(f"Pages: Not available")
 
-            # =============================================
             # ISBN
-            # =============================================
             isbn_list = best_match.get('isbn', [])
             if isbn_list:
                 self.isbn = isbn_list[0]
                 print(f"ISBN: {self.isbn}")
-            else:
-                print(f"ISBN: Not available")
 
-            # =============================================
             # COVER IMAGE
-            # =============================================
             cover_id = best_match.get("cover_i")
             if cover_id and not self.cover_image:
                 for size in ['-L.jpg', '-M.jpg']:
@@ -268,17 +242,10 @@ class Book(models.Model):
                     if self.cover_image:
                         break
 
-            if not self.cover_image:
-                print(f"No cover available")
-
         except requests.RequestException as e:
             print(f"Open Library request error: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
-
-        print(f"\n{'='*50}")
-        print(f"FETCH COMPLETE")
-        print(f"{'='*50}")
 
     def save(self, *args, **kwargs):
         is_new = self.pk is None
@@ -288,22 +255,26 @@ class Book(models.Model):
 
         super().save(*args, **kwargs)
 
+        # Notification create karo - sirf naye book ke liye
         if is_new:
             for user in User.objects.all():
                 Notification.objects.create(
                     user=user,
                     message=f"New book added: {self.title}",
-                    link=f"/read/{self.pk}/"
+                    link=f"/read/{self.pk}/",
+                    icon='book',  # Chhota icon name
                 )
 
+
 class Notification(models.Model):
+    # Professional approach - chhote icon names
     ICON_CHOICES = [
-        ('fa-book', 'Book'),
-        ('fa-info-circle', 'Info'),
-        ('fa-check-circle', 'Success'),
-        ('fa-exclamation-triangle', 'Warning'),
-        ('fa-user-plus', 'New User'),
-        ('fa-star', 'Star'),
+        ('book', 'Book'),
+        ('info', 'Info'),
+        ('check', 'Success'),
+        ('warning', 'Warning'),
+        ('user', 'New User'),
+        ('star', 'Star'),
     ]
     
     user = models.ForeignKey(
@@ -314,9 +285,11 @@ class Notification(models.Model):
     message = models.CharField(max_length=200)
     link = models.CharField(max_length=300, blank=True)
     icon = models.CharField(
-        max_length=30, 
+        max_length=20,  # Chhota max_length - professional
         choices=ICON_CHOICES, 
-        default='fa-info-circle'
+        default='info',
+        null=True,  # Migration ke liye
+        blank=True,
     )
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -324,6 +297,10 @@ class Notification(models.Model):
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = 'Notifications'
+        indexes = [
+            models.Index(fields=['user', 'is_read']),
+            models.Index(fields=['created_at']),
+        ]
 
     def __str__(self):
         return f"{self.user.username} - {self.message[:50]}"
