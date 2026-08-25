@@ -506,7 +506,7 @@ The application uses external services to enrich book information.
 
 Used as the primary source for automated book metadata retrieval.
 
-Potentially retrieved information includes:
+Potentially retrieved  aa information includes:
 
 * Book description.
 * Rating
