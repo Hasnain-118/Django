@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 
 class Contact(models.Model):
     name = models.CharField(max_length=150)
-    email = models.CharField()
+    email = models.CharField(max_length=150)
     phone = models.CharField(max_length=20)
-    desc = models.TextField()
+    description = models.TextField(null=True, blank=True)
     date = models.DateField()
 
     def __str__(self):
