@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='contact',
             name='email',
-            field=models.CharField(max_length=35),
+            field=models.CharField(max_length=150),
         ),
         migrations.AlterField(
             model_name='contact',
