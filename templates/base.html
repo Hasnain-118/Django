@@ -786,78 +786,78 @@
                     </form>
 
                     <!-- NOTIFICATION BELL -->
-                    {% if user.is_authenticated %}
-                    <div class="dropdown">
-                        <button class="notif-btn" type="button" data-bs-toggle="dropdown" title="Notifications">
-                            <i class="fas fa-bell"></i>
+{% if user.is_authenticated %}
+<div class="dropdown">
+    <button class="notif-btn" type="button" data-bs-toggle="dropdown" title="Notifications">
+        <i class="fas fa-bell"></i>
 
-                            {% if unread_count %}
-                            <span class="badge-dot-count">{{ unread_count }}</span>
-                            {% endif %}
-                        </button>
+        {% if unread_count %}
+        <span class="badge-dot-count">{{ unread_count }}</span>
+        {% endif %}
+    </button>
 
-                        <ul class="dropdown-menu user-menu notification-dropdown">
-                            <li>
-                                <h6 class="dropdown-header d-flex justify-content-between align-items-center">
-                                    <span><i class="fas fa-bell me-2"></i>Notifications</span>
-                                    {% if unread_count %}
-                                    <span class="badge bg-danger rounded-pill">{{ unread_count }} new</span>
-                                    {% endif %}
-                                </h6>
-                            </li>
+    <ul class="dropdown-menu user-menu notification-dropdown">
+        <li>
+            <h6 class="dropdown-header d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-bell me-2"></i>Notifications</span>
+                {% if unread_count %}
+                <span class="badge bg-danger rounded-pill">{{ unread_count }} new</span>
+                {% endif %}
+            </h6>
+        </li>
 
-                            {% for n in notifications %}
-                            <li class="notification-item position-relative">
-                                <a class="dropdown-item {% if not n.is_read %}fw-bold unread-notification{% endif %}"
-                                    href="{% url 'mark_one_read' n.id %}">
-                                    <div class="d-flex">
-                                        <div class="notification-icon-wrapper">
-                                            <!-- FIXED: fa- prefix add kiya -->
-                                            <i class="fas fa-{{ n.icon|default:'info' }}"></i>
-                                        </div>
-                                        <div class="flex-grow-1 ms-2">
-                                            <div class="notification-message">{{ n.message }}</div>
-                                            <small class="notification-time">
-                                                <i class="far fa-clock me-1"></i>{{ n.created_at|timesince }} ago
-                                            </small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="{% url 'clear_notification' n.id %}" class="delete-notification"
-                                    onclick="return confirm('Delete this notification?')" title="Delete notification">
-                                    <i class="fas fa-times"></i>
-                                </a>
-                            </li>
-                            {% empty %}
-                            <li>
-                                <span class="dropdown-item text-center py-4">
-                                    <i class="far fa-bell-slash fa-2x d-block mb-2 text-muted"></i>
-                                    <span class="text-muted">No notifications yet</span>
-                                </span>
-                            </li>
-                            {% endfor %}
-
-                            {% if notifications %}
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item text-center mark-all-read"
-                                    href="{% url 'mark_notifications_read' %}?next={{ request.path }}">
-                                    {% if unread_count %}
-                                    <i class="fas fa-check-double me-2"></i>Mark all as read
-                                    {% else %}
-                                    <span class="text-muted">
-                                        <i class="fas fa-check me-2"></i>All caught up!
-                                    </span>
-                                    {% endif %}
-                                </a>
-                            </li>
-                            {% endif %}
-                        </ul>
+        {% for n in notifications %}
+        <li class="notification-item position-relative">
+            <a class="dropdown-item {% if not n.is_read %}fw-bold unread-notification{% endif %}"
+                href="{% url 'mark_one_read' n.id %}">
+                <div class="d-flex">
+                    <div class="notification-icon-wrapper">
+                        <!-- FIXED: Direct icon class use karo -->
+                        <i class="fas {{ n.icon|default:'fa-info-circle' }}"></i>
                     </div>
-                    {% endif %}
+                    <div class="flex-grow-1 ms-2">
+                        <div class="notification-message">{{ n.message }}</div>
+                        <small class="notification-time">
+                            <i class="far fa-clock me-1"></i>{{ n.created_at|timesince }} ago
+                        </small>
+                    </div>
+                </div>
+            </a>
+            <a href="{% url 'clear_notification' n.id %}" class="delete-notification"
+                onclick="return confirm('Delete this notification?')" title="Delete notification">
+                <i class="fas fa-times"></i>
+            </a>
+        </li>
+        {% empty %}
+        <li>
+            <span class="dropdown-item text-center py-4">
+                <i class="far fa-bell-slash fa-2x d-block mb-2 text-muted"></i>
+                <span class="text-muted">No notifications yet</span>
+            </span>
+        </li>
+        {% endfor %}
+
+        {% if notifications %}
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+
+        <li>
+            <a class="dropdown-item text-center mark-all-read"
+                href="{% url 'mark_notifications_read' %}?next={{ request.path }}">
+                {% if unread_count %}
+                <i class="fas fa-check-double me-2"></i>Mark all as read
+                {% else %}
+                <span class="text-muted">
+                    <i class="fas fa-check me-2"></i>All caught up!
+                </span>
+                {% endif %}
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
 
                     <!-- USER -->
                     {% if user.is_authenticated %}

@@ -266,15 +266,15 @@ class Book(models.Model):
                 )
 
 
+
 class Notification(models.Model):
-    # Professional approach - chhote icon names
     ICON_CHOICES = [
-        ('book', 'Book'),
-        ('info', 'Info'),
-        ('check', 'Success'),
-        ('warning', 'Warning'),
-        ('user', 'New User'),
-        ('star', 'Star'),
+        ('fa-book', 'Book'),
+        ('fa-info-circle', 'Info'),
+        ('fa-check-circle', 'Success'),
+        ('fa-exclamation-triangle', 'Warning'),
+        ('fa-user-plus', 'New User'),
+        ('fa-star', 'Star'),
     ]
     
     user = models.ForeignKey(
@@ -285,10 +285,10 @@ class Notification(models.Model):
     message = models.CharField(max_length=200)
     link = models.CharField(max_length=300, blank=True)
     icon = models.CharField(
-        max_length=20,  # Chhota max_length - professional
+        max_length=35,  # 35 karo - lambi values ke liye
         choices=ICON_CHOICES, 
-        default='info',
-        null=True,  # Migration ke liye
+        default='fa-info-circle',
+        null=True,
         blank=True,
     )
     is_read = models.BooleanField(default=False)
@@ -297,10 +297,6 @@ class Notification(models.Model):
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = 'Notifications'
-        indexes = [
-            models.Index(fields=['user', 'is_read']),
-            models.Index(fields=['created_at']),
-        ]
 
     def __str__(self):
         return f"{self.user.username} - {self.message[:50]}"
