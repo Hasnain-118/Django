@@ -19,10 +19,13 @@ def notifications(request):
         return empty
 
     try:
-        notifications_qs = request.user.notifications.all()
+        notifications_qs = request.user.notifications.select_related('user')  # Optimization
         return {
             'notifications': notifications_qs[:10],
             'unread_count': notifications_qs.filter(is_read=False).count()
         }
     except (OperationalError, ProgrammingError):
+        return empty
+    except Exception:
+        # Koi aur unexpected error
         return empty

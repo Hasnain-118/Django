@@ -296,8 +296,16 @@ class Book(models.Model):
                     link=f"/read/{self.pk}/"
                 )
 
-
 class Notification(models.Model):
+    ICON_CHOICES = [
+        ('fa-book', 'Book'),
+        ('fa-info-circle', 'Info'),
+        ('fa-check-circle', 'Success'),
+        ('fa-exclamation-triangle', 'Warning'),
+        ('fa-user-plus', 'New User'),
+        ('fa-star', 'Star'),
+    ]
+    
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -305,11 +313,17 @@ class Notification(models.Model):
     )
     message = models.CharField(max_length=200)
     link = models.CharField(max_length=300, blank=True)
+    icon = models.CharField(
+        max_length=30, 
+        choices=ICON_CHOICES, 
+        default='fa-info-circle'
+    )
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-created_at']
+        verbose_name_plural = 'Notifications'
 
     def __str__(self):
-        return f"{self.user.username}: {self.message}"
+        return f"{self.user.username} - {self.message[:50]}"

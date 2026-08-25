@@ -16,8 +16,22 @@ urlpatterns = [
     path("search/", views.search_books, name="search_books"),
 
     path(
+        "notifications/read/<int:notif_id>/",
+        views.mark_one_read,
+        name="mark_one_read"
+    ),
+    
+    # Saari notifications read karne ke liye (aapka existing)
+    path(
         "notifications/read/",
         views.mark_notifications_read,
         name="mark_notifications_read"
+    ),
+    
+    # Single notification delete karne ke liye
+    path(
+        "notifications/delete/<int:notif_id>/",
+        views.clear_notification,
+        name="clear_notification"
     ),
 ]

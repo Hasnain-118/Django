@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import datetime
 
-from .models import Contact, Book
+from .models import Contact, Book, Notification
 from .forms import SignUpForm, BookForm
 
 from django.contrib.auth import login, authenticate, logout
@@ -431,8 +431,32 @@ def category_books(request, category_slug):
         context
     )
 
+@login_required
+def mark_one_read(request, notif_id):
+    """Single notification ko read mark karo"""
+    notif = get_object_or_404(Notification, id=notif_id, user=request.user)
+    notif.is_read = True
+    notif.save()
+    
+    # Agar notification mein link hai toh wahan redirect karo
+    if notif.link:
+        return redirect(notif.link)
+    return redirect('home')
 
 @login_required
 def mark_notifications_read(request):
+    """Saari notifications read mark karo"""
     request.user.notifications.filter(is_read=False).update(is_read=True)
-    return redirect(request.GET.get('next', 'home'))
+    messages.success(request, "All notifications marked as read!")
+    
+    next_url = request.GET.get('next', 'home')
+    return redirect(next_url)
+
+@login_required
+def clear_notification(request, notif_id):
+    """Single notification delete karo"""
+    notification = get_object_or_404(Notification, id=notif_id, user=request.user)
+    notification.delete()
+    messages.success(request, "Notification deleted!")
+    
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
