@@ -265,8 +265,6 @@ class Book(models.Model):
                     icon='book',  # Chhota icon name
                 )
 
-
-
 class Notification(models.Model):
     ICON_CHOICES = [
         ('fa-book', 'Book'),
@@ -285,7 +283,7 @@ class Notification(models.Model):
     message = models.CharField(max_length=200)
     link = models.CharField(max_length=300, blank=True)
     icon = models.CharField(
-        max_length=35,  # 35 karo - lambi values ke liye
+        max_length=50,  # 35 se 50 karo
         choices=ICON_CHOICES, 
         default='fa-info-circle',
         null=True,
