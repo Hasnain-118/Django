@@ -508,7 +508,7 @@ Used as the primary source for automated book metadata retrieval.
 
 Potentially retrieved information includes:
 
-* Book description
+* Book description.
 * Rating
 * Cover image
 
