@@ -75,25 +75,36 @@ def about(request):
     return render(request, 'about.html')
 
 
+def services(request):
+    return redirect('about')
+
 
 def contact(request):
+
     if request.method == 'POST':
+
         name = request.POST.get('name')
         email = request.POST.get('email')
-        phone = request.POST.get('phone', '')  # ✅ Default empty string
-        description = request.POST.get('desc', '')  # ✅ Default empty string
-        
+        phone = request.POST.get('phone')
+        description = request.POST.get('desc')
+
         contact = Contact(
             name=name,
             email=email,
             phone=phone,
-            description=description,
+            desc=description,
             date=datetime.today()
         )
+
         contact.save()
-        messages.success(request, 'Your form submitted successfully!')
-    
+
+        messages.success(
+            request,
+            'Your form submitted successfully!'
+        )
+
     return render(request, 'contact.html')
+
 
 # =========================================================
 # SIGN UP
