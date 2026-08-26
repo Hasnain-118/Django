@@ -81,7 +81,7 @@ def contact(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone', '')  # ✅ Default empty string
-        description = request.POST.get('description', '')  # ✅ Default empty string
+        description = request.POST.get('desc', '')  # ✅ Default empty string
         
         contact = Contact(
             name=name,
