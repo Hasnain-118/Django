@@ -86,13 +86,13 @@ def contact(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        desc = request.POST.get('desc')
+        description = request.POST.get('desc')
 
         contact = Contact(
             name=name,
             email=email,
             phone=phone,
-            desc=desc,
+            desc=description,
             date=datetime.today()
         )
 
