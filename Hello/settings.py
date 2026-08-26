@@ -283,19 +283,20 @@ if (
     )
 
 
+
 # ====================
-# EMAIL - BREVO
+# EMAIL - RESEND (HTTP API)
 # ====================
 
-EMAIL_BACKEND = 'anymail.backends.brevo.EmailBackend'
+EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
 
 ANYMAIL = {
-    'BREVO_API_KEY': config('BREVO_API_KEY'),
+    "RESEND_API_KEY": config('RESEND_API_KEY', default=''),
 }
 
 DEFAULT_FROM_EMAIL = config(
     'DEFAULT_FROM_EMAIL',
-    default='noreply@example.com'
+    default='onboarding@resend.dev'
 )
 
 
