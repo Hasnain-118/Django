@@ -80,29 +80,22 @@ def services(request):
 
 
 def contact(request):
-
     if request.method == 'POST':
-
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        description = request.POST.get('desc')
-
+        description = request.POST.get('desc')  # Form se 'desc' aayega
+        
         contact = Contact(
             name=name,
             email=email,
             phone=phone,
-            desc=description,
+            description=description,  # ✅ Model mein 'description' hai
             date=datetime.today()
         )
-
         contact.save()
-
-        messages.success(
-            request,
-            'Your form submitted successfully!'
-        )
-
+        messages.success(request, 'Your form submitted successfully!')
+    
     return render(request, 'contact.html')
 
 
