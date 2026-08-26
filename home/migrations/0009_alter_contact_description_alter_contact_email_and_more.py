@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='contact',
             name='name',
-            field=models.CharField(max_length=30),
+            field=models.CharField(max_length=60),
         ),
         migrations.AlterField(
             model_name='contact',
             name='phone',
-            field=models.CharField(max_length=12),
+            field=models.CharField(max_length=20, blank=True, default=''),
         ),
     ]
