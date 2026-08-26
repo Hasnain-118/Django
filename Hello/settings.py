@@ -284,21 +284,19 @@ if (
 
 
 
+
 # ====================
-# EMAIL - RESEND (HTTP API)
+# EMAIL - MAILGUN
 # ====================
 
-EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
 ANYMAIL = {
-    "RESEND_API_KEY": config('RESEND_API_KEY', default=''),
+    "MAILGUN_API_KEY": config('MAILGUN_API_KEY'),
+    "MAILGUN_SENDER_DOMAIN": config('MAILGUN_SENDER_DOMAIN'),  
 }
 
-DEFAULT_FROM_EMAIL = config(
-    'DEFAULT_FROM_EMAIL',
-    default='onboarding@resend.dev'
-)
-
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 # ====================
 # MESSAGE TAGS
