@@ -27,6 +27,7 @@ class Book(models.Model):
         ('romance', 'Romance'),
         ('fantasy', 'Fantasy'),
         ('sci-fi', 'Science Fiction'),
+        ('novel', 'Novel'),
     ]
 
     title = models.CharField(max_length=100)
