@@ -950,7 +950,9 @@
             </div>
 
         </div>
-
+        <p class="text-center" style="color: #9ca3af; font-size: 0.9rem; margin: 20px 0 0;">
+    Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ total_books }} books
+</p>
         {% if page_obj.has_other_pages %}
         <nav class="pagination-container" aria-label="Page navigation">
             {% if page_obj.has_previous %}

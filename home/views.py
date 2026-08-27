@@ -23,7 +23,7 @@ def index(request):
 
     books = Book.objects.all().order_by('-id')
 
-    paginator = Paginator(books, 12)
+    paginator = Paginator(books, 20)
 
     page_number = request.GET.get('page')
 
@@ -38,6 +38,7 @@ def index(request):
             'books': page_obj,
             'page_obj': page_obj,
             'latest_books': latest_books,
+            'total_books': paginator.count,
         }
     )
 
